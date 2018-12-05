@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="css/album.css"/>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript"
+            src="js/vue2.6.15.js"></script>
+</head>
+<body>
+<!--相册弹出-->
+<div style="width: 100vw;height: 100vh;background: rgba(0,0,0,0.63);position: fixed;top: 0;z-index: 1; display: none">
+
+    <div style="margin:50px;border:1px #c0c0c0 solid;height: 85vh;background: #fff;padding: 40px;">
+        <div>
+            <i class="glyphicon glyphicon-remove btn_close"></i>
+            <h3>相册名字</h3>
+            <h5 style="color:#8e8e8e;">2018年12月4日</h5></div>
+
+
+        <hr>
+        <div style="border: 1px #ffb2b2 solid;width: 100%;height: 85%;overflow-y:auto; overflow-x:hidden;  ">
+            <div class="col-md-4 mgt10">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 mgt10 ">
+                <div class="photo_box">
+                    <img src="http://t2.hddhhn.com/uploads/tu/201610/198/hkgip2b102z.jpg" class="photo">
+                </div>
+                <div class="text_content">
+                    <label>
+                        <span class="text_label">mingzi</span>
+                        <br>
+                        <span class="text_label">min</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--单张图片弹出-->
+<div style="width: 100vw;height: 100vh;background: rgba(0,0,0,0.85);position: fixed;top: 0;z-index: 1;">
+    <div style="display: flex; justify-content:center ">
+        <img style="height: 100%"
+             src="https://www.halfbakedharvest.com/wp-content/uploads/2015/12/Gingerbread-Latte-with-Salted-Caramel-Sugar-VIDEO-4.jpg">
+        <img src="img/close.png" style="width: 40px;height: 40px;position: relative;left: 50px;top: 75px;">
+        <img src="img/right.png" style="width: 40px;height: 40px;position: fixed;right: 50px;top: 50vh;">
+        <img src="img/left.png" style="width: 40px;height: 40px;position: fixed;left: 50px;top: 50vh;">
+    </div>
+</div>
+<!-- 导航栏 -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">照片<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="#">相册</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">图片管理</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="">
+    <div style="text-align: center">
+        <input type="text" style="height: 35px;width: 60%;" placeholder="输入搜索的照片号/照片名称">
+        <button class="btn btn-danger">搜索</button>
+    </div>
+    <hr>
+    <div class="classify">
+        <ul>
+            <li class="li_acitve">综合</li>
+            <li>编号</li>
+            <li>名称</li>
+            <li>创建时间</li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <!--图片显示区域-->
+    <div class="row" id="app">
+        <div class="col-md-3 mgt10 album_box" v-for="album in albums">
+            <img width="100%" src="http://img.hb.aicdn.com/6b6253aa2746244e0535fbcc07041aba32777d5c3c8000-b8fm3o_fw658"
+                 alt="">
+            <div class="text_content">
+                <label>
+                    <span class="text_label">{{album.albumName}}</span>
+                    <br>
+                    <span class="text_label">{{album.albumDesc}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="mgt30" style="text-align: center">
+        <button class="btn" style="background: #eeeeee;padding: 10px 80px; color: #3c3c3c">查看更多</button>
+    </div>
+</div>
+<footer class="mgt50" style="height: 300px; background: #BBBBBB">
+
+</footer>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            albums:[{
+                "albumId": 1,
+                "albumName": "图集1",
+                "albumDesc": "原图",
+                "albumCreatetime": "2018年12月4日",
+                "albumRemark": "sad",
+                "photos": [{
+                    "photoId": 1,
+                    "photoName": "图片A",
+                    "photoDesc": 25,
+                    "photoCreatetime": "2018年12月4日",
+                    "albumId": 1,
+                    "albumName": "sad",
+                    "photoURL": "/adb.jpg"
+                }, {
+                    "photoId": 2,
+                    "photoName": "图片B",
+                    "photoCreatetime": 25,
+                    "albumId": 1,
+                    "albumName": "sad",
+                    "photoURL": "/adb.jpg"
+                }]
+            },
+                {
+                    "albumId": 2,
+                    "albumName": "图集2",
+                    "albumDesc": "原图2",
+                    "albumCreatetime": "2018年12月2日",
+                    "albumRemark": "happy",
+                    "photos": [{
+                        "photoId": 3,
+                        "photoName": "图片C",
+                        "photoDesc": 25,
+                        "photoCreatetime": "2018年12月2日",
+                        "albumId": 2,
+                        "albumName": "sad",
+                        "photoURL": "/adb.jpg"
+                    }, {
+                        "photoId": 4,
+                        "photoName": "图片D",
+                        "photoDesc": 25,
+                        "photoCreatetime": "2018年12月2日",
+                        "albumId": 2,
+                        "albumName": "sad",
+                        "photoURL": "/adb.jpg"
+                    }]
+                }
+            ]
+        },
+        methods: {}
+    });
+
+    function searchCustom() {
+        $.ajax({
+            type: 'POST',
+            url: './search.do',
+            data: $("#searchForm").serialize(),
+            success: function (data) {
+                app.customs = data;
+                app.getPageTotle();
+            }
+        });
+    }
+
+    function toPage(page) {
+        var sendData = "&page=" + page;
+        $.ajax({
+            type: 'POST',
+            url: './search.do',
+            data: sendData,
+            success: function (data) {
+                app.customs = data;
+            }
+        });
+    }
+</script>
+</html>
