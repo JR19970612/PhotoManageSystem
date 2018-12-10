@@ -9,7 +9,7 @@ spring:
 #Mybatis配置
 mybatis:
   type-aliases-package: com.ydb.entity
-  mapper-locations:  classpath:static/mapper/IPhotoDao.xml
+  mapper-locations:  classpath:static/mapper/*.xml
 
 #日志配置
 logging:
