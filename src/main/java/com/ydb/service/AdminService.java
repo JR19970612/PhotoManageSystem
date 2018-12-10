@@ -1,7 +1,7 @@
 package com.ydb.service;
 
-import com.ydb.bean.Admin;
-import com.ydb.dao.AdminMapper;
+import com.ydb.entity.Admin;
+import com.ydb.dao.IAdminDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +16,19 @@ import org.springframework.stereotype.Service;
 public class AdminService {
 
 
-    private AdminMapper mapper;
+    private IAdminDao mapper;
 
 
     @Autowired
-    public void setUserMapper(AdminMapper mapper){
+    public void setUserMapper(IAdminDao mapper){
         this.mapper = mapper;
     }
-    public void insert() {
+    public void insertAdmin() {
        Admin admin = new Admin();
-        admin.setAdminName("哈哈");
+//       admin.setAdminId(9);
+        admin.setAdminName("哈哈11");
         admin.setAdminPassword("123456");
-        mapper.insert(admin);
+        mapper.insertAdmin(admin);
 
 
     }

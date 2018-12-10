@@ -1,4 +1,4 @@
-package com.ydb.bean;
+package com.ydb.entity;
 /**
  * @program: com.ydb.bean
  * @description: Admin

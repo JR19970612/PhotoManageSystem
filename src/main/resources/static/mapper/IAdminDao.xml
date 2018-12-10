@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ydb.dao.AdminMapper" >
-  <resultMap id="BaseResultMap" type="com.ydb.bean.Admin" >
+<mapper namespace="com.ydb.dao.IAdminDao" >
+  <resultMap id="BaseResultMap" type="com.ydb.entity.Admin" >
     <id column="admin_id" property="adminId" jdbcType="INTEGER" />
     <result column="admin_name" property="adminName" jdbcType="CHAR" />
     <result column="admin_password" property="adminPassword" jdbcType="CHAR" />
@@ -19,38 +19,14 @@
     delete from admin
     where admin_id = #{adminId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ydb.bean.Admin" >
+  <insert id="insertAdmin" parameterType="com.ydb.entity.Admin" >
     insert into admin (admin_id, admin_name, admin_password
       )
     values (#{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=CHAR}, #{adminPassword,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ydb.bean.Admin" >
-    insert into admin
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        admin_id,
-      </if>
-      <if test="adminName != null" >
-        admin_name,
-      </if>
-      <if test="adminPassword != null" >
-        admin_password,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        #{adminId,jdbcType=INTEGER},
-      </if>
-      <if test="adminName != null" >
-        #{adminName,jdbcType=CHAR},
-      </if>
-      <if test="adminPassword != null" >
-        #{adminPassword,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ydb.bean.Admin" >
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ydb.entity.Admin" >
     update admin
     <set >
       <if test="adminName != null" >
@@ -62,7 +38,7 @@
     </set>
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ydb.bean.Admin" >
+  <update id="updateByPrimaryKey" parameterType="com.ydb.entity.Admin" >
     update admin
     set admin_name = #{adminName,jdbcType=CHAR},
       admin_password = #{adminPassword,jdbcType=CHAR}

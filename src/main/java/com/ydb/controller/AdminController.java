@@ -15,12 +15,11 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
-    @RequestMapping("/insert")
+    @RequestMapping("/insertAdmin")
     @ResponseBody
     public String index(){
-
-         adminService.insert();
- return "123";
+         adminService.insertAdmin();
+          return "123";
     }
 
 }
