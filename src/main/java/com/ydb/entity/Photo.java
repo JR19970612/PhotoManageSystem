@@ -2,54 +2,53 @@ package com.ydb.entity;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class Photo {
 
-    private Integer id;
+    private Integer photoId;
     @NotNull
-    private String name;
+    private String photoName;
     @NotNull
-    private String desc;
+    private String photoDesc;
     @NotNull
     @Past
-    private Timestamp createTime;
+    private Date photoCreatetime;
     @NotNull
     private Integer albumId;
     private String photoOriginalUrl;
     private String photoThumUrl;
 
-    public Integer getId() {
-        return id;
+    public Integer getPhotoId() {
+        return photoId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPhotoId(Integer photoId) {
+        this.photoId = photoId;
     }
 
-    public String getName() {
-        return name;
+    public String getPhotoName() {
+        return photoName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getPhotoDesc() {
+        return photoDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setPhotoDesc(String photoDesc) {
+        this.photoDesc = photoDesc;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getPhotoCreatetime() {
+        return photoCreatetime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setPhotoCreatetime(Date photoCreatetime) {
+        this.photoCreatetime = photoCreatetime;
     }
 
     public Integer getAlbumId() {
@@ -74,5 +73,19 @@ public class Photo {
 
     public void setPhotoThumUrl(String photoThumUrl) {
         this.photoThumUrl = photoThumUrl;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Photo{" +
+                "photoId=" + photoId +
+                ", photoName='" + photoName + '\'' +
+                ", photoDesc='" + photoDesc + '\'' +
+                ", photoCreatetime=" + photoCreatetime +
+                ", albumId=" + albumId +
+                ", photoOriginalUrl='" + photoOriginalUrl + '\'' +
+                ", photoThumUrl='" + photoThumUrl + '\'' +
+                '}';
     }
 }

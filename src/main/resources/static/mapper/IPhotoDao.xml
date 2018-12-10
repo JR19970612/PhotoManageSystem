@@ -4,39 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ydb.dao.IPhotoDao">
     <resultMap id="photoMap" type="Photo">
-        <id property="id" column="photo_id"></id>
-        <result property="name" column="photo_name"></result>
-        <result property="desc" column="photo_desc"></result>
-        <result property="createTime" column="photo_createtime"></result>
+        <id property="photoId" column="photo_id"></id>
+        <result property="photoName" column="photo_name"></result>
+        <result property="photoDesc" column="photo_desc"></result>
+        <result property="photoCreatetime" column="photo_createtime"></result>
         <result property="albumId" column="album_id"></result>
-        <result property="photoOriginalUrl" column="photo_url"></result>
-        <result property="photoThumUrl" column="photo_thum"></result>
+        <result property="photoOriginalUrl" column="photo_original_url"></result>
+        <result property="photoThumUrl" column="photo_thum_url"></result>
     </resultMap>
 
     <insert id="insertPhoto" parameterType="Photo">
         INSERT INTO
-        Photo(photo_name,photo_desc,photo_createtime,album_id,photo_url,photo_thum)
-        VALUES (#{name},#{desc},#{createTime},#{albumId},#{photoOriginalUrl},#{photoThumUrl)
-        <selectKey resultType="int" keyProperty="id" order="AFTER">
+        Photo(photo_name,photo_desc,photo_createtime,album_id,photo_original_url,photo_thum_url)
+        VALUES (#{photoName},#{photoDesc},#{photoCreatetime},#{albumId},#{photoOriginalUrl},#{photoThumUrl})
+        <selectKey resultType="int" keyProperty="photoId" order="AFTER">
             select @@identity
         </selectKey>
     </insert>
 
 
-    <delete id="deletePhoto" parameterType="Photo">
+    <delete id="deletePhoto">
         delete from photo
         <where>
-            photo_id=#{id}
+            photo_id=#{photoId}
         </where>
     </delete>
 
     <update id="updatePhoto" parameterType="Photo">
         UPDATE photo SET
-        photo_name =#{name},
-        photo_desc=#{desc},
+        photo_name =#{photoName},
+        photo_desc=#{photoDesc},
         album_id=#{albumId}
         <where>
-            photo_id=#{id}
+            photo_id=#{photoId}
         </where>
     </update>
 
