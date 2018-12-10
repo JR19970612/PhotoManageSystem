@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+/**
+ * @program: com.ydb.dao
+ * @description: PhotoServiceImp
+ * @author: JR
+ * @create: 2018-12-10 10:27
+ **/
 
 @Service
 public class PhotoServiceImp implements IPhotoService {

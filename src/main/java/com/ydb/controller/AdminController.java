@@ -1,25 +1,23 @@
 package com.ydb.controller;
 
-import com.ydb.service.AdminService;
-
+import com.ydb.bean.ResultBean;
+import com.ydb.entity.Admin;
+import com.ydb.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by xingbaichao on 15/12/10.
  */
-@Controller
+@RestController
 public class AdminController {
 
     @Autowired
-    private AdminService adminService;
-    @RequestMapping("/insertAdmin")
-    @ResponseBody
-    public String index(){
-         adminService.insertAdmin();
-          return "123";
-    }
+    private IAdminService adminService;
 
+    @PostMapping("/admin")
+    public ResultBean<Admin> addAdmin(Admin admin) {
+        return adminService.addAdmin(admin);
+    }
 }
