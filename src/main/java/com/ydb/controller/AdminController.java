@@ -1,5 +1,6 @@
 package com.ydb.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Admin;
 import com.ydb.service.IAdminService;
@@ -17,6 +18,7 @@ public class AdminController {
     private IAdminService adminService;
 
     @PostMapping("/admin")
+    @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Admin> addAdmin(Admin admin) {
         return adminService.addAdmin(admin);
     }

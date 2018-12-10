@@ -1,5 +1,6 @@
 package com.ydb.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.service.IPhotoService;
@@ -15,8 +16,9 @@ public class PhotoController {
     @Autowired
     IPhotoService photoService;
 
-    //根据photoId(编号)查询单张图片
+    //根据photoId(编号)或名称查询单张图片
     @GetMapping(value = "/{type}")
+    @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
         ResultBean<Photo> resultBean = null;
         if (type != null & type.equals("photoId")) {
@@ -26,6 +28,9 @@ public class PhotoController {
         } else {
             throw new RuntimeException("非法的查询方式");
         }
+        int i=1/0;
         return resultBean;
     }
+
+
 }
