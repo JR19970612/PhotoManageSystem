@@ -4,3 +4,16 @@ spring:
     url: jdbc:mysql://localhost///photo_manage_system
     username: root
     password: 123456
+
+
+#Mybatis配置
+mybatis:
+  type-aliases-package: com.ydb.entity
+  mapper-locations:  classpath:static/mapper/IPhotoDao.xml
+
+
+
+#SpringSecurity配置
+security:
+  basic:
+    enabled: false
