@@ -59,6 +59,7 @@ public class PersonServiceimp implements IPersonService {
         return PersonResultList;
     }
 
+
     @Override
     public ResultBean<Person> queryPerson(Integer personId) {
         PersonResultBean = new ResultBean<>();
@@ -89,14 +90,17 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> updatePerson(Person person) {
         PersonResultBean = new ResultBean<>();
         PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
+
         int code = mapper.updatePerson(person);
+
         if(code==1){
             PersonResultBean.setMsg("修改成功");
 
         }else {
             PersonResultBean.setMsg("修改失败");
         }
-        PersonResultBean.setData(null);
+        PersonResultBean.setData(Collections.singletonList(person));
         return PersonResultBean;
     }
 }
