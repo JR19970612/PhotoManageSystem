@@ -11,9 +11,9 @@ public class ResultBean<E> {
     /**
      * 状态码定义
      */
-    public static final Integer SUCCSSED_CODE = 0;//成功
     public static final Integer FAILURE_CODE = -1;//失败
-
+    public static final Integer SUCCSSED_CODE = 0;//成功
+    public static final Integer BINDEXCEPTION_CODE = 1;//数据校验异常
 
     /**
      * 定义@JsonView接口
