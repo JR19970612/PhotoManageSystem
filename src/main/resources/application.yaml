@@ -26,3 +26,8 @@ server:
     uri-encoding: UTF-8
 
 
+swagger:
+  basePackage:  com.ydb.controller
+  title: 照片管理系统请求接口测试
+  description : 照片管理系统请求接口测试
+  version : V1.0

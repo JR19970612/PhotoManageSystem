@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.service.IPhotoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -20,21 +21,23 @@ public class PhotoController {
     IPhotoService photoService;
 
 
-    //上传单张图片信息
+    @ApiOperation(value = "上传单张图片信息")
     @PostMapping(value = "/photo")
     @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> uploadPhoto(MultipartHttpServletRequest request, @Validated Photo photo) throws IOException {
         return photoService.addPhoto(request, photo);
     }
 
-    //根据photo_id删除单张图片信息
+
+    @ApiOperation(value = "删除单张图片信息")
     @DeleteMapping(value = "/photo/{photoId}")
     @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> dropPhoto(@PathVariable Integer photoId) {
         return photoService.dropPhoto(photoId);
     }
 
-    //修改单张图片信息
+
+    @ApiOperation(value = "修改单张图片信息")
     @PutMapping(value = "/photo")
     @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> updatePhoto(@Validated Photo photo, BindingResult bindingResult) throws BindException {
@@ -44,7 +47,7 @@ public class PhotoController {
         return photoService.updatePhoto(photo);
     }
 
-    //根据photoId(编号)或名称查询单张图片
+    @ApiOperation(value = "获取图片信息", notes = "通过photoId(编号)或名称获取用户")
     @GetMapping(value = "/photo/{type}")
     @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
