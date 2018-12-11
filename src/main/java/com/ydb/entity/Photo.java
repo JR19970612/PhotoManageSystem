@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.bean.ResultBean;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.util.Date;
+
 
 public class Photo {
     @JsonView(ResultBean.SuccessView.class)
@@ -16,8 +16,6 @@ public class Photo {
     @NotNull
     @JsonView(ResultBean.SuccessView.class)
     private String photoDesc;
-    @NotNull
-    @Past
     @JsonView(ResultBean.SuccessView.class)
     private Date photoCreatetime;
     @NotNull

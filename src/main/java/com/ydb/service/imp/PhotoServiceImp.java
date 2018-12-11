@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @program: com.ydb.dao
@@ -27,6 +28,9 @@ import java.util.Arrays;
 
 @Service
 public class PhotoServiceImp implements IPhotoService {
+
+    private final String HOST="http://localhost:8080";
+
     @Autowired
     IPhotoDao photoDao;
 
@@ -43,6 +47,7 @@ public class PhotoServiceImp implements IPhotoService {
         saveOriginalPhoto(request, photo);//原始图片
         saveThumPhoto(request, photo);//缩略图片
         //保存图片信息到数据库
+        photo.setPhotoCreatetime(new Date());
         photoDao.insertPhoto(photo);
         //返回response
         resultBean = new ResultBean<>();
@@ -59,7 +64,7 @@ public class PhotoServiceImp implements IPhotoService {
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("删除成功");
-        resultBean.setData(Arrays.asList(null));
+        resultBean.setData(Arrays.asList());
         return resultBean;
     }
 
@@ -94,7 +99,7 @@ public class PhotoServiceImp implements IPhotoService {
     }
 
     private boolean judgeFormat() {
-        return false;
+        return true;
     }
 
     private void saveOriginalPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
@@ -107,22 +112,22 @@ public class PhotoServiceImp implements IPhotoService {
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
         File savePath = new File(contextPath, imageName);
         multipartFile.transferTo(savePath);
-        photo.setPhotoOriginalUrl("http://localhost:8080/originalphoto/" + imageName);
+        photo.setPhotoOriginalUrl(HOST+"/originalphoto/" + imageName);
     }
 
 
-    private void saveThumPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
-        MultipartFile multipartFile = request.getFile("photo");
+    private void saveThumPhoto(MultipartHttpServletRequest request,Photo photo) throws IOException {
         String contextPath = request.getSession().getServletContext().getRealPath("/") + "/thumphoto";
         File file = new File(contextPath);
         if (!file.exists()) {
             file.mkdir();
         }
-        String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
+        String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + request.getFile("photo").getOriginalFilename();
         File savePath = new File(contextPath, imageName);
-        Thumbnails.of(multipartFile.getInputStream())
-                .scale(0.25)
+        String originImagePath=request.getServletContext().getRealPath("/")+ "/originalphoto/"+photo.getPhotoOriginalUrl().split("/")[4];
+        Thumbnails.of(originImagePath)
+                .width(400)
                 .toFile(savePath);
-        photo.setPhotoThumUrl("http://localhost:8080/thumphoto/" + imageName);
+        photo.setPhotoThumUrl(HOST+"/thumphoto/" + imageName);
     }
 }

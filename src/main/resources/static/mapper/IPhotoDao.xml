@@ -31,10 +31,18 @@
     </delete>
 
     <update id="updatePhoto" parameterType="Photo">
-        UPDATE photo SET
-        photo_name =#{photoName},
-        photo_desc=#{photoDesc},
-        album_id=#{albumId}
+        UPDATE photo
+        <set>
+            <if test="photoName!=null">
+                photo_name =#{photoName},
+            </if>
+            <if test="photoDesc!=null">
+                photo_desc=#{photoDesc},
+            </if>
+            <if test="albumId!=null">
+                album_id=#{albumId}
+            </if>
+        </set>
         <where>
             photo_id=#{photoId}
         </where>
