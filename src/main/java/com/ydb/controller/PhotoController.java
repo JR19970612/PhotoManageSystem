@@ -5,10 +5,10 @@ import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.service.IPhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/photo")
@@ -28,8 +28,28 @@ public class PhotoController {
         } else {
             throw new RuntimeException("非法的查询方式");
         }
-        int i=1/0;
         return resultBean;
+    }
+
+    //上传单张图片信息
+    @PostMapping(value = "/photo")
+    @JsonView(ResultBean.SuccessView.class)
+    public ResultBean<Photo> uploadPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
+        return photoService.addPhoto(request, photo);
+    }
+
+    //根据photo_id删除单张图片信息
+    @DeleteMapping(value = "/photo/{photoId}")
+    @JsonView(ResultBean.SuccessView.class)
+    public ResultBean<Photo> dropPhoto(@PathVariable Integer photoId) {
+        return photoService.dropPhoto(photoId);
+    }
+
+    //修改单张图片信息
+    @PutMapping(value = "/photo")
+    @JsonView(ResultBean.SuccessView.class)
+    public ResultBean<Photo> updatePhoto(Photo photo) {
+        return photoService.updatePhoto(photo);
     }
 
 
