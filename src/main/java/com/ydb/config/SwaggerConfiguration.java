@@ -22,7 +22,9 @@ public class SwaggerConfiguration {
     private String title;
 
     //当前文档的详细描述
-    private String description;
+    private String description="照片管理系统请求接口测试数据返回格式注意!!!，\n" +
+            "成功统一返回: { \"data\": [ ], \"msg\": \"\", \"status\": 0}，\n" +
+            "失败统一返回: { \"exception\": { \"exceptionName\": \"string\", \"string\",\"time\": \"string\"},\"msg\": \"\", \"status\": 0}。";
 
     //当前文档的版本
     private String version;

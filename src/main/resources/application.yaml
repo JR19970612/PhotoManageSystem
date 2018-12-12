@@ -12,12 +12,15 @@ spring:
 mybatis:
   type-aliases-package: com.ydb.entity
   mapper-locations:  classpath:static/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
 
 #日志配置
 logging:
   level:
     com.ydb.dao.IPhotoDao: debug
-
+    com.ydb.dao.ICommentDao : debug
 
 #SpringSecurity配置
 security:

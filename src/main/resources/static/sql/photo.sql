@@ -54,7 +54,7 @@ CREATE TABLE `comment`  (
   `person_id` int(11) NOT NULL,
   `photo_id` int(11) NOT NULL,
   `comment_time` timestamp(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-  `comment_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `commentContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `COMMENT_PHOTOID_FORIGNKEY`(`photo_id`) USING BTREE,
   INDEX `COMMENT_PERSONID_FORINGIKEY`(`person_id`) USING BTREE,

@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: com.ydb.dao
@@ -29,13 +30,13 @@ import java.util.Date;
 @Service
 public class PhotoServiceImp implements IPhotoService {
 
-    private final String HOST="http://localhost:8080";
+    private final String HOST = "http://localhost:8080";
 
     @Autowired
     IPhotoDao photoDao;
 
 
-    ResultBean<Photo> resultBean;
+    ResultBean resultBean;
 
     @Override
     public ResultBean<Photo> addPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
@@ -98,6 +99,16 @@ public class PhotoServiceImp implements IPhotoService {
         return resultBean;
     }
 
+    @Override
+    public ResultBean<List<Photo>> queryPhoto() {
+        List<Photo> photos = photoDao.selectAllPhoto();
+        resultBean = new ResultBean<>();
+        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        resultBean.setMsg("查询成功");
+        resultBean.setData(photos);
+        return resultBean;
+    }
+
     private boolean judgeFormat() {
         return true;
     }
@@ -112,11 +123,11 @@ public class PhotoServiceImp implements IPhotoService {
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
         File savePath = new File(contextPath, imageName);
         multipartFile.transferTo(savePath);
-        photo.setPhotoOriginalUrl(HOST+"/originalphoto/" + imageName);
+        photo.setPhotoOriginalUrl(HOST + "/originalphoto/" + imageName);
     }
 
 
-    private void saveThumPhoto(MultipartHttpServletRequest request,Photo photo) throws IOException {
+    private void saveThumPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
         String contextPath = request.getSession().getServletContext().getRealPath("/") + "/thumphoto";
         File file = new File(contextPath);
         if (!file.exists()) {
@@ -124,10 +135,10 @@ public class PhotoServiceImp implements IPhotoService {
         }
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + request.getFile("photo").getOriginalFilename();
         File savePath = new File(contextPath, imageName);
-        String originImagePath=request.getServletContext().getRealPath("/")+ "/originalphoto/"+photo.getPhotoOriginalUrl().split("/")[4];
+        String originImagePath = request.getServletContext().getRealPath("/") + "/originalphoto/" + photo.getPhotoOriginalUrl().split("/")[4];
         Thumbnails.of(originImagePath)
                 .width(400)
                 .toFile(savePath);
-        photo.setPhotoThumUrl(HOST+"/thumphoto/" + imageName);
+        photo.setPhotoThumUrl(HOST + "/thumphoto/" + imageName);
     }
 }

@@ -5,26 +5,37 @@ import com.ydb.bean.ResultBean;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 
 public class Photo {
     @JsonView(ResultBean.SuccessView.class)
     private Integer photoId;
+
     @NotNull
     @JsonView(ResultBean.SuccessView.class)
     private String photoName;
+
     @NotNull
     @JsonView(ResultBean.SuccessView.class)
     private String photoDesc;
+
     @JsonView(ResultBean.SuccessView.class)
     private Date photoCreatetime;
+
     @NotNull
     @JsonView(ResultBean.SuccessView.class)
     private Integer albumId;
+
     @JsonView(ResultBean.SuccessView.class)
     private String photoOriginalUrl;
+
     @JsonView(ResultBean.SuccessView.class)
     private String photoThumUrl;
+
+    @JsonView(ResultBean.SuccessView.class)
+    private List<Comment> comments;
+
 
     public Integer getPhotoId() {
         return photoId;
@@ -82,9 +93,17 @@ public class Photo {
         this.photoThumUrl = photoThumUrl;
     }
 
+    public List<Comment> getComments() {
+
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
-
         return "Photo{" +
                 "photoId=" + photoId +
                 ", photoName='" + photoName + '\'' +
@@ -93,6 +112,7 @@ public class Photo {
                 ", albumId=" + albumId +
                 ", photoOriginalUrl='" + photoOriginalUrl + '\'' +
                 ", photoThumUrl='" + photoThumUrl + '\'' +
+                ", comments=" + comments +
                 '}';
     }
 }

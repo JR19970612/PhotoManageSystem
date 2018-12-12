@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 
@@ -47,7 +48,7 @@ public class PhotoController {
         return photoService.updatePhoto(photo);
     }
 
-    @ApiOperation(value = "获取图片信息", notes = "通过photoId(编号)或名称获取用户")
+    @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或名称获取用户")
     @GetMapping(value = "/photo/{type}")
     @JsonView(ResultBean.SuccessView.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
@@ -59,13 +60,12 @@ public class PhotoController {
             throw new RuntimeException("非法的查询方式");
         }
     }
-//    @GetMapping(value = "/photo/{params}")
-//    public ResultBean<Photo> getPhotoByType(@PathVariable String params) {
-//        try {
-//            return photoService.queryPhoto(Integer.parseInt(params));
-//        } catch (NumberFormatException e) {
-//            return photoService.queryPhoto(params);
-//        }
-//    }
 
+
+    @ApiOperation(value = "获取图片信息", notes = "获取所有图片信息")
+    @GetMapping(value = "/photo")
+    @JsonView(ResultBean.SuccessView.class)
+    public ResultBean<List<Photo>> getAllPhoto() {
+        return photoService.queryPhoto();
+    }
 }

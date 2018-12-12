@@ -5,6 +5,7 @@ import com.ydb.entity.Photo;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface IPhotoService {
 
@@ -22,5 +23,7 @@ public interface IPhotoService {
 
     //通过photoName（图片名）查询单张图片信息
     ResultBean<Photo> queryPhoto(String photoName);
+
+    ResultBean<List<Photo>> queryPhoto();
 }
 
