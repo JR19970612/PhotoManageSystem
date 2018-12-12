@@ -1,21 +1,21 @@
 package com.ydb.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.bean.ResultBean;
 import java.sql.Timestamp;
-import java.util.TimerTask;
+
 
 
 public class Album {
-
+    @JsonView(ResultBean.SuccessView.class)
     private Integer album_id;
-
+    @JsonView(ResultBean.SuccessView.class)
     private String album_name;
-
+    @JsonView(ResultBean.SuccessView.class)
     private String album_desc;
-
+    @JsonView(ResultBean.SuccessView.class)
     private Timestamp album_createtime;
 
-    private String albume_remark;
 
     public Integer getAlbum_id() {
         return album_id;
@@ -49,11 +49,5 @@ public class Album {
         this.album_createtime = album_createtime;
     }
 
-    public String getAlbume_remark() {
-        return albume_remark;
-    }
 
-    public void setAlbume_remark(String albume_remark) {
-        this.albume_remark = albume_remark;
-    }
 }

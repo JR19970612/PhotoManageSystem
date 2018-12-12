@@ -1,4 +1,8 @@
 package com.ydb.entity;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.bean.ResultBean;
+
 /**
  * @program: com.ydb.bean
  * @description: Admin
@@ -6,10 +10,13 @@ package com.ydb.entity;
  * @create: 2018-12-10 10:27
  **/
 public class Admin {
+    @JsonView(ResultBean.SuccessView.class)
     private Integer adminId;
 
+    @JsonView(ResultBean.SuccessView.class)
     private String adminName;
 
+    @JsonView(ResultBean.SuccessView.class)
     private String adminPassword;
 
     public Integer getAdminId() {

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/photo_manage_system?useSSL=false
+    url: jdbc:mysql:///photo_manage_system?useSSL=true
     username: root
-    password: 516545
+    password: 123456
 
 
 #Mybatis配置
@@ -11,11 +11,18 @@ mybatis:
   type-aliases-package: com.ydb.entity
   mapper-locations:  classpath:static/mapper/*.xml
 
+#日志配置
+logging:
+  level:
+    com.ydb.dao.IPhotoDao: debug
 
 
 #SpringSecurity配置
 security:
   basic:
     enabled: false
+server:
+  tomcat:
+    uri-encoding: UTF-8
 
 
