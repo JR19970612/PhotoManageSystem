@@ -3,14 +3,11 @@ package com.ydb.service.imp;
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IPhotoDao;
 import com.ydb.entity.Photo;
-import com.ydb.exception.ErrorFileFormatException;
+import com.ydb.exception.FomatTypeException;
 import com.ydb.service.IPhotoService;
-import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -41,8 +38,8 @@ public class PhotoServiceImp implements IPhotoService {
     @Override
     public ResultBean<Photo> addPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
         //判断文件格式
-        if (!judgeFormat()) {
-            throw new ErrorFileFormatException("上传的文件格式有误");
+        if (!judgeFormat(request)) {
+            throw new FomatTypeException("上传的文件格式有误");
         }
         //保存图片到本地
         saveOriginalPhoto(request, photo);//原始图片
@@ -109,7 +106,11 @@ public class PhotoServiceImp implements IPhotoService {
         return resultBean;
     }
 
-    private boolean judgeFormat() {
+    private boolean judgeFormat(MultipartHttpServletRequest request) {
+        String format = request.getFile("photo").getOriginalFilename().split("\\.")[1].toLowerCase();
+        if (format == null || !format.equals("jpg") || !format.equals("png") || !format.equals("jpeg") || !format.equals("bmp")) {
+            return false;
+        }
         return true;
     }
 

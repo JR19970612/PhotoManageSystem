@@ -1,7 +1,7 @@
 package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.ydb.bean.ResultBean;
+import com.ydb.JsonView.PhotoView;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -9,31 +9,31 @@ import java.util.List;
 
 
 public class Photo {
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private Integer photoId;
 
     @NotNull
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private String photoName;
 
     @NotNull
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private String photoDesc;
 
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private Date photoCreatetime;
 
     @NotNull
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private Integer albumId;
 
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private String photoOriginalUrl;
 
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryRoughly.class)
     private String photoThumUrl;
 
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(PhotoView.QueryDetail.class)
     private List<Comment> comments;
 
 

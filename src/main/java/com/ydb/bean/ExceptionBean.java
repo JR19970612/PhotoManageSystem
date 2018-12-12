@@ -1,16 +1,17 @@
 package com.ydb.bean;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.JsonView.ExceptionView;
 
 /**
  * 异常信息封装Bean
  */
 public class ExceptionBean {
-    @JsonView(ResultBean.ExceptionView.class)
+    @JsonView(ExceptionView.class)
     private String exceptionName;
-    @JsonView(ResultBean.ExceptionView.class)
+    @JsonView(ExceptionView.class)
     private String time;
-    @JsonView(ResultBean.ExceptionView.class)
+    @JsonView(ExceptionView.class)
     private String excetionMessage;
 
     public ExceptionBean() {

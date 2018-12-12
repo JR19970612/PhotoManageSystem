@@ -6,7 +6,7 @@ spring:
     password: 123456
   http:
     multipart:
-      max-file-size: 3
+      max-file-size: 3MB
 
 #Mybatis配置
 mybatis:

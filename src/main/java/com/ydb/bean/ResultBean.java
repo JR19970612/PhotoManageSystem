@@ -1,6 +1,9 @@
 package com.ydb.bean;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.JsonView.BaseView;
+import com.ydb.JsonView.ExceptionView;
+import com.ydb.JsonView.SuccessView;
 
 import java.util.List;
 
@@ -14,28 +17,21 @@ public class ResultBean<E> {
     public static final Integer FAILURE_CODE = -1;//失败
     public static final Integer SUCCSSED_CODE = 0;//成功
     public static final Integer BINDEXCEPTION_CODE = 1;//数据校验异常
-
-    /**
-     * 定义@JsonView接口
-     */
-
-    public interface SuccessView {
-    }
-
-    public interface ExceptionView {
-    }
+    public static final Integer PARAMSEXCPEITON_CODE = 2;//携带参数异常
+    public static final Integer UPLOADFILESIEZEXPTION_CODE = 3;//上传文件超出界限
+    public static final Integer FILEFOMATTYPEEZEXPTION_CODE = 4;
 
     /**
      * 定义返回字段
      */
-    @JsonView(value = {SuccessView.class, ExceptionView.class})
+    @JsonView(value = {BaseView.class})
     private Integer status;
-    @JsonView(value = {SuccessView.class, ExceptionView.class})
+    @JsonView(value = {BaseView.class})
     private String msg;
     @JsonView(value = SuccessView.class)
     private List<E> data;
     @JsonView(value = ExceptionView.class)
-    private ExceptionBean exception ;
+    private ExceptionBean exception;
 
     public Integer getStatus() {
         return status;

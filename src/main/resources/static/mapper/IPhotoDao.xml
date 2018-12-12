@@ -66,7 +66,7 @@
         </where>
     </select>
 
-    <select id="selectAllPhoto" resultMap="photoMap">
+    <select id="selectAllPhoto" resultType="Photo">
         SELECT * from photo
     </select>
 </mapper> 

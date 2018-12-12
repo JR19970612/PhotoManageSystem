@@ -1,20 +1,20 @@
 package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.ydb.bean.ResultBean;
+import com.ydb.JsonView.SuccessView;
 
 import java.util.Date;
 
 public class Comment {
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Integer commentId;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Integer photoId;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Date commentTime;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private String commentContent;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Person person;
 
     public Integer getCommentId() {
