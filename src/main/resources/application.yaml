@@ -4,7 +4,9 @@ spring:
     url: jdbc:mysql:///photo_manage_system?useSSL=true
     username: root
     password: 123456
-
+  http:
+    multipart:
+      max-file-size: 3
 
 #Mybatis配置
 mybatis:
@@ -29,5 +31,4 @@ server:
 swagger:
   basePackage:  com.ydb.controller
   title: 照片管理系统请求接口测试
-  description : 照片管理系统请求接口测试
   version : V1.0
