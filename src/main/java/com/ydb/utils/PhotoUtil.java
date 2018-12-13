@@ -22,9 +22,7 @@ public class PhotoUtil implements ServletContextListener {
         ServletContext servletContext = servletContextEvent.getServletContext();
 //        realPath = servletContext.getRealPath("/");
         realPath = "D:\\";
-        contextPath = "http://localhost:8080/" + servletContext.getContextPath();
-        servletContext.setAttribute("webPath", realPath);
-        servletContext.setAttribute("contextPath", contextPath);
+        contextPath = "http://localhost:8080" + servletContext.getContextPath();
     }
 
     @Override
@@ -67,7 +65,7 @@ public class PhotoUtil implements ServletContextListener {
             file.mkdir();
         }
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-        File savePath = new File(realPath, imageName);
+        File savePath = new File(file, imageName);
         String[] originalUrl = photo.getPhotoOriginalUrl().split("/");
         String originImagePath = realPath + "/originalphoto/" + originalUrl[originalUrl.length - 1];
         Thumbnails.of(originImagePath)
