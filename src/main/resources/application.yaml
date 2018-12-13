@@ -2,7 +2,7 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver  #数据库驱动名
-    url: jdbc:mysql:///photo_manage_system?useSSL=true #链接地址
+    url: jdbc:mysql:///photo_manage_system?useSSL=true&useUnicode=true&characterEncoding=utf-8 #链接地址
     username: root  #用户名
     password: 123456 #密码
   #http配置
