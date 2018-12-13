@@ -70,6 +70,12 @@ public class ExceptionInterceptor {
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
+            case "DuplicateKeyException": {
+                status = ResultBean.DAOEXCEPTION;
+                msg = "请求确认上传参数";
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                break;
+            }
         }
         resultBean.setStatus(status);
         resultBean.setMsg(msg);
