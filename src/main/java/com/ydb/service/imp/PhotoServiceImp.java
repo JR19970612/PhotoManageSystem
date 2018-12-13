@@ -7,6 +7,7 @@ import com.ydb.exception.FomatTypeException;
 import com.ydb.service.IPhotoService;
 import com.ydb.utils.PhotoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -92,11 +93,11 @@ public class PhotoServiceImp implements IPhotoService {
 
     @Override
     public ResultBean<Photo> queryPhoto(String photoName) {
-        Photo photo = photoDao.selectPhotoByName(photoName);
+        List<Photo> photos = photoDao.selectPhotoByName(photoName);
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
-        resultBean.setData(Arrays.asList(photo));
+        resultBean.setData(photos);
         return resultBean;
     }
 
