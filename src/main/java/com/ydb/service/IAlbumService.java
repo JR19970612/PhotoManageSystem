@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public interface IAlbumService {
     //添加相册的信息
-    ResultBean<Album> addPhoto(Album album);
+    ResultBean<Album> addAlbum(Album album);
 
     //删除相册，通过album_id删除
     ResultBean<Album> dropAlbum(Integer album_id);

@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql:///photo_manage_system?useSSL=true
     username: root
-    password: 123456
+    password: 516545
 
 
 #Mybatis配置
