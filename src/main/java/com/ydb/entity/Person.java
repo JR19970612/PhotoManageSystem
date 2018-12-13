@@ -1,7 +1,8 @@
 package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.ydb.bean.ResultBean;
+import com.ydb.JsonView.SuccessView;
+
 /**
  * @program: com.ydb.entity
  * @description: Person
@@ -9,17 +10,16 @@ import com.ydb.bean.ResultBean;
  * @create: 2018-12-11 15:45
  **/
 public class Person {
-    @JsonView(ResultBean.SuccessView.class)
-
+    @JsonView(SuccessView.class)
     private Integer personId;
-    @JsonView(ResultBean.SuccessView.class)
 
+    @JsonView(SuccessView.class)
     private String personName;
-    @JsonView(ResultBean.SuccessView.class)
 
+    @JsonView(SuccessView.class)
     private String personPassword;
-    @JsonView(ResultBean.SuccessView.class)
 
+    @JsonView(SuccessView.class)
     private String personAvatarUrl;
 
     public Integer getPersonId() {
@@ -52,5 +52,15 @@ public class Person {
 
     public void setPersonAvatarUrl(String personAvatarUrl) {
         this.personAvatarUrl = personAvatarUrl == null ? null : personAvatarUrl.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personId=" + personId +
+                ", personName='" + personName + '\'' +
+                ", personPassword='" + personPassword + '\'' +
+                ", personAvatarUrl='" + personAvatarUrl + '\'' +
+                '}';
     }
 }
