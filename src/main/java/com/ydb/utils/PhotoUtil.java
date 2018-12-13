@@ -35,7 +35,8 @@ public class PhotoUtil implements ServletContextListener {
     //判断文件格式
     public boolean judgeFormat(MultipartFile multipartFile) {
         String format = multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase();
-        if (format == null || !format.equals("jpg") || !format.equals("png") || !format.equals("jpeg") || !format.equals("bmp")) {
+        String type = "jpg" + "png" + "jpeg" + "bmp";
+        if (format == null || !type.contains(format)) {
             return false;
         }
         return true;
@@ -53,7 +54,7 @@ public class PhotoUtil implements ServletContextListener {
             file.mkdir();
         }
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-        File savePath = new File(realPath, imageName);
+        File savePath = new File(file, imageName);
         multipartFile.transferTo(savePath);
         photo.setPhotoOriginalUrl(contextPath + "/originalphoto/" + imageName);
     }
@@ -66,7 +67,7 @@ public class PhotoUtil implements ServletContextListener {
             file.mkdir();
         }
         String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-        File savePath = new File(contextPath, imageName);
+        File savePath = new File(realPath, imageName);
         String[] originalUrl = photo.getPhotoOriginalUrl().split("/");
         String originImagePath = realPath + "/originalphoto/" + originalUrl[originalUrl.length - 1];
         Thumbnails.of(originImagePath)
