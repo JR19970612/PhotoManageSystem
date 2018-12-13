@@ -21,7 +21,7 @@ public class Photo {
     private String photoDesc;
 
     @JsonView(PhotoView.QueryRoughly.class)
-    private Date photoCreatetime;
+    private Date photoCreateTime;
 
     @NotNull
     @JsonView(PhotoView.QueryRoughly.class)
@@ -61,12 +61,12 @@ public class Photo {
         this.photoDesc = photoDesc;
     }
 
-    public Date getPhotoCreatetime() {
-        return photoCreatetime;
+    public Date getPhotoCreateTime() {
+        return photoCreateTime;
     }
 
-    public void setPhotoCreatetime(Date photoCreatetime) {
-        this.photoCreatetime = photoCreatetime;
+    public void setPhotoCreateTime(Date photoCreateTime) {
+        this.photoCreateTime = photoCreateTime;
     }
 
     public Integer getAlbumId() {
@@ -108,7 +108,7 @@ public class Photo {
                 "photoId=" + photoId +
                 ", photoName='" + photoName + '\'' +
                 ", photoDesc='" + photoDesc + '\'' +
-                ", photoCreatetime=" + photoCreatetime +
+                ", photoCreateTime=" + photoCreateTime +
                 ", albumId=" + albumId +
                 ", photoOriginalUrl='" + photoOriginalUrl + '\'' +
                 ", photoThumUrl='" + photoThumUrl + '\'' +

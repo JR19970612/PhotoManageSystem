@@ -23,7 +23,7 @@ public class IPhotoDaoTest {
     public void init() {
         photo.setPhotoName("Name_A");
         photo.setPhotoDesc("Desc_A");
-        photo.setPhotoCreatetime(new Date());
+        photo.setPhotoCreateTime(new Date());
         photo.setAlbumId(1);
         photo.setPhotoOriginalUrl("http://localhost");
         photo.setPhotoThumUrl("http://localhost");

@@ -2,9 +2,9 @@ package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
-import com.ydb.bean.ResultBean;
-import java.sql.Timestamp;
 
+import java.util.Date;
+import java.util.List;
 
 
 public class Album {
@@ -15,8 +15,9 @@ public class Album {
     @JsonView(SuccessView.class)
     private String album_desc;
     @JsonView(SuccessView.class)
-    private Timestamp album_createtime;
-
+    private Date album_createtime;
+    @JsonView(SuccessView.class)
+    private List<Photo> photos;
 
     public Integer getAlbum_id() {
         return album_id;
@@ -42,13 +43,30 @@ public class Album {
         this.album_desc = album_desc;
     }
 
-    public Timestamp getAlbum_createtime() {
+    public Date getAlbum_createtime() {
         return album_createtime;
     }
 
-    public void setAlbum_createtime(Timestamp album_createtime) {
+    public void setAlbum_createtime(Date album_createtime) {
         this.album_createtime = album_createtime;
     }
 
+    public List<Photo> getPhotos() {
+        return photos;
+    }
 
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "album_id=" + album_id +
+                ", album_name='" + album_name + '\'' +
+                ", album_desc='" + album_desc + '\'' +
+                ", album_createtime=" + album_createtime +
+                ", photos=" + photos +
+                '}';
+    }
 }

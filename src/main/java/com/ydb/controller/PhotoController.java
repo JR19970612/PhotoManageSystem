@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
-
 public class PhotoController {
     @Autowired
     IPhotoService photoService;
