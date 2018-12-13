@@ -11,6 +11,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:D://originalphoto/");
         registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:D://thumphoto/");
+        registry.addResourceHandler("/*.*").addResourceLocations("classpath:/static/", "classpath:/public/");
+        super.addResourceHandlers(registry);
     }
 
     @Override
