@@ -6,14 +6,11 @@ import com.ydb.entity.Photo;
 import com.ydb.exception.FomatTypeException;
 import com.ydb.service.IPhotoService;
 import com.ydb.utils.PhotoUtil;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -48,7 +45,7 @@ public class PhotoServiceImp implements IPhotoService {
         //保存图片到本地
         photoUtil.saveImage(multipartFile, photo);
         //保存图片信息到数据库
-        photo.setPhotoCreatetime(new Date());
+        photo.setPhotoCreateTime(new Date());
         photoDao.insertPhoto(photo);
         //返回response
         resultBean = new ResultBean<>();

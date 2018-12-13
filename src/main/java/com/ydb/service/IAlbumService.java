@@ -1,14 +1,7 @@
 package com.ydb.service;
 
 import com.ydb.bean.ResultBean;
-import com.ydb.dao.IAlbumDao;
 import com.ydb.entity.Album;
-import com.ydb.entity.Photo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.io.IOException;
 
 
 public interface IAlbumService {
@@ -26,4 +19,7 @@ public interface IAlbumService {
 
     //根据相册的name来查询相册
     ResultBean<Album> queryAlbumByName(String album_name);
+
+    //查询所有相册
+    ResultBean<Album> queryAllAlbum();
 }

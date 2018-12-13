@@ -17,5 +17,7 @@ public interface IPhotoDao {
 
     Photo selectPhotoById(Integer id);
 
+    List<Photo> selectPhotoByAlbumId(Integer albumId);
+
     List<Photo> selectAllPhoto();
 }

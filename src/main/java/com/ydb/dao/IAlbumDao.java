@@ -2,7 +2,8 @@ package com.ydb.dao;
 
 import com.ydb.entity.Album;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 @Mapper
 public interface IAlbumDao {
@@ -16,4 +17,5 @@ public interface IAlbumDao {
 
     Album selectAlbumByName(String album_name);
 
+    List<Album> selectAllAlbum();
 }
