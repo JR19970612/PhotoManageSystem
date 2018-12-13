@@ -1,19 +1,20 @@
 package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.JsonView.SuccessView;
 import com.ydb.bean.ResultBean;
 import java.sql.Timestamp;
 
 
 
 public class Album {
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Integer album_id;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private String album_name;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private String album_desc;
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     private Timestamp album_createtime;
 
 

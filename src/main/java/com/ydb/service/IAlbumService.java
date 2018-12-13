@@ -2,7 +2,6 @@ package com.ydb.service;
 
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IAlbumDao;
-import com.ydb.entity.Admin;
 import com.ydb.entity.Album;
 import com.ydb.entity.Photo;
 import org.springframework.beans.factory.annotation.Autowired;

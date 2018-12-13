@@ -1,6 +1,7 @@
 package com.ydb.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.ydb.JsonView.SuccessView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Album;
 import com.ydb.service.IAlbumService;
@@ -15,7 +16,7 @@ public class AlbumController {
 
     //根据相册的id来查询相册
     @GetMapping(value = "/albumById/{id}")
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumById(@PathVariable String id){
         if(id!=null&&id!=""){
             return iAlbumService.queryAlbumById(Integer.parseInt(id));
@@ -26,7 +27,7 @@ public class AlbumController {
     }
     //根据相册的name(名字)查询相册
     @GetMapping(value = "/albumByName/{name}")
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumByName(@PathVariable String name){
         if(name!=null&&name!=""){
             return iAlbumService.queryAlbumByName(name);
@@ -38,14 +39,14 @@ public class AlbumController {
 
     //添加相册
     @PostMapping("/addAlbum")
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     public ResultBean<Album> addAlbum(@PathVariable Album album){
         return iAlbumService.addAlbum(album);
     }
 
     //删除相册
     @DeleteMapping(value ="/dropAlbum/{album_id}")
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     public ResultBean<Album> dropAlbum(@PathVariable Integer album_id){
         return iAlbumService.dropAlbum(album_id);
 
@@ -54,7 +55,7 @@ public class AlbumController {
 
     //修改相册
     @PutMapping("/updateAlbum")
-    @JsonView(ResultBean.SuccessView.class)
+    @JsonView(SuccessView.class)
     public ResultBean<Album> updateAlbum(@PathVariable Album album){
         return iAlbumService.updateAlbum(album);
     }
