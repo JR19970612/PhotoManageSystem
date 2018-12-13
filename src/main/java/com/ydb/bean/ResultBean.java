@@ -20,6 +20,7 @@ public class ResultBean<E> {
     public static final Integer PARAMSEXCPEITON_CODE = 2;//携带参数异常
     public static final Integer UPLOADFILESIEZEXPTION_CODE = 3;//上传文件超出界限
     public static final Integer FILEFOMATTYPEEZEXPTION_CODE = 4;
+    public static final Integer DAOEXCEPTION = 5;
 
     /**
      * 定义返回字段
