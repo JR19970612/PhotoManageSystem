@@ -1,37 +1,51 @@
 spring:
+  #数据源配置
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql:///photo_manage_system?useSSL=true
-    username: root
-    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver  #数据库驱动名
+    url: jdbc:mysql:///photo_manage_system?useSSL=true #链接地址
+    username: root  #用户名
+    password: 123456 #密码
+  #http配置
   http:
     multipart:
-      max-file-size: 3MB
+      max-file-size: 3MB #文件上传大小
+  #Redis配置
+  redis:
+    host: localhost #Redis服务器地址
+    port: 6379  #Redis服务器连接端口
+    database: 0 #Redis数据库索引（默认为0）
+    pool:
+      max-active: 8 #连接池最大连接数（使用负值表示没有限制）
+      max-idle: 8 #连接池中的最大空闲连接
+      min-idle: 1 #连接池中的最小空闲连接
+      max-wait: 50000 #连接池最大阻塞等待时间（使用负值表示没有限制）
 
 #Mybatis配置
 mybatis:
-  type-aliases-package: com.ydb.entity
-  mapper-locations:  classpath:static/mapper/*.xml
+  type-aliases-package: com.ydb.entity  #别名
+  mapper-locations:  classpath:static/mapper/*.xml  #映射文件
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true #开启驼峰命名
 
 
 #日志配置
 logging:
-  level:
+  level: #输出日志级别
     com.ydb.dao.IPhotoDao: debug
     com.ydb.dao.ICommentDao : debug
 
 #SpringSecurity配置
 security:
   basic:
-    enabled: false
+    enabled: false #是否开始SpringSecurity
+
 server:
   tomcat:
-    uri-encoding: UTF-8
+    uri-encoding: UTF-8 #tomcat编码格式
 
 
+#Swagger配置
 swagger:
-  basePackage:  com.ydb.controller
-  title: 照片管理系统请求接口测试
-  version : V1.0
+  basePackage:  com.ydb.controller  #测试Controller接口包名
+  title: 照片管理系统请求接口测试 #标题
+  version : V1.0  #版本号

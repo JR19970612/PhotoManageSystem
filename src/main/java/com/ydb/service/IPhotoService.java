@@ -13,7 +13,7 @@ public interface IPhotoService {
     ResultBean<Photo> addPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException;
 
     //通过photoId（编号）删除单张图片信息
-    ResultBean<Photo> dropPhoto(Integer photoId);
+    ResultBean<Photo> dropPhoto(Photo photo);
 
     //通过photoId（编号）修改单张图片信息
     ResultBean<Photo> updatePhoto(Photo photo);

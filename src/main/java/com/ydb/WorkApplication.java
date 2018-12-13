@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.ydb.dao")
 public class WorkApplication {
 
-
-	public static void main(String[] args) {
-		SpringApplication.run(WorkApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WorkApplication.class, args);
+    }
 }
