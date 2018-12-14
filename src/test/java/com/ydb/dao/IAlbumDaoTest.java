@@ -20,9 +20,9 @@ public class IAlbumDaoTest {
     @Test
     public void insertAlbum() {
         Album album = new Album();
-        album.setAlbum_name("相册A");
-        album.setAlbum_desc("相册描述");
-        album.setAlbum_createtime(new Date());
+        album.setAlbumName("相册A");
+        album.setAlbumDesc("相册描述");
+        album.setAlbumCreatetime(new Date());
         albumDao.insertAlbum(album);
     }
 

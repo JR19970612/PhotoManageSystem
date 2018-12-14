@@ -3,18 +3,18 @@
 <mapper namespace="com.ydb.dao.IAlbumDao">
 
     <resultMap id="albumMap" type="Album">
-        <id property="album_id" column="album_id"></id>
-        <result property="album_name" column="album_name"></result>
-        <result property="album_desc" column="album_desc"></result>
-        <result property="album_createtime" column="album_createtime"></result>
+        <id property="albumId" column="album_id"></id>
+        <result property="albumName" column="album_name"></result>
+        <result property="albumDesc" column="album_desc"></result>
+        <result property="albumCreatetime" column="album_createtime"></result>
         <collection property="photos" column="album_id" ofType="Photo"
                      select="com.ydb.dao.IPhotoDao.selectPhotoByAlbumId"></collection>
     </resultMap>
 
     <insert id="insertAlbum" parameterType="Album">
         INSERT INTO
-        album(album_name,album_desc,album_createtime)
-        VALUES (#{album_name},#{album_desc},#{album_createtime})
+        album(albumName,album_desc,album_createtime)
+        VALUES (#{albumName},#{albumDesc},#{albumCreatetime})
         <selectKey resultType="int" keyProperty="album_id" order="AFTER">
             select @@identity
         </selectKey>
@@ -23,7 +23,7 @@
     <delete id="deleteAlbum">
         delete from album
         <where>
-            album_id=#{album_id}
+            album_id=#{albumId}
         </where>
     </delete>
 
@@ -31,10 +31,10 @@
         UPDATE album
         <set>
             <if test="album_name!=null">
-                album_name =#{album_name},
+                album_name =#{albumName},
             </if>
             <if test="album_desc!=null">
-                album_desc=#{album_desc},
+                album_desc=#{albumDesc},
             </if>
 
         </set>
@@ -46,14 +46,14 @@
     <select id="selectAlbumById" resultMap="albumMap">
         select * from album
         <where>
-            album_id=#{album_id}
+            album_id=#{albumId}
         </where>
     </select>
 
     <select id="selectAlbumByName" resultMap="albumMap">
         select * from album
         <where>
-            album_name=#{album_name}
+            album_name=#{albumName}
         </where>
     </select>
 

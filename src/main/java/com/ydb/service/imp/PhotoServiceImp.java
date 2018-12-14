@@ -47,7 +47,13 @@ public class PhotoServiceImp implements IPhotoService {
         photoUtil.saveImage(multipartFile, photo);
         //保存图片信息到数据库
         photo.setPhotoCreateTime(new Date());
-        photoDao.insertPhoto(photo);
+        //出现异常删除本地图片
+        try {
+            photoDao.insertPhoto(photo);
+        } catch (Exception e) {
+            photoUtil.dropPhoto(photo);
+            throw e;
+        }
         //返回response
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);

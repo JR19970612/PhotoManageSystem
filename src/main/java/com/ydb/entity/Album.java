@@ -9,46 +9,46 @@ import java.util.List;
 
 public class Album {
     @JsonView(SuccessView.class)
-    private Integer album_id;
+    private Integer albumId;
     @JsonView(SuccessView.class)
-    private String album_name;
+    private String albumName;
     @JsonView(SuccessView.class)
-    private String album_desc;
+    private String albumDesc;
     @JsonView(SuccessView.class)
-    private Date album_createtime;
+    private Date albumCreatetime;
     @JsonView(SuccessView.class)
     private List<Photo> photos;
 
-    public Integer getAlbum_id() {
-        return album_id;
+    public Integer getAlbumId() {
+        return albumId;
     }
 
-    public void setAlbum_id(Integer album_id) {
-        this.album_id = album_id;
+    public void setAlbumId(Integer albumId) {
+        this.albumId = albumId;
     }
 
-    public String getAlbum_name() {
-        return album_name;
+    public String getAlbumName() {
+        return albumName;
     }
 
-    public void setAlbum_name(String album_name) {
-        this.album_name = album_name;
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
     }
 
-    public String getAlbum_desc() {
-        return album_desc;
+    public String getAlbumDesc() {
+        return albumDesc;
     }
 
-    public void setAlbum_desc(String album_desc) {
-        this.album_desc = album_desc;
+    public void setAlbumDesc(String albumDesc) {
+        this.albumDesc = albumDesc;
     }
 
-    public Date getAlbum_createtime() {
-        return album_createtime;
+    public Date getAlbumCreatetime() {
+        return albumCreatetime;
     }
 
-    public void setAlbum_createtime(Date album_createtime) {
-        this.album_createtime = album_createtime;
+    public void setAlbumCreatetime(Date albumCreatetime) {
+        this.albumCreatetime = albumCreatetime;
     }
 
     public List<Photo> getPhotos() {
@@ -62,10 +62,10 @@ public class Album {
     @Override
     public String toString() {
         return "Album{" +
-                "album_id=" + album_id +
-                ", album_name='" + album_name + '\'' +
-                ", album_desc='" + album_desc + '\'' +
-                ", album_createtime=" + album_createtime +
+                "albumId=" + albumId +
+                ", albumName='" + albumName + '\'' +
+                ", albumDesc='" + albumDesc + '\'' +
+                ", albumCreatetime=" + albumCreatetime +
                 ", photos=" + photos +
                 '}';
     }
