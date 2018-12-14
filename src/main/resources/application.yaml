@@ -31,8 +31,7 @@ mybatis:
 #日志配置
 logging:
   level: #输出日志级别
-    com.ydb.dao.IPhotoDao: debug
-    com.ydb.dao.ICommentDao : debug
+    com.ydb.dao: debug
 
 #SpringSecurity配置
 security:

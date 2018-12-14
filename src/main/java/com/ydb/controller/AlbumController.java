@@ -31,7 +31,7 @@ public class AlbumController {
     //添加相册
     @GetMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> getAllAlbum(@PathVariable Album album) {
+    public ResultBean<Album> getAllAlbum() {
         return iAlbumService.queryAllAlbum();
     }
 
