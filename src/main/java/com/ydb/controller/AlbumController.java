@@ -47,7 +47,6 @@ public class AlbumController {
     @JsonView(SuccessView.class)
     public ResultBean<Album> dropAlbum(@PathVariable Integer album_id) {
         return iAlbumService.dropAlbum(album_id);
-
     }
 
 
