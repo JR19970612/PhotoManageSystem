@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-
+@CrossOrigin
 public class PhotoController {
     @Autowired
     IPhotoService photoService;
