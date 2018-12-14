@@ -6,14 +6,12 @@ import com.ydb.entity.Photo;
 import com.ydb.exception.FomatTypeException;
 import com.ydb.service.IPhotoService;
 import com.ydb.utils.PhotoUtil;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -48,7 +46,7 @@ public class PhotoServiceImp implements IPhotoService {
         //保存图片到本地
         photoUtil.saveImage(multipartFile, photo);
         //保存图片信息到数据库
-        photo.setPhotoCreatetime(new Date());
+        photo.setPhotoCreateTime(new Date());
         photoDao.insertPhoto(photo);
         //返回response
         resultBean = new ResultBean<>();
@@ -95,11 +93,11 @@ public class PhotoServiceImp implements IPhotoService {
 
     @Override
     public ResultBean<Photo> queryPhoto(String photoName) {
-        Photo photo = photoDao.selectPhotoByName(photoName);
+        List<Photo> photos = photoDao.selectPhotoByName(photoName);
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
-        resultBean.setData(Arrays.asList(photo));
+        resultBean.setData(photos);
         return resultBean;
     }
 

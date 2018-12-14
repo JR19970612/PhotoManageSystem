@@ -6,7 +6,10 @@
 </head>
 <body>
 <form action="/photo" method="post" enctype="multipart/form-data">
-    <p>文件<input type="file"/></p>
+    图片名字<input type="text" name="photoName">
+    图片描述 <input type="text" name="photoDesc">
+    相册号 <input type="number" name="albumId">
+    <p>文件<input type="file" name="photo"/></p>
     <input type="submit" value="Submit"/>
 </form>
 </body>

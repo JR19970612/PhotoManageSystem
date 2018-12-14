@@ -6,9 +6,7 @@ import com.ydb.bean.ResultBean;
 import com.ydb.entity.Person;
 import com.ydb.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,35 +17,35 @@ public class PersonController {
     @Autowired
     private IPersonService PersonService;
 
-    @PostMapping("/insertPerson")
+    @PostMapping("/person")
     @JsonView(SuccessView.class)
     public ResultBean<Person> insertPerson(Person Person) {
         return PersonService.insertPerson(Person);
     }
 
-    @PostMapping("/queryPerson")
-    @JsonView(SuccessView.class)
-    public ResultBean<Person> queryPerson(Integer personId) {
-        return PersonService.queryPerson(personId);
-    }
 
-    //    @DeleteMapping("/deletePerson")
-    @PostMapping("/deletePerson")
+    @DeleteMapping("/person")
     @JsonView(SuccessView.class)
     public ResultBean<Person> deletePerson(Integer personId) {
         return PersonService.deletePerson(personId);
     }
 
-    @GetMapping("/queryPersons")
+    @PutMapping("/person")
+    @JsonView(SuccessView.class)
+    public ResultBean<Person> updatePerson(Person person) {
+        return PersonService.updatePerson(person);
+    }
+
+    @GetMapping("/person")
     @JsonView(SuccessView.class)
     public ResultBean<List<Person>> queryPersons() {
         return PersonService.queryPersons();
     }
 
-    //    @PutMapping("/updatePerson")
-    @PostMapping("/updatePerson")
+    @GetMapping("/person/{personId}")
     @JsonView(SuccessView.class)
-    public ResultBean<Person> updatePerson(Person person) {
-        return PersonService.updatePerson(person);
+    public ResultBean<Person> queryPerson(@PathVariable Integer personId) {
+        return PersonService.queryPerson(personId);
     }
+
 }
