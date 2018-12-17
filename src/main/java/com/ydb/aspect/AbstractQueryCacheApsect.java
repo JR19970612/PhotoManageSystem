@@ -50,11 +50,6 @@ public abstract class AbstractQueryCacheApsect<T> {
 
     public abstract void delete(T args);
 
-    //在查询数据库之前先会查询缓存是否存在该数据
-//    public List<T> queryCacheBeforeSelectDao(ProceedingJoinPoint point) {
-//        Integer photoId = (Integer) point.getArgs()[0];
-//    }
-
     //分组缓存数据到对象内
     public void initObject(T t, Map<String, String> entries) {
         for (Map.Entry<String, String> entry : entries.entrySet()) {

@@ -72,8 +72,9 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> deletePerson(Integer personId) {
         PersonResultBean = new ResultBean<>();
         PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
-
-        int code = mapper.deletePerson(personId);
+        Person person = new Person();
+        person.setPersonId(personId);
+        int code = mapper.deletePerson(person);
         if (code == 1) {
             PersonResultBean.setMsg("删除成功");
         } else {
