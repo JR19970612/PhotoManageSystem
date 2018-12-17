@@ -23,7 +23,7 @@ public class IPhotoDaoTest {
     public void init() {
         photo.setPhotoName("Name_A");
         photo.setPhotoDesc("Desc_A");
-        photo.setPhotoCreatetime(new Date());
+        photo.setPhotoCreateTime(new Date());
         photo.setAlbumId(1);
         photo.setPhotoOriginalUrl("http://localhost");
         photo.setPhotoThumUrl("http://localhost");
@@ -52,13 +52,13 @@ public class IPhotoDaoTest {
 
     @Test
     public void selectPhotoById() {
-        Photo photo = photoDao.selectPhotoById(17);
+        Photo photo = photoDao.selectPhotoById(22);
         System.out.println(photo);
     }
 
     @Test
     public void selectPhotoByName() {
-        Photo photo = photoDao.selectPhotoByName("图片");
+        List<Photo> photo = photoDao.selectPhotoByName("图片名1");
         System.out.println(photo);
     }
 

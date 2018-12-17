@@ -19,7 +19,6 @@
 target
 mvnw
 mvnw.cmd
-work.iml
 
 ### NetBeans ###
 /nbproject/private/

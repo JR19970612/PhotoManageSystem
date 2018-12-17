@@ -7,7 +7,7 @@
         <id property="photoId" column="photo_id"></id>
         <result property="photoName" column="photo_name"></result>
         <result property="photoDesc" column="photo_desc"></result>
-        <result property="photoCreatetime" column="photo_createtime"></result>
+        <result property="photoCreateTime" column="photo_createtime"></result>
         <result property="albumId" column="album_id"></result>
         <result property="photoOriginalUrl" column="photo_original_url"></result>
         <result property="photoThumUrl" column="photo_thum_url"></result>
@@ -19,7 +19,7 @@
     <insert id="insertPhoto" parameterType="Photo">
         INSERT INTO
         Photo(photo_name,photo_desc,photo_createtime,album_id,photo_original_url,photo_thum_url)
-        VALUES (#{photoName},#{photoDesc},#{photoCreatetime},#{albumId},#{photoOriginalUrl},#{photoThumUrl})
+        VALUES (#{photoName},#{photoDesc},#{photoCreateTime},#{albumId},#{photoOriginalUrl},#{photoThumUrl})
         <selectKey resultType="int" keyProperty="photoId" order="AFTER">
             select @@identity
         </selectKey>
@@ -63,6 +63,13 @@
         select * from photo
         <where>
             photo_id=#{id}
+        </where>
+    </select>
+
+    <select id="selectPhotoByAlbumId" resultType="Photo">
+        select * from photo
+        <where>
+            album_id=#{albumId}
         </where>
     </select>
 

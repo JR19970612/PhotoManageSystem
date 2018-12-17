@@ -13,9 +13,11 @@ public interface IPhotoDao {
 
     Integer updatePhoto(Photo photo);
 
-    Photo selectPhotoByName(String name);
+    List<Photo> selectPhotoByName(String name);
 
     Photo selectPhotoById(Integer id);
+
+    List<Photo> selectPhotoByAlbumId(Integer albumId);
 
     List<Photo> selectAllPhoto();
 }

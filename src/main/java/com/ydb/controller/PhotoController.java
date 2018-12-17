@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
 @CrossOrigin
+@RestController
 public class PhotoController {
     @Autowired
     IPhotoService photoService;
@@ -33,10 +33,10 @@ public class PhotoController {
 
 
     @ApiOperation(value = "删除单张图片信息")
-    @DeleteMapping(value = "/photo/{photoId}")
+    @DeleteMapping(value = "/photo")
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<Photo> dropPhoto(@PathVariable Integer photoId) {
-        return photoService.dropPhoto(photoId);
+    public ResultBean<Photo> dropPhoto(Photo photo) {
+        return photoService.dropPhoto(photo);
     }
 
 

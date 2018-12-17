@@ -2,6 +2,7 @@ package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.PhotoView;
+import com.ydb.JsonView.SuccessView;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -9,31 +10,31 @@ import java.util.List;
 
 
 public class Photo {
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Integer photoId;
 
     @NotNull
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class,})
     private String photoName;
 
     @NotNull
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
     private String photoDesc;
 
-    @JsonView(PhotoView.QueryRoughly.class)
-    private Date photoCreatetime;
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    private Date photoCreateTime;
 
     @NotNull
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
     private Integer albumId;
 
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
     private String photoOriginalUrl;
 
-    @JsonView(PhotoView.QueryRoughly.class)
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
     private String photoThumUrl;
 
-    @JsonView(PhotoView.QueryDetail.class)
+    @JsonView({PhotoView.QueryDetail.class})
     private List<Comment> comments;
 
 
@@ -61,12 +62,12 @@ public class Photo {
         this.photoDesc = photoDesc;
     }
 
-    public Date getPhotoCreatetime() {
-        return photoCreatetime;
+    public Date getPhotoCreateTime() {
+        return photoCreateTime;
     }
 
-    public void setPhotoCreatetime(Date photoCreatetime) {
-        this.photoCreatetime = photoCreatetime;
+    public void setPhotoCreateTime(Date photoCreateTime) {
+        this.photoCreateTime = photoCreateTime;
     }
 
     public Integer getAlbumId() {
@@ -108,7 +109,7 @@ public class Photo {
                 "photoId=" + photoId +
                 ", photoName='" + photoName + '\'' +
                 ", photoDesc='" + photoDesc + '\'' +
-                ", photoCreatetime=" + photoCreatetime +
+                ", photoCreateTime=" + photoCreateTime +
                 ", albumId=" + albumId +
                 ", photoOriginalUrl='" + photoOriginalUrl + '\'' +
                 ", photoThumUrl='" + photoThumUrl + '\'' +

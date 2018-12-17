@@ -30,8 +30,6 @@ public class PersonServiceimp implements IPersonService {
     ResultBean<List<Person>> PersonResultList;
 
 
-
-
     @Override
     public ResultBean<Person> insertPerson(Person person) {
         PersonResultBean = new ResultBean<>();
@@ -45,7 +43,6 @@ public class PersonServiceimp implements IPersonService {
             //删除不存在的id
             PersonResultBean.setMsg("添加失败");
         }
-
         return PersonResultBean;
     }
 

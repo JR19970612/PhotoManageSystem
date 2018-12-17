@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydb.dao.IAlbumDao">
+
+    <resultMap id="albumMap" type="Album">
+        <id property="albumId" column="album_id"></id>
+        <result property="albumName" column="album_name"></result>
+        <result property="albumDesc" column="album_desc"></result>
+        <result property="albumCreatetime" column="album_createtime"></result>
+        <collection property="photos" column="album_id" ofType="Photo"
+                     select="com.ydb.dao.IPhotoDao.selectPhotoByAlbumId"></collection>
+    </resultMap>
+
+    <insert id="insertAlbum" parameterType="Album">
+        INSERT INTO
+        album(albumName,album_desc,album_createtime)
+        VALUES (#{albumName},#{albumDesc},#{albumCreatetime})
+        <selectKey resultType="int" keyProperty="album_id" order="AFTER">
+            select @@identity
+        </selectKey>
+    </insert>
+
+    <delete id="deleteAlbum">
+        delete from album
+        <where>
+            album_id=#{albumId}
+        </where>
+    </delete>
+
+    <update id="updateAlbum" parameterType="Album">
+        UPDATE album
+        <set>
+            <if test="album_name!=null">
+                album_name =#{albumName},
+            </if>
+            <if test="album_desc!=null">
+                album_desc=#{albumDesc},
+            </if>
+
+        </set>
+        <where>
+            album_id=#{album_id}
+        </where>
+    </update>
+
+    <select id="selectAlbumById" resultMap="albumMap">
+        select * from album
+        <where>
+            album_id=#{albumId}
+        </where>
+    </select>
+
+    <select id="selectAlbumByName" resultMap="albumMap">
+        select * from album
+        <where>
+            album_name=#{albumName}
+        </where>
+    </select>
+
+    <select id="selectAllAlbum" resultMap="albumMap">
+        select * from album
+    </select>
+</mapper>

@@ -5,13 +5,13 @@ import com.ydb.dao.IPhotoDao;
 import com.ydb.entity.Photo;
 import com.ydb.exception.FomatTypeException;
 import com.ydb.service.IPhotoService;
-import net.coobird.thumbnailator.Thumbnails;
+import com.ydb.utils.PhotoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -27,26 +27,33 @@ import java.util.List;
 @Service
 public class PhotoServiceImp implements IPhotoService {
 
-    private final String HOST = "http://localhost:8080";
-
     @Autowired
     IPhotoDao photoDao;
 
+    @Autowired
+    PhotoUtil photoUtil;
 
     ResultBean resultBean;
 
     @Override
     public ResultBean<Photo> addPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
+
+        MultipartFile multipartFile = request.getFile("photo");
         //判断文件格式
-        if (!judgeFormat(request)) {
+        if (!photoUtil.judgeFormat(multipartFile)) {
             throw new FomatTypeException("上传的文件格式有误");
         }
         //保存图片到本地
-        saveOriginalPhoto(request, photo);//原始图片
-        saveThumPhoto(request, photo);//缩略图片
+        photoUtil.saveImage(multipartFile, photo);
         //保存图片信息到数据库
-        photo.setPhotoCreatetime(new Date());
-        photoDao.insertPhoto(photo);
+        photo.setPhotoCreateTime(new Date());
+        //出现异常删除本地图片
+        try {
+            photoDao.insertPhoto(photo);
+        } catch (Exception e) {
+            photoUtil.dropPhoto(photo);
+            throw e;
+        }
         //返回response
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -57,8 +64,12 @@ public class PhotoServiceImp implements IPhotoService {
 
 
     @Override
-    public ResultBean<Photo> dropPhoto(Integer photoId) {
-        photoDao.deletePhoto(photoId);
+    public ResultBean<Photo> dropPhoto(Photo photo) {
+        //删除数据库图片信息
+        photoDao.deletePhoto(photo.getPhotoId());
+        //删除本地磁盘图片
+        photoUtil.dropPhoto(photo);
+        //返回reponse数据
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("删除成功");
@@ -88,11 +99,11 @@ public class PhotoServiceImp implements IPhotoService {
 
     @Override
     public ResultBean<Photo> queryPhoto(String photoName) {
-        Photo photo = photoDao.selectPhotoByName(photoName);
+        List<Photo> photos = photoDao.selectPhotoByName(photoName);
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
-        resultBean.setData(Arrays.asList(photo));
+        resultBean.setData(photos);
         return resultBean;
     }
 
@@ -106,40 +117,4 @@ public class PhotoServiceImp implements IPhotoService {
         return resultBean;
     }
 
-    private boolean judgeFormat(MultipartHttpServletRequest request) {
-        String format = request.getFile("photo").getOriginalFilename().split("\\.")[1].toLowerCase();
-        if (format == null || !format.equals("jpg") || !format.equals("png") || !format.equals("jpeg") || !format.equals("bmp")) {
-            return false;
-        }
-        return true;
-    }
-
-    private void saveOriginalPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
-        MultipartFile multipartFile = request.getFile("photo");
-        String contextPath = request.getSession().getServletContext().getRealPath("/") + "/originalphoto";
-        File file = new File(contextPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-        File savePath = new File(contextPath, imageName);
-        multipartFile.transferTo(savePath);
-        photo.setPhotoOriginalUrl(HOST + "/originalphoto/" + imageName);
-    }
-
-
-    private void saveThumPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
-        String contextPath = request.getSession().getServletContext().getRealPath("/") + "/thumphoto";
-        File file = new File(contextPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        String imageName = photo.getPhotoName() + "-" + System.currentTimeMillis() + "-" + request.getFile("photo").getOriginalFilename();
-        File savePath = new File(contextPath, imageName);
-        String originImagePath = request.getServletContext().getRealPath("/") + "/originalphoto/" + photo.getPhotoOriginalUrl().split("/")[4];
-        Thumbnails.of(originImagePath)
-                .width(400)
-                .toFile(savePath);
-        photo.setPhotoThumUrl(HOST + "/thumphoto/" + imageName);
-    }
 }
