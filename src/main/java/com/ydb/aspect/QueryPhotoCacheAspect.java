@@ -1,5 +1,7 @@
 package com.ydb.aspect;
 
+import com.ydb.dao.ICommentDao;
+import com.ydb.entity.Comment;
 import com.ydb.entity.Photo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +15,20 @@ import java.util.*;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: Photo信息缓存
+ * @description: Photo图片信息缓存
  * @date:2018/12/16
  */
 
 public class QueryPhotoCacheAspect {
 
-    private String namespace = "photo:photoId-%s~photoName-%s";//缓存命名空间
+    private String namespace = "photo:photoId:%s:photoName:%s";//缓存命名空间
 
     @Autowired
     RedisTemplate redisTemplate;
     @Autowired
     HashOperations hashOperations;
+    @Autowired
+    ICommentDao commentDao;
 
     //数据添加和更新的缓存切面
     public Integer updateCache(ProceedingJoinPoint point) {
@@ -56,7 +60,7 @@ public class QueryPhotoCacheAspect {
         try {
             result = (Integer) point.proceed(point.getArgs());
             if (result != 0) {
-                redisTemplate.delete(namespace + photoId);
+                redisTemplate.delete(String.format(namespace, photoId));
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -77,9 +81,12 @@ public class QueryPhotoCacheAspect {
         if (keys != null && !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
             Iterator keyIterator = keys.iterator();
             while (keyIterator.hasNext()) {
-                String key = (String)keyIterator.next();
+                String key = (String) keyIterator.next();
                 Map entries = hashOperations.entries(key);
                 Photo photo = initPhoto(entries);
+                //查询Comment评论信息
+                List<Comment> comments = commentDao.selectCommentByPhotoId(photo.getPhotoId());
+                photo.setComments(comments);
                 photos.add(photo);
             }
         } else {//不存在则去查询数据库中的数据
