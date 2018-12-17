@@ -5,33 +5,39 @@ import com.ydb.JsonView.PhotoView;
 import com.ydb.JsonView.SuccessView;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
-public class Photo {
+/**
+ * @author: create by JR
+ * @version: v1.0
+ * @description: com.ydb.aspect
+ * @date:2018/12/16
+ */
+public class Photo implements Serializable {
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Integer photoId;
 
     @NotNull
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoName;
 
     @NotNull
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoDesc;
 
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Date photoCreateTime;
 
     @NotNull
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Integer albumId;
 
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoOriginalUrl;
 
-    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
+    @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoThumUrl;
 
     @JsonView({PhotoView.QueryDetail.class})

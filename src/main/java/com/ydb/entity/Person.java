@@ -3,13 +3,15 @@ package com.ydb.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
 
+import java.io.Serializable;
+
 /**
  * @program: com.ydb.entity
  * @description: Person
  * @author: Jun
  * @create: 2018-12-11 15:45
  **/
-public class Person {
+public class Person implements Serializable {
     @JsonView(SuccessView.class)
     private Integer personId;
 

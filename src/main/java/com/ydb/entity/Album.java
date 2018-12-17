@@ -3,11 +3,12 @@ package com.ydb.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class Album {
+public class Album implements Serializable {
     @JsonView(SuccessView.class)
     private Integer albumId;
     @JsonView(SuccessView.class)
