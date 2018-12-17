@@ -6,10 +6,13 @@ import com.ydb.JsonView.ExceptionView;
 import com.ydb.JsonView.SuccessView;
 
 import java.util.List;
-
 /**
- * api接口数据返回封装Bean
+ * @author: create by JR
+ * @version: v1.0
+ * @description: api接口数据返回封装Bean
+ * @date:2018/12/16
  */
+
 public class ResultBean<E> {
     /**
      * 状态码定义

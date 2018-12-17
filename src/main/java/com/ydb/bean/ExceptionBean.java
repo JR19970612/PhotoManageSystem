@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.ExceptionView;
 
 /**
- * 异常信息封装Bean
+ * @author: create by JR
+ * @version: v1.0
+ * @description: 异常信息封装Bean
+ * @date:2018/12/16
  */
 public class ExceptionBean {
     @JsonView(ExceptionView.class)

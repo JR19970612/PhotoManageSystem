@@ -11,11 +11,13 @@ import java.util.List;
  * @author: Jun
  * @create: 2018-12-10 10:27
  **/
+//@Mapper
 public interface IPersonDao {
 
     int insertPerson(Person person);
 
     List<Person> queryPersons();
+
 
     Person queryPerson(Integer personId);
 
@@ -23,10 +25,5 @@ public interface IPersonDao {
 
     int updatePerson(Person person);
 
-
-//    int insertSelective(Person person);
-
-
-//    int updateByPrimaryKeySelective(Person person);
 
 }
