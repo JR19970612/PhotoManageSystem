@@ -3,9 +3,15 @@ package com.ydb.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
 
+import java.io.Serializable;
 import java.util.Date;
-
-public class Comment {
+/**
+ * @author: create by JR
+ * @version: v1.0
+ * @description: com.ydb.aspect
+ * @date:2018/12/16
+ */
+public class Comment implements Serializable {
     @JsonView(SuccessView.class)
     private Integer commentId;
     @JsonView(SuccessView.class)

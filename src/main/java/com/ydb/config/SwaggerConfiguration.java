@@ -11,6 +11,12 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author: create by JR
+ * @version: v1.0
+ * @description: com.ydb.aspect
+ * @date:2018/12/16
+ */
 @Configuration
 @EnableSwagger2
 @ConfigurationProperties(prefix = "swagger")
@@ -22,7 +28,7 @@ public class SwaggerConfiguration {
     private String title;
 
     //当前文档的详细描述
-    private String description="照片管理系统请求接口测试数据返回格式注意!!!，\n" +
+    private String description = "照片管理系统请求接口测试数据返回格式注意!!!，\n" +
             "成功统一返回: { \"data\": [ ], \"msg\": \"\", \"status\": 0}，\n" +
             "失败统一返回: { \"exception\": { \"exceptionName\": \"string\", \"string\",\"time\": \"string\"},\"msg\": \"\", \"status\": 0}。";
 

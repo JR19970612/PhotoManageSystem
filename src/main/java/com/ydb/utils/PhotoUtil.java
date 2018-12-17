@@ -10,6 +10,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.File;
 import java.io.IOException;
+/**
+ * @program: com.ydb.dao
+ * @description: 图片操作工具类
+ * @author: JR
+ * @create: 2018-12-10 10:27
+ **/
 
 @Component
 public class PhotoUtil implements ServletContextListener {

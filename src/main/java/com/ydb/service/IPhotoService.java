@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
+
 public interface IPhotoService {
 
     //添加单张图片信息
@@ -21,11 +22,13 @@ public interface IPhotoService {
     ResultBean<Photo> updatePhoto(Photo photo);
 
     //通过photoId（编号）查询单张图片信息
+
     ResultBean<Photo> queryPhoto(Integer photoId);
 
     //通过photoName（图片名）查询单张图片信息
     ResultBean<Photo> queryPhoto(String photoName);
 
+    //查询全部图片信息
     ResultBean<List<Photo>> queryPhoto();
 }
 

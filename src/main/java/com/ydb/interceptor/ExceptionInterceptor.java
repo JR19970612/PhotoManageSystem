@@ -7,18 +7,18 @@ import com.ydb.bean.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-
 /**
- * 全局异常处理
+ * @author: create by JR
+ * @version: v1.0
+ * @description: 全局异常处理
+ * @date:2018/12/16
  */
-@ControllerAdvice(basePackages = {"com.ydb.controller"})
 @ResponseBody
 public class ExceptionInterceptor {
     Logger logger = LoggerFactory.getLogger(ExceptionInterceptor.class);
@@ -77,7 +77,12 @@ public class ExceptionInterceptor {
                 break;
             }
         }
+        StackTraceElement stackTraceElement = e.getStackTrace()[0];
+        String errorMsg = "文件名：" + stackTraceElement.getFileName() +
+                "\r\n类名：" + stackTraceElement.getClassName() +
+                "\r\n方法名：" + stackTraceElement.getMethodName() +
+                "\r\n抛出异常行号：" + stackTraceElement.getLineNumber();
         resultBean.setStatus(status);
-        resultBean.setMsg(msg);
+        resultBean.setMsg(errorMsg);
     }
 }

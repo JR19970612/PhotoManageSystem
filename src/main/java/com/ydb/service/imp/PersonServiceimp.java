@@ -5,7 +5,6 @@ import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
 import com.ydb.service.IPersonService;
 import com.ydb.utils.MD5Util;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,7 @@ import java.util.List;
 public class PersonServiceimp implements IPersonService {
 
     @Autowired
+//    @Qualifier(value = "personDao")
     private IPersonDao mapper;
 
     ResultBean<Person> PersonResultBean;

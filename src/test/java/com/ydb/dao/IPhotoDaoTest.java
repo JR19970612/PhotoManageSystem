@@ -13,7 +13,10 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class IPhotoDaoTest {
+public class
+
+
+IPhotoDaoTest {
     @Autowired
     IPhotoDao photoDao;
 
@@ -21,10 +24,11 @@ public class IPhotoDaoTest {
 
     @Before
     public void init() {
+        photo.setPhotoId(0);
         photo.setPhotoName("Name_A");
         photo.setPhotoDesc("Desc_A");
         photo.setPhotoCreateTime(new Date());
-        photo.setAlbumId(1);
+        photo.setAlbumId(2);
         photo.setPhotoOriginalUrl("http://localhost");
         photo.setPhotoThumUrl("http://localhost");
     }
@@ -37,7 +41,7 @@ public class IPhotoDaoTest {
 
     @Test
     public void deletePhoto() {
-        Integer status = photoDao.deletePhoto(8);
+        Integer status = photoDao.deletePhoto(43);
         System.out.println("受影响列：" + status);
     }
 
@@ -47,12 +51,11 @@ public class IPhotoDaoTest {
         photo.setPhotoName("图片");
         Integer status = photoDao.updatePhoto(photo);
         System.out.println("受影响列：" + status + "修改后的数据：" + photo);
-
     }
 
     @Test
     public void selectPhotoById() {
-        Photo photo = photoDao.selectPhotoById(22);
+        List<Photo> photo = photoDao.selectPhotoById(49);
         System.out.println(photo);
     }
 
