@@ -14,7 +14,7 @@ public class Photo {
     private Integer photoId;
 
     @NotNull
-    @JsonView({PhotoView.QueryRoughly.class,})
+    @JsonView({PhotoView.QueryRoughly.class,SuccessView.class})
     private String photoName;
 
     @NotNull

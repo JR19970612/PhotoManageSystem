@@ -50,7 +50,7 @@ public class PhotoController {
         return photoService.updatePhoto(photo);
     }
 
-    @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或名称获取用户")
+    @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或photoName(名称)获取图片")
     @GetMapping(value = "/photo/{type}")
     @JsonView(PhotoView.QueryDetail.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
