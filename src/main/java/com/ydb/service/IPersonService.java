@@ -16,4 +16,6 @@ public interface IPersonService {
     ResultBean<Person> deletePerson(Integer personId);
     //更新个人信息
     ResultBean<Person> updatePerson(Person person);
+
+    ResultBean<Person> loginPerson(Person person);
 }

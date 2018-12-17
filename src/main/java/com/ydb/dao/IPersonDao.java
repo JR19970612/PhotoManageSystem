@@ -14,14 +14,17 @@ import java.util.List;
 //@Mapper
 public interface IPersonDao {
 
-    Integer insertPerson(Person person);
+    int insertPerson(Person person);
 
     List<Person> queryPersons();
 
+
     Person queryPerson(Integer personId);
 
-    Integer deletePerson(Person person);
+    int deletePerson(Person person);
 
-    Integer updatePerson(Person person);
+    int updatePerson(Person person);
+
+    Person loginPerson(Person person);
 
 }

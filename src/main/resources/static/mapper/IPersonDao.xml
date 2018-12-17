@@ -1,90 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ydb.dao.IPersonDao">
-    <resultMap id="BaseResultMap" type="com.ydb.entity.Person">
-        <id column="person_id" property="personId" jdbcType="INTEGER"/>
-        <result column="person_name" property="personName" jdbcType="CHAR"/>
-        <result column="person_password" property="personPassword" jdbcType="CHAR"/>
-        <result column="person_avatar_url" property="personAvatarUrl" jdbcType="VARCHAR"/>
-    </resultMap>
-    <sql id="Base_Column_List">
+<mapper namespace="com.ydb.dao.IPersonDao" >
+  <resultMap id="BaseResultMap" type="com.ydb.entity.Person" >
+    <id column="person_id" property="personId" jdbcType="INTEGER" />
+    <result column="person_name" property="personName" jdbcType="CHAR" />
+    <result column="person_password" property="personPassword" jdbcType="CHAR" />
+    <result column="person_avatar_url" property="personAvatarUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
     person_id, person_name, person_password, person_avatar_url
   </sql>
-    <select id="queryPerson" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="queryPerson" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     person_id, person_name, person_avatar_url
     from person
     where person_id = #{personId,jdbcType=INTEGER}
   </select>
-    <delete id="deletePerson">
+  <delete id="deletePerson" parameterType="java.lang.Integer" >
     delete from person
     where person_id = #{personId,jdbcType=INTEGER}
   </delete>
-    <insert id="insertPerson" parameterType="com.ydb.entity.Person">
-        insert into person (person_id, person_name, person_password,
-        person_avatar_url)
-        values (#{personId,jdbcType=INTEGER}, #{personName,jdbcType=CHAR}, #{personPassword,jdbcType=CHAR},
-        #{personAvatarUrl,jdbcType=VARCHAR})
-        <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
-            select @@identity
-        </selectKey>
-    </insert>
-    <insert id="insertSelective" parameterType="com.ydb.entity.Person">
-        insert into person
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="personId != null">
-                person_id,
-            </if>
-            <if test="personName != null">
-                person_name,
-            </if>
-            <if test="personPassword != null">
-                person_password,
-            </if>
-            <if test="personAvatarUrl != null">
-                person_avatar_url,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="personId != null">
-                #{personId,jdbcType=INTEGER},
-            </if>
-            <if test="personName != null">
-                #{personName,jdbcType=CHAR},
-            </if>
-            <if test="personPassword != null">
-                #{personPassword,jdbcType=CHAR},
-            </if>
-            <if test="personAvatarUrl != null">
-                #{personAvatarUrl,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <!--<update id="updatePerson" parameterType="com.ydb.entity.Person" >-->
+  <insert id="insertPerson" parameterType="com.ydb.entity.Person" >
+    insert into person (person_id, person_name, person_password, 
+      person_avatar_url)
+    values (#{personId,jdbcType=INTEGER}, #{personName,jdbcType=CHAR}, #{personPassword,jdbcType=CHAR}, 
+      #{personAvatarUrl,jdbcType=VARCHAR})
+      <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
+          select @@identity
+      </selectKey>
+</insert>
+  <insert id="insertSelective" parameterType="com.ydb.entity.Person" >
+    insert into person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="personId != null" >
+        person_id,
+      </if>
+      <if test="personName != null" >
+        person_name,
+      </if>
+      <if test="personPassword != null" >
+        person_password,
+      </if>
+      <if test="personAvatarUrl != null" >
+        person_avatar_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="personId != null" >
+        #{personId,jdbcType=INTEGER},
+      </if>
+      <if test="personName != null" >
+        #{personName,jdbcType=CHAR},
+      </if>
+      <if test="personPassword != null" >
+        #{personPassword,jdbcType=CHAR},
+      </if>
+      <if test="personAvatarUrl != null" >
+        #{personAvatarUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--<update id="updatePerson" parameterType="com.ydb.entity.Person" >-->
     <!--update person-->
     <!--<set >-->
-    <!--<if test="personName != null" >-->
-    <!--person_name = #{personName,jdbcType=CHAR},-->
-    <!--</if>-->
-    <!--<if test="personPassword != null" >-->
-    <!--person_password = #{personPassword,jdbcType=CHAR},-->
-    <!--</if>-->
-    <!--<if test="personAvatarUrl != null" >-->
-    <!--person_avatar_url = #{personAvatarUrl,jdbcType=VARCHAR},-->
-    <!--</if>-->
+      <!--<if test="personName != null" >-->
+        <!--person_name = #{personName,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="personPassword != null" >-->
+        <!--person_password = #{personPassword,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="personAvatarUrl != null" >-->
+        <!--person_avatar_url = #{personAvatarUrl,jdbcType=VARCHAR},-->
+      <!--</if>-->
     <!--</set>-->
     <!--where person_id = #{personId,jdbcType=INTEGER}-->
-    <!--</update>-->
-    <update id="updatePerson" parameterType="com.ydb.entity.Person">
+  <!--</update>-->
+  <update id="updatePerson" parameterType="com.ydb.entity.Person" >
     update person
     set person_name = #{personName,jdbcType=CHAR},
       person_password = #{personPassword,jdbcType=CHAR},
       person_avatar_url = #{personAvatarUrl,jdbcType=VARCHAR}
     where person_id = #{personId,jdbcType=INTEGER}
   </update>
-    <select id="queryPersons" resultMap="BaseResultMap">
+  <select id="queryPersons" resultMap="BaseResultMap">
     select
     person_id, person_name, person_avatar_url
     from person
   </select>
+    <select id="loginPerson" resultMap="BaseResultMap">
+        select
+        person_id, person_name, person_avatar_url
+        from person
+        　　<trim prefix="WHERE" prefixOverrides="and ">
+        <if test="personId != null" >
+
+            and  person_id = #{personId,jdbcType=INTEGER}
+        </if>
+        <if test="personId == null and personName != null " >
+            and  person_name = #{personName,jdbcType=CHAR}
+        </if>
+        <if test="personName != null or personId !=null" >
+            and  person_password = #{personPassword,jdbcType=CHAR}
+        </if>
+    </trim>
+    </select>
 </mapper>
