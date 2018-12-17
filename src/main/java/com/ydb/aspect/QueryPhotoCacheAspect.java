@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: com.ydb.aspect
+ * @description: Photo信息缓存
  * @date:2018/12/16
  */
 

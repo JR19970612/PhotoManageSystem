@@ -1,5 +1,6 @@
 package com.ydb.dao;
 
+import com.github.pagehelper.Page;
 import com.ydb.entity.Photo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,5 +26,5 @@ public interface IPhotoDao {
 
     List<Photo> selectPhotoByAlbumId(Integer albumId);
 
-    List<Photo> selectAllPhoto();
+    Page<Photo> selectAllPhoto();
 }

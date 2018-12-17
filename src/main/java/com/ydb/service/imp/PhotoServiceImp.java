@@ -1,5 +1,7 @@
 package com.ydb.service.imp;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IPhotoDao;
 import com.ydb.entity.Photo;
@@ -111,12 +113,13 @@ public class PhotoServiceImp implements IPhotoService {
     }
 
     @Override
-    public ResultBean<List<Photo>> queryPhoto() {
-        List<Photo> photos = photoDao.selectAllPhoto();
+    public ResultBean<List<Photo>> queryPhoto(Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<Photo> photos = photoDao.selectAllPhoto();
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
-        resultBean.setData(photos);
+        resultBean.setData(photos.getResult());
         return resultBean;
     }
 
