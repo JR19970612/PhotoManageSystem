@@ -31,7 +31,14 @@ public class IPersonDaoTest {
     }
 
     @Test
+    public void deletePerson() {
+        Person person = new Person();
+        person.setPersonId(199);
+        personDao.deletePerson(person);
+    }
+
+    @Test
     public void queryPerson() {
-        System.out.println(personDao.queryPerson(109));
+        System.out.println(personDao.queryPerson(198));
     }
 }

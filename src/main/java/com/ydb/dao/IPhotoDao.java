@@ -16,7 +16,7 @@ import java.util.List;
 public interface IPhotoDao {
     Integer insertPhoto(Photo photo);
 
-    Integer deletePhoto(Integer id);
+    Integer deletePhoto(Photo photo);
 
     Integer updatePhoto(Photo photo);
 

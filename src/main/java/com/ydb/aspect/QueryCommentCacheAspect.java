@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 
@@ -20,8 +18,8 @@ import java.util.*;
  * @description: Comment评论缓存切面
  * @date:2018/12/16
  */
-public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment>{
-    private String namespace = "comment:photoId:%s";//缓存命名空间
+public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment> {
+    private String namespace = "comment:photoId:%d";//缓存命名空间
 
     @Autowired
     RedisTemplate redisTemplate;
@@ -31,69 +29,46 @@ public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment>{
     IPersonDao personDao;
 
     //数据添加和更新的缓存切面
-    public Integer updateCache(ProceedingJoinPoint point) {
-        Comment comment = (Comment) point.getArgs()[0];
-        Integer result = 0;
-        try {
-            result = (Integer) point.proceed();
-            if (result > 0) {
-                Map commentMap = new HashMap<>();
-                commentMap.put("CommentId", comment.getCommentId());
-                commentMap.put("PhotoId", comment.getPhotoId());
-                commentMap.put("CommentContent", comment.getCommentContent());
-                commentMap.put("CommentTime", comment.getCommentTime());
-                commentMap.put("PersonId", comment.getPerson().getPersonId());
-                String commentJson = JSON.toJSONString(commentMap);
-                hashOperations.put(String.format(namespace, comment.getPhotoId()), String.valueOf(comment.getCommentId()), commentJson);
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        return result;
-    }
-
     @Override
-    public void updateCache(Comment comment) {
-
+    public void update(Comment comment) {
+        Map<String, String> commentMap = new HashMap<>();
+        commentMap.put("CommentId", String.valueOf(comment.getCommentId()));
+        commentMap.put("PhotoId", String.valueOf(comment.getPhotoId()));
+        commentMap.put("CommentContent", comment.getCommentContent());
+        commentMap.put("CommentTime", comment.getCommentTime().toString());
+        commentMap.put("PersonId", String.valueOf(comment.getPerson().getPersonId()));
+        String commentJson = JSON.toJSONString(commentMap);
+        hashOperations.put(String.format(namespace, comment.getPhotoId()), String.valueOf(comment.getCommentId()), commentJson);
     }
 
     //数据删除的缓存切面
-    public Integer deleteCache(ProceedingJoinPoint point) {
-        Comment comment = (Comment) point.getArgs()[0];
-        int result = 0;
-        try {
-            result = (int) point.proceed();
-            if (result > 0) {
-                hashOperations.delete(String.format(namespace, comment.getPhotoId()), comment.getCommentId());
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        return result;
-    }
-
     @Override
-    public void deleteCache(Integer id) {
-
+    public void delete(Comment comment) {
+        hashOperations.delete(String.format(namespace, comment.getPhotoId()), String.valueOf(comment.getCommentId()));
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
-    public List<Comment> queryCacheBeforeDao(ProceedingJoinPoint point) {
+    public List<Comment> queryCacheBeforeSelectDao(ProceedingJoinPoint point) {
         Integer photoId = (Integer) point.getArgs()[0];
         List<Comment> comments = new ArrayList<>();
         try {
             Set keys = redisTemplate.keys(String.format(namespace, photoId));
-            if (keys != null & !keys.isEmpty()) {
+            if (keys != null & !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
                 Iterator iterator = keys.iterator();
                 while (iterator.hasNext()) {
                     String key = (String) iterator.next();
-                    Map commentMap = hashOperations.entries(key);
-                    Comment comment = initComment(commentMap);
-                    Person person = personDao.queryPerson((Integer) commentMap.get("PersonId"));
-                    comment.setPerson(person);
-                    comments.add(comment);
+                    LinkedHashMap entriesMap = (LinkedHashMap) hashOperations.entries(key);
+                    for (Object objectKey : entriesMap.keySet()) {
+                        String commentString = (String) entriesMap.get(objectKey);
+                        Map<String, String> commentMap = (Map<String, String>) JSON.parse(commentString);
+                        Comment comment = new Comment();
+                        initObject(comment, commentMap);
+                        Person person = personDao.queryPerson(Integer.valueOf(commentMap.get("PersonId")));
+                        comment.setPerson(person);
+                        comments.add(comment);
+                    }
                 }
-            } else {
+            } else {//不存在则去查询数据库中的数据
                 comments = (List<Comment>) point.proceed();
             }
         } catch (Throwable throwable) {
@@ -102,37 +77,5 @@ public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment>{
         return comments;
     }
 
-    public Comment initComment(Map<String, String> entries) {
-        Comment comment = new Comment();
-        for (Map.Entry<String, String> entry : entries.entrySet()) {
-            try {
-                Method[] methods = comment.getClass().getMethods();
-                for (Method method : methods) {
-                    if (method.getName().equals("set" + entry.getKey())) {
-                        Class<?> param = method.getParameterTypes()[0];
-                        switch (param.getSimpleName()) {
-                            case "String": {
-                                method.invoke(comment, entry.getValue());
-                                break;
-                            }
-                            case "Date": {
-                                method.invoke(comment, new Date(entry.getValue()));
-                                break;
-                            }
-                            case "Integer": {
-                                method.invoke(comment, Integer.valueOf(entry.getValue()));
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-        return comment;
-    }
+
 }

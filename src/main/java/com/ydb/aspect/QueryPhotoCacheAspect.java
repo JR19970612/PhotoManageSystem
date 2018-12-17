@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -19,9 +17,9 @@ import java.util.*;
  * @date:2018/12/16
  */
 
-public class QueryPhotoCacheAspect {
+public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
 
-    private String namespace = "photo:photoId:%s:photoName:%s";//缓存命名空间
+    private String namespace = "photo:photoId:%d:photoName:%s";//缓存命名空间
 
     @Autowired
     RedisTemplate redisTemplate;
@@ -30,42 +28,23 @@ public class QueryPhotoCacheAspect {
     @Autowired
     ICommentDao commentDao;
 
-    //数据添加和更新的缓存切面
-    public Integer updateCache(ProceedingJoinPoint point) {
-        Photo photo = (Photo) point.getArgs()[0];
-        Integer result = 0;//数据库操作受影响列
-        try {
-            result = (Integer) point.proceed(point.getArgs());
-            if (result != 0) {//当数据真正对数据库产生影响时才进行缓存操作
-                HashMap<String, String> photoMap = new HashMap<>();
-                photoMap.put("PhotoId", String.valueOf(photo.getPhotoId()));
-                photoMap.put("PhotoName", photo.getPhotoName());
-                photoMap.put("AlbumId", String.valueOf(photo.getAlbumId()));
-                photoMap.put("PhotoCreateTime", photo.getPhotoCreateTime().toString());
-                photoMap.put("PhotoDesc", photo.getPhotoDesc());
-                photoMap.put("PhotoOriginalUrl", photo.getPhotoOriginalUrl());
-                photoMap.put("PhotoThumUrl", photo.getPhotoThumUrl());
-                hashOperations.putAll(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), photoMap);
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        return result;
+    @Override
+    public void update(Photo photo) {
+        Map<String, String> photoMap = new HashMap<>();
+        photoMap.put("PhotoId", String.valueOf(photo.getPhotoId()));
+        photoMap.put("PhotoName", photo.getPhotoName());
+        photoMap.put("AlbumId", String.valueOf(photo.getAlbumId()));
+        photoMap.put("PhotoCreateTime", photo.getPhotoCreateTime().toString());
+        photoMap.put("PhotoDesc", photo.getPhotoDesc());
+        photoMap.put("PhotoOriginalUrl", photo.getPhotoOriginalUrl());
+        photoMap.put("PhotoThumUrl", photo.getPhotoThumUrl());
+        hashOperations.putAll(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), photoMap);
     }
 
-    //数据删除的缓存切面
-    public Integer deleteCache(ProceedingJoinPoint point) {
-        Integer photoId = (Integer) point.getArgs()[0];
-        Integer result = 0;//数据库操作受影响列
-        try {
-            result = (Integer) point.proceed(point.getArgs());
-            if (result != 0) {
-                redisTemplate.delete(String.format(namespace, photoId));
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        return result;
+
+    @Override
+    public void delete(Photo photo) {
+        redisTemplate.delete(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()));
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
@@ -82,8 +61,9 @@ public class QueryPhotoCacheAspect {
             Iterator keyIterator = keys.iterator();
             while (keyIterator.hasNext()) {
                 String key = (String) keyIterator.next();
-                Map entries = hashOperations.entries(key);
-                Photo photo = initPhoto(entries);
+                Map photoMap = hashOperations.entries(key);
+                Photo photo = new Photo();
+                initObject(photo, photoMap);
                 //查询Comment评论信息
                 List<Comment> comments = commentDao.selectCommentByPhotoId(photo.getPhotoId());
                 photo.setComments(comments);
@@ -97,39 +77,5 @@ public class QueryPhotoCacheAspect {
             }
         }
         return photos;
-    }
-
-    //初始化Photo对象
-    public Photo initPhoto(Map<String, String> entries) {
-        Photo photo = new Photo();
-        for (Map.Entry<String, String> entry : entries.entrySet()) {
-            try {
-                Method[] methods = photo.getClass().getMethods();
-                for (Method method : methods) {
-                    if (method.getName().equals("set" + entry.getKey())) {
-                        Class<?> param = method.getParameterTypes()[0];
-                        switch (param.getSimpleName()) {
-                            case "String": {
-                                method.invoke(photo, entry.getValue());
-                                break;
-                            }
-                            case "Date": {
-                                method.invoke(photo, new Date(entry.getValue()));
-                                break;
-                            }
-                            case "Integer": {
-                                method.invoke(photo, Integer.valueOf(entry.getValue()));
-                                break;
-                            }
-                        }
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-        return photo;
     }
 }

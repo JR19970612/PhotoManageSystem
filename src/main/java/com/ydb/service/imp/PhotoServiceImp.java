@@ -71,7 +71,7 @@ public class PhotoServiceImp implements IPhotoService {
     @Override
     public ResultBean<Photo> dropPhoto(Photo photo) {
         //删除数据库图片信息
-        photoDao.deletePhoto(photo.getPhotoId());
+        photoDao.deletePhoto(photo);
         //删除本地磁盘图片
         photoUtil.dropPhoto(photo);
         //返回reponse数据

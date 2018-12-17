@@ -53,5 +53,5 @@ swagger:
 
 #Mybatis-PageHelper配置
 pagehelper:
-  dialect: mysql
+#  dialect: mysql
   reasonable: true

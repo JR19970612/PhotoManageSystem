@@ -37,9 +37,9 @@ public class PersonServiceimp implements IPersonService {
         person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
         PersonResultBean.setData(Arrays.asList(person));
         int code = mapper.insertPerson(person);
-        if(code==1){
+        if (code == 1) {
             PersonResultBean.setMsg("添加成功");
-        }else{
+        } else {
             //删除不存在的id
             PersonResultBean.setMsg("添加失败");
         }
@@ -66,15 +66,17 @@ public class PersonServiceimp implements IPersonService {
         PersonResultBean.setData(Collections.singletonList(person));
         return PersonResultBean;
     }
+
     @Override
     public ResultBean<Person> deletePerson(Integer personId) {
         PersonResultBean = new ResultBean<>();
         PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
-
-        int code = mapper.deletePerson(personId);
-        if(code==1){
+        Person person = new Person();
+        person.setPersonId(personId);
+        int code = mapper.deletePerson(person);
+        if (code == 1) {
             PersonResultBean.setMsg("删除成功");
-        }else{
+        } else {
             //删除不存在的id
             PersonResultBean.setMsg("删除失败");
         }
@@ -91,10 +93,10 @@ public class PersonServiceimp implements IPersonService {
 
         int code = mapper.updatePerson(person);
 
-        if(code==1){
+        if (code == 1) {
             PersonResultBean.setMsg("修改成功");
 
-        }else {
+        } else {
             PersonResultBean.setMsg("修改失败");
         }
         PersonResultBean.setData(Collections.singletonList(person));

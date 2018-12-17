@@ -22,6 +22,9 @@
     <insert id="addComment" parameterType="Comment">
         insert into comment(person_id,photo_id,comment_time,comment_content)
         VALUES (#{person.personId},#{photoId},#{commentTime},#{commentContent})
+        <selectKey keyProperty="commentId" keyColumn="comment_id" order="AFTER" resultType="int">
+            select @@identity
+        </selectKey>
     </insert>
 
 

@@ -76,6 +76,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public HashOperations hashOperations(RedisTemplate redisTemplate) {
         return redisTemplate.opsForHash();
     }
+
 }
 
 
