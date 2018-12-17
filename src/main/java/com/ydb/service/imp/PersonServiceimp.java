@@ -5,6 +5,7 @@ import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
 import com.ydb.service.IPersonService;
 import com.ydb.utils.MD5Util;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class PersonServiceimp implements IPersonService {
     ResultBean<Person> PersonResultBean;
 
     ResultBean<List<Person>> PersonResultList;
-
+    Person loginPerson;
 
     @Override
     public ResultBean<Person> insertPerson(Person person) {
@@ -37,9 +38,9 @@ public class PersonServiceimp implements IPersonService {
         person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
         PersonResultBean.setData(Arrays.asList(person));
         int code = mapper.insertPerson(person);
-        if(code==1){
+        if (code == 1) {
             PersonResultBean.setMsg("添加成功");
-        }else{
+        } else {
             //删除不存在的id
             PersonResultBean.setMsg("添加失败");
         }
@@ -66,15 +67,16 @@ public class PersonServiceimp implements IPersonService {
         PersonResultBean.setData(Collections.singletonList(person));
         return PersonResultBean;
     }
+
     @Override
     public ResultBean<Person> deletePerson(Integer personId) {
         PersonResultBean = new ResultBean<>();
         PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
 
         int code = mapper.deletePerson(personId);
-        if(code==1){
+        if (code == 1) {
             PersonResultBean.setMsg("删除成功");
-        }else{
+        } else {
             //删除不存在的id
             PersonResultBean.setMsg("删除失败");
         }
@@ -91,13 +93,41 @@ public class PersonServiceimp implements IPersonService {
 
         int code = mapper.updatePerson(person);
 
-        if(code==1){
+        if (code == 1) {
             PersonResultBean.setMsg("修改成功");
 
-        }else {
+        } else {
             PersonResultBean.setMsg("修改失败");
         }
         PersonResultBean.setData(Collections.singletonList(person));
         return PersonResultBean;
+    }
+
+    @Override
+    public ResultBean<Person> loginPerson(Person person) {
+
+        PersonResultBean = new ResultBean();
+        PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        loginPerson = new Person();
+        if (person.getPersonPassword() != null || person.getPersonPassword() != "" || person.getPersonPassword().length() > 0) {
+            person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
+        }
+
+        if (person.getPersonId() != null || person.getPersonName() != null) {
+            System.out.print("getPersonId:" + person.getPersonId() + ",getPersonName:" + person.getPersonName());
+            loginPerson = mapper.loginPerson(person);
+        } else {
+            loginPerson = null;
+        }
+//        Person loginPerson = mapper.loginPerson(person);
+        if (loginPerson == null) {
+            PersonResultBean.setMsg("登陆失败");
+        } else {
+            PersonResultBean.setMsg("登陆成功");
+        }
+        PersonResultBean.setData(Collections.singletonList(loginPerson));
+//        PersonResultBean.setData();
+        return PersonResultBean;
+
     }
 }

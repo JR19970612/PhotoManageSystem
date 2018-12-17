@@ -25,5 +25,6 @@ public interface IPersonDao {
 
     int updatePerson(Person person);
 
+    Person loginPerson(Person person);
 
 }

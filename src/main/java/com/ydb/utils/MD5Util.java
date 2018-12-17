@@ -21,6 +21,8 @@ public class MD5Util {
     public static String encode(String word) {
         byte[] secretBytes = null;
         try {
+            if(word==null){return null
+                    ;}
             secretBytes = MessageDigest.getInstance("md5").digest(word.getBytes());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
