@@ -65,9 +65,9 @@ public class PhotoController {
 
 
     @ApiOperation(value = "获取图片信息", notes = "获取所有图片信息")
-    @GetMapping(value = "/photo")
+    @GetMapping(value = "/photo/{pageSize}/{pageNum}")
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<List<Photo>> getAllPhoto() {
-        return photoService.queryPhoto();
+    public ResultBean<List<Photo>> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
+        return photoService.queryPhoto(pageSize, pageNum);
     }
 }
