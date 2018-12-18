@@ -90,7 +90,7 @@ public class PhotoController {
     @ApiOperation(value = "获取图片信息", notes = "获取分页图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageSize", value = "页面大小", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "path", dataType = "int"),
     }
     )
     @GetMapping(value = "/photo/{pageSize}/{pageNum}")

@@ -1,5 +1,7 @@
 package com.ydb.service.imp;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IAlbumDao;
 import com.ydb.entity.Album;
@@ -67,7 +69,7 @@ public class AlbumServiceImp implements IAlbumService {
     }
 
     @Override
-    public ResultBean<Album> queryAlbumById(Integer album_id) {
+    public ResultBean<Album> queryAlbum(Integer album_id) {
         Album album = mapper.selectAlbumById(album_id);
         resultBean = new ResultBean<Album>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -77,7 +79,7 @@ public class AlbumServiceImp implements IAlbumService {
     }
 
     @Override
-    public ResultBean<Album> queryAlbumByName(String album_name) {
+    public ResultBean<Album> queryAlbum(String album_name) {
         Album album = mapper.selectAlbumByName(album_name);
         resultBean = new ResultBean<Album>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -87,7 +89,18 @@ public class AlbumServiceImp implements IAlbumService {
     }
 
     @Override
-    public ResultBean<Album> queryAllAlbum() {
+    public ResultBean<List<Album>> queryAlbum(Integer pageSize, Integer pageNub) {
+        PageHelper.startPage(pageNub, pageSize);
+        Page<Album> page = mapper.selectAllAlbum();
+        resultBean = new ResultBean<Album>();
+        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        resultBean.setMsg("查询相册成功");
+        resultBean.setData(page.getResult());
+        return resultBean;
+    }
+
+    @Override
+    public ResultBean<List<Album>> queryAlbum() {
         List<Album> albums = mapper.selectAllAlbum();
         resultBean = new ResultBean<Album>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);

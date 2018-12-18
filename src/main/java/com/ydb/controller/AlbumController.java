@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class AlbumController {
 
@@ -68,20 +70,32 @@ public class AlbumController {
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumById(@PathVariable String type, @RequestParam String params) {
         if (type != null & type.equals("AlbumId")) {
-            return iAlbumService.queryAlbumById(Integer.parseInt(params));
+            return iAlbumService.queryAlbum(Integer.parseInt(params));
         } else if (type != null & type.equals("AlbumName")) {
-            return iAlbumService.queryAlbumByName(params);
+            return iAlbumService.queryAlbum(params);
         } else {
             throw new ParamsException("非法的查询方式");
         }
+    }
+
+    @ApiOperation(value = "获取图片信息", notes = "获取分页图片信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "query", dataType = "int"),
+    }
+    )
+    @GetMapping(value = "/Album/{pageSize}/{pageNum}")
+    @JsonView(SuccessView.class)
+    public ResultBean<List<Album>> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
+        return iAlbumService.queryAlbum(pageSize, pageNum);
     }
 
 
     @ApiOperation(value = "查询所有相册信息")
     @GetMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> getAllAlbum() {
-        return iAlbumService.queryAllAlbum();
+    public ResultBean<List<Album>> getAllAlbum() {
+        return iAlbumService.queryAlbum();
     }
 
 
