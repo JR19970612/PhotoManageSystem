@@ -10,21 +10,21 @@
     <!--注册缓存处理切面-->
     <bean id="photoCacheAspect" class="com.ydb.aspect.QueryPhotoCacheAspect"></bean>
     <!--aspectj织入切面-->
-    <aop:config>
-        <!--定义切入点-->
-        <aop:pointcut id="photoDaoPoincut_insertPhoto"
-                      expression="execution(* com.ydb.dao.IPhotoDao+.insertPhoto(..))"></aop:pointcut>
-        <aop:pointcut id="photoDaoPoincut_deletePhoto"
-                      expression="execution(* com.ydb.dao.IPhotoDao+.deletePhoto(..))"></aop:pointcut>
-        <aop:pointcut id="photoDaoPoincut_updatePhoto"
-                      expression="execution(* com.ydb.dao.IPhotoDao+.updatePhoto(..))"></aop:pointcut>
-        <aop:pointcut id="photoDaoPoincut_selectPhoto"
-                      expression="execution(* com.ydb.dao.IPhotoDao+.selectPhoto*(..))"></aop:pointcut>
-        <aop:aspect ref="photoCacheAspect">
-            <aop:around method="updateCache" pointcut-ref="photoDaoPoincut_insertPhoto"></aop:around>
-            <aop:around method="deleteCache" pointcut-ref="photoDaoPoincut_deletePhoto"></aop:around>
-            <aop:around method="updateCache" pointcut-ref="photoDaoPoincut_updatePhoto"></aop:around>
-            <aop:around method="queryCacheBeforeSelectDao" pointcut-ref="photoDaoPoincut_selectPhoto"></aop:around>
-        </aop:aspect>
-    </aop:config>
+    <!--<aop:config>-->
+        <!--&lt;!&ndash;定义切入点&ndash;&gt;-->
+        <!--<aop:pointcut id="photoDaoPoincut_insertPhoto"-->
+                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.insertPhoto(..))"></aop:pointcut>-->
+        <!--<aop:pointcut id="photoDaoPoincut_deletePhoto"-->
+                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.deletePhoto(..))"></aop:pointcut>-->
+        <!--<aop:pointcut id="photoDaoPoincut_updatePhoto"-->
+                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.updatePhoto(..))"></aop:pointcut>-->
+        <!--<aop:pointcut id="photoDaoPoincut_selectPhoto"-->
+                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.selectPhoto*(..))"></aop:pointcut>-->
+        <!--<aop:aspect ref="photoCacheAspect">-->
+            <!--<aop:around method="updateCache" pointcut-ref="photoDaoPoincut_insertPhoto"></aop:around>-->
+            <!--<aop:around method="deleteCache" pointcut-ref="photoDaoPoincut_deletePhoto"></aop:around>-->
+            <!--<aop:around method="updateCache" pointcut-ref="photoDaoPoincut_updatePhoto"></aop:around>-->
+            <!--<aop:around method="queryCacheBeforeSelectDao" pointcut-ref="photoDaoPoincut_selectPhoto"></aop:around>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
 </beans>
