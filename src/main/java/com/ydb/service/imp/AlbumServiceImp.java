@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class AlbumServiceImp implements IAlbumService {
     @Override
     public ResultBean<Album> addAlbum(Album album) {
         resultBean = new ResultBean<Album>();
+        album.setAlbumCreatetime(new Date());
         int code = mapper.insertAlbum(album);
         if (code == 1) {
             //插入数据成功
@@ -61,7 +63,6 @@ public class AlbumServiceImp implements IAlbumService {
             resultBean.setStatus(ResultBean.FAILURE_CODE);
             resultBean.setMsg("修改相册失败");
         }
-
         return resultBean;
     }
 

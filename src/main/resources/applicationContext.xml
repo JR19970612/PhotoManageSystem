@@ -48,6 +48,8 @@
     <aop:config>
         <!--定义IPersonDao切入点-->
         <aop:pointcut id="personDaoPoincut_updatePerson"
+                      expression="execution(* com.ydb.dao.IPersonDao+.updatePerson(..))"></aop:pointcut>
+        <aop:pointcut id="personDaoPoincut_insertPerson"
                       expression="execution(* com.ydb.dao.IPersonDao+.insertPerson(..))"></aop:pointcut>
         <aop:pointcut id="personDaoPoincut_deletePerson"
                       expression="execution(* com.ydb.dao.IPersonDao+.deletePerson(..))"></aop:pointcut>
@@ -56,6 +58,7 @@
         <!--织入IPersonDao切面-->
         <aop:aspect ref="personCacheAspect">
             <aop:around method="updateCache" pointcut-ref="personDaoPoincut_updatePerson"></aop:around>
+            <aop:around method="updateCache" pointcut-ref="personDaoPoincut_insertPerson"></aop:around>
             <aop:around method="deleteCache" pointcut-ref="personDaoPoincut_deletePerson"></aop:around>
             <aop:around method="queryCacheBeforeSelectDao" pointcut-ref="personDaoPoincut_selectPerson"></aop:around>
         </aop:aspect>

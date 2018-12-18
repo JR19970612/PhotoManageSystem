@@ -48,31 +48,27 @@ public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment> {
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
-    public List<Comment> queryCacheBeforeSelectDao(ProceedingJoinPoint point) {
+    public List<Comment> queryCacheBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
         Integer photoId = (Integer) point.getArgs()[0];
         List<Comment> comments = new ArrayList<>();
-        try {
-            Set keys = redisTemplate.keys(String.format(namespace, photoId));
-            if (keys != null & !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
-                Iterator iterator = keys.iterator();
-                while (iterator.hasNext()) {
-                    String key = (String) iterator.next();
-                    LinkedHashMap entriesMap = (LinkedHashMap) hashOperations.entries(key);
-                    for (Object objectKey : entriesMap.keySet()) {
-                        String commentString = (String) entriesMap.get(objectKey);
-                        Map<String, String> commentMap = (Map<String, String>) JSON.parse(commentString);
-                        Comment comment = new Comment();
-                        initObject(comment, commentMap);
-                        Person person = personDao.queryPerson(Integer.valueOf(commentMap.get("PersonId")));
-                        comment.setPerson(person);
-                        comments.add(comment);
-                    }
+        Set keys = redisTemplate.keys(String.format(namespace, photoId));
+        if (keys != null & !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
+            Iterator iterator = keys.iterator();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                LinkedHashMap entriesMap = (LinkedHashMap) hashOperations.entries(key);
+                for (Object objectKey : entriesMap.keySet()) {
+                    String commentString = (String) entriesMap.get(objectKey);
+                    Map<String, String> commentMap = (Map<String, String>) JSON.parse(commentString);
+                    Comment comment = new Comment();
+                    initObject(comment, commentMap);
+                    Person person = personDao.queryPerson(Integer.valueOf(commentMap.get("PersonId")));
+                    comment.setPerson(person);
+                    comments.add(comment);
                 }
-            } else {//不存在则去查询数据库中的数据
-                comments = (List<Comment>) point.proceed();
             }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        } else {//不存在则去查询数据库中的数据
+            comments = (List<Comment>) point.proceed();
         }
         return comments;
     }
