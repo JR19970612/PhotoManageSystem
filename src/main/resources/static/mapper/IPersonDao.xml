@@ -25,7 +25,10 @@
       person_avatar_url)
     values (#{personId,jdbcType=INTEGER}, #{personName,jdbcType=CHAR}, #{personPassword,jdbcType=CHAR}, 
       #{personAvatarUrl,jdbcType=VARCHAR})
-  </insert>
+      <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
+          select @@identity
+      </selectKey>
+</insert>
   <insert id="insertSelective" parameterType="com.ydb.entity.Person" >
     insert into person
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -84,4 +87,21 @@
     person_id, person_name, person_avatar_url
     from person
   </select>
+    <select id="loginPerson" resultMap="BaseResultMap">
+        select
+        person_id, person_name, person_avatar_url
+        from person
+        　　<trim prefix="WHERE" prefixOverrides="and ">
+        <if test="personId != null" >
+
+            and  person_id = #{personId,jdbcType=INTEGER}
+        </if>
+        <if test="personId == null and personName != null " >
+            and  person_name = #{personName,jdbcType=CHAR}
+        </if>
+        <if test="personName != null or personId !=null" >
+            and  person_password = #{personPassword,jdbcType=CHAR}
+        </if>
+    </trim>
+    </select>
 </mapper>

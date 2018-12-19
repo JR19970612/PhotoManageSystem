@@ -6,10 +6,10 @@ import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
 import com.ydb.service.IPhotoService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,6 +25,13 @@ public class PhotoController {
 
 
     @ApiOperation(value = "上传单张图片信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "photo", value = "上传图片文件", required = true, paramType = "form", dataType = "File"),
+            @ApiImplicitParam(name = "photoName", value = "图片名", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name = "photoDesc", value = "图片描述", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name = "albumId", value = "相册ID", required = true, paramType = "form", dataType = "String"),
+    }
+    )
     @PostMapping(value = "/photo")
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> uploadPhoto(MultipartHttpServletRequest request, @Validated Photo photo) throws IOException {
@@ -33,6 +40,12 @@ public class PhotoController {
 
 
     @ApiOperation(value = "删除单张图片信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "photoOriginalUrl", value = "图片原图URL", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "photoThumUrl", value = "图片缩略图URL", required = true, paramType = "query", dataType = "String"),
+    }
+    )
     @DeleteMapping(value = "/photo")
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> dropPhoto(Photo photo) {
@@ -41,16 +54,25 @@ public class PhotoController {
 
 
     @ApiOperation(value = "修改单张图片信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "photoName", value = "图片名称", required = false, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "photoDesc", value = "图片描述", required = false, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "albumId", value = "相册ID", required = false, paramType = "query", dataType = "int"),
+    }
+    )
     @PutMapping(value = "/photo")
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<Photo> updatePhoto(@Validated Photo photo, BindingResult bindingResult) throws BindException {
-        if (bindingResult.hasErrors()) {
-            throw new BindException(bindingResult);
-        }
+    public ResultBean<Photo> updatePhoto(Photo photo) {
         return photoService.updatePhoto(photo);
     }
 
     @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或名称获取用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "查询形式（可选择photoName|photoId）", required = true, paramType = "path", dataType = "String"),
+            @ApiImplicitParam(name = "params", value = "查询参数", required = true, paramType = "query", dataType = "String"),
+    }
+    )
     @GetMapping(value = "/photo/{type}")
     @JsonView(PhotoView.QueryDetail.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
@@ -64,10 +86,15 @@ public class PhotoController {
     }
 
 
-    @ApiOperation(value = "获取图片信息", notes = "获取所有图片信息")
-    @GetMapping(value = "/photo")
+    @ApiOperation(value = "获取图片信息", notes = "获取分页图片信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "query", dataType = "int"),
+    }
+    )
+    @GetMapping(value = "/photo/{pageSize}/{pageNum}")
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<List<Photo>> getAllPhoto() {
-        return photoService.queryPhoto();
+    public ResultBean<List<Photo>> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
+        return photoService.queryPhoto(pageSize, pageNum);
     }
 }

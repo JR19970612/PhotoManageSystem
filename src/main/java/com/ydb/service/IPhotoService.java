@@ -28,7 +28,7 @@ public interface IPhotoService {
     //通过photoName（图片名）查询单张图片信息
     ResultBean<Photo> queryPhoto(String photoName);
 
-    //查询全部图片信息
-    ResultBean<List<Photo>> queryPhoto();
+    //分页查询全部图片信息
+    ResultBean<List<Photo>> queryPhoto(Integer pageSize,  Integer pageNum);
 }
 

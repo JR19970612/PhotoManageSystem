@@ -12,9 +12,9 @@ import java.util.List;
  */
 @Mapper
 public interface ICommentDao {
-    int addComment(Comment comment);
+    Integer addComment(Comment comment);
 
-    int deleteComment(Comment comment);
+    Integer deleteComment(Comment comment);
 
     List<Comment> selectCommentByPhotoId(Integer photoId);
 }
