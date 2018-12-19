@@ -16,7 +16,7 @@ import java.util.Set;
  * @description: person缓存切面
  * @date:2018/12/17
  */
-public class QueryPersonCacheAspect extends AbstractQueryCacheApsect<Person> {
+public class PersonCacheAspect extends AbstractCacheApsect<Person> {
     private String namespace = "person:personId:%d";//缓存命名空间
 
     @Autowired

@@ -13,7 +13,7 @@ import java.util.Map;
  * @description: 缓存模板方法类
  * @date:2018/12/17
  */
-public abstract class AbstractQueryCacheApsect<T> {
+public abstract class AbstractCacheApsect<T> {
 
     //数据添加和更新的缓存切面
     public Integer updateCache(ProceedingJoinPoint point) throws Throwable {

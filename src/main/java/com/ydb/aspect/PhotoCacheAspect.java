@@ -17,7 +17,7 @@ import java.util.*;
  * @date:2018/12/16
  */
 
-public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
+public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     private String namespace = "photo:photoId:%d:photoName:%s";//缓存命名空间
 
@@ -31,25 +31,25 @@ public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
     @Override
     public void update(Photo photo) {
         if (photo != null && photo.getPhotoId() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoId", String.valueOf(photo.getPhotoId()));
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
         }
         if (photo != null && photo.getPhotoName() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoName", photo.getPhotoName());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoName", photo.getPhotoName());
         }
         if (photo != null && photo.getAlbumId() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "AlbumId", String.valueOf(photo.getAlbumId()));
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "AlbumId", String.valueOf(photo.getAlbumId()));
         }
         if (photo != null && photo.getPhotoDesc() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoDesc", photo.getPhotoDesc());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoDesc", photo.getPhotoDesc());
         }
         if (photo != null && photo.getPhotoCreateTime() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoCreateTime", photo.getPhotoCreateTime());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime());
         }
         if (photo != null && photo.getPhotoOriginalUrl() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());
         }
         if (photo != null && photo.getPhotoThumUrl() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId()), "PhotoThumUrl", photo.getPhotoThumUrl());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoThumUrl", photo.getPhotoThumUrl());
         }
     }
 
