@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public interface IPhotoService {
@@ -29,6 +28,6 @@ public interface IPhotoService {
     ResultBean<Photo> queryPhoto(String photoName);
 
     //分页查询全部图片信息
-    ResultBean<List<Photo>> queryPhoto(Integer pageSize,  Integer pageNum);
+    ResultBean<Photo> queryPhoto(Integer pageSize,  Integer pageNum);
 }
 

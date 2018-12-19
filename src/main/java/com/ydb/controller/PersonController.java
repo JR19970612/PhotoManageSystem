@@ -37,12 +37,12 @@ public class PersonController {
 
     @ApiOperation(value = "删除用户信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "path", dataType = "int"),
     }
     )
-    @DeleteMapping("/person")
+    @DeleteMapping("/person/{personId}")
     @JsonView(SuccessView.class)
-    public ResultBean<Person> deletePerson(Integer personId) {
+    public ResultBean<Person> deletePerson(@PathVariable Integer personId) {
         return PersonService.deletePerson(personId);
     }
 
@@ -71,7 +71,7 @@ public class PersonController {
 
     @ApiOperation(value = "根据用户ID查询指定用户信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "path", dataType = "int"),
     }
     )
     @GetMapping("/person/{personId}")

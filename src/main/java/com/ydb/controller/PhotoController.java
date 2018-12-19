@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -95,7 +94,8 @@ public class PhotoController {
     )
     @GetMapping(value = "/photo/{pageSize}/{pageNum}")
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<List<Photo>> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
+    public ResultBean<Photo> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
         return photoService.queryPhoto(pageSize, pageNum);
     }
+
 }

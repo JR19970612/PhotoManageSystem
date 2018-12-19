@@ -26,29 +26,17 @@ public class AlbumServiceImp implements IAlbumService {
         resultBean = new ResultBean<Album>();
         album.setAlbumCreatetime(new Date());
         int code = mapper.insertAlbum(album);
-        if (code == 1) {
-            //插入数据成功
-            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-            resultBean.setMsg("添加相册成功");
-            resultBean.setData(Arrays.asList(album));
-        } else {
-            resultBean.setStatus(ResultBean.FAILURE_CODE);
-            resultBean.setMsg("添加相册失败");
-        }
+        initResultBean(code, resultBean);
+        resultBean.setData(Arrays.asList(album));
         return resultBean;
     }
+
 
     @Override
     public ResultBean<Album> dropAlbum(Integer album_id) {
         resultBean = new ResultBean<Album>();
         int code = mapper.deleteAlbum(album_id);
-        if (code == 1) {
-            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-            resultBean.setMsg("删除成功");
-        } else {
-            resultBean.setStatus(ResultBean.FAILURE_CODE);
-            resultBean.setMsg("删除失败");
-        }
+        initResultBean(code, resultBean);
         return resultBean;
     }
 
@@ -56,15 +44,8 @@ public class AlbumServiceImp implements IAlbumService {
     public ResultBean<Album> updateAlbum(Album album) {
         resultBean = new ResultBean<Album>();
         int code = mapper.updateAlbum(album);
+        initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(album));
-        if (code == 1) {
-            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-            resultBean.setMsg("修改相册成功");
-            resultBean.setData(Arrays.asList(album));
-        } else {
-            resultBean.setStatus(ResultBean.FAILURE_CODE);
-            resultBean.setMsg("修改相册失败");
-        }
         return resultBean;
     }
 
@@ -107,5 +88,16 @@ public class AlbumServiceImp implements IAlbumService {
         resultBean.setMsg("查询相册成功");
         resultBean.setData(albums);
         return resultBean;
+    }
+
+    private void initResultBean(int code, ResultBean resultBean) {
+        if (code > 0) {
+            //插入数据成功
+            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+            resultBean.setMsg("操作成功");
+        } else {
+            resultBean.setStatus(ResultBean.FAILURE_CODE);
+            resultBean.setMsg("操作失败");
+        }
     }
 }
