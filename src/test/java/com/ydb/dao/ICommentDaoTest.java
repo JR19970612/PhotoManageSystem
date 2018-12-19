@@ -21,11 +21,12 @@ public class ICommentDaoTest {
     @Test
     public void addComment() {
         Person person = new Person();
-        person.setPersonId(109);
+        person.setPersonId(149);
         Comment comment = new Comment();
+        comment.setCommentId(1);
         comment.setPerson(person);
         comment.setCommentTime(new Date());
-        comment.setPhotoId(17);
+        comment.setPhotoId(51);
         comment.setCommentContent("Comment_Conent");
         iCommentDao.addComment(comment);
         System.out.println(comment);
@@ -34,13 +35,14 @@ public class ICommentDaoTest {
     @Test
     public void deleteComment() {
         Comment comment = new Comment();
-        comment.setCommentId(1);
+        comment.setCommentId(19);
+        comment.setPhotoId(51);
         iCommentDao.deleteComment(comment);
     }
 
     @Test
     public void selectCommentByPhotoId() {
-        List<Comment> comment = iCommentDao.selectCommentByPhotoId(17);
+        List<Comment> comment = iCommentDao.selectCommentByPhotoId(51);
         System.out.println(comment);
     }
 }

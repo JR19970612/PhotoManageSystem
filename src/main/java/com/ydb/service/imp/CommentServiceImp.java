@@ -7,6 +7,8 @@ import com.ydb.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class CommentServiceImp implements ICommentService {
     @Autowired
@@ -18,6 +20,7 @@ public class CommentServiceImp implements ICommentService {
     public ResultBean addComment(Comment comment) {
         resultBean = new ResultBean();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        comment.setCommentTime(new Date());
         resultBean.setMsg("添加成功");
         commentDao.addComment(comment);
         return resultBean;

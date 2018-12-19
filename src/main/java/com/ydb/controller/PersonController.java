@@ -47,5 +47,10 @@ public class PersonController {
     public ResultBean<Person> queryPerson(@PathVariable Integer personId) {
         return PersonService.queryPerson(personId);
     }
+    @PutMapping("/loginPerson")
+    @JsonView(SuccessView.class)
+    public ResultBean<Person>     loginPerson(Person person) {
+        return PersonService. loginPerson(person);
+    }
 
 }

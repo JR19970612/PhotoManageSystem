@@ -1,5 +1,6 @@
 package com.ydb.dao;
 
+import com.github.pagehelper.Page;
 import com.ydb.entity.Photo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface IPhotoDao {
     Integer insertPhoto(Photo photo);
 
-    Integer deletePhoto(Integer id);
+    Integer deletePhoto(Photo photo);
 
     Integer updatePhoto(Photo photo);
 
@@ -25,5 +26,5 @@ public interface IPhotoDao {
 
     List<Photo> selectPhotoByAlbumId(Integer albumId);
 
-    List<Photo> selectAllPhoto();
+    Page<Photo> selectAllPhoto();
 }

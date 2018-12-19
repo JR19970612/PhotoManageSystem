@@ -49,4 +49,9 @@ server:
 swagger:
   basePackage:  com.ydb.controller  #测试Controller接口包名
   title: 照片管理系统请求接口测试 #标题
-  version : V1.0  #版本号
+  version : V1.0   #版本号
+
+#Mybatis-PageHelper配置
+pagehelper:
+#  dialect: mysql
+  reasonable: true

@@ -33,11 +33,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.2</version>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
         </dependency>
+        <!--由于pagehelper内部已经依赖mybatis，所以最好使用它自己依赖的版本，免得出现版本问题而运行不了-->
+        <!--<dependency>-->
+        <!--<groupId>org.mybatis.spring.boot</groupId>-->
+        <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--<version>1.3.2</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -81,6 +88,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+
     </dependencies>
 
     <build>

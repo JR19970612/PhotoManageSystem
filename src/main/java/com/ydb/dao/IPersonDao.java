@@ -21,9 +21,10 @@ public interface IPersonDao {
 
     Person queryPerson(Integer personId);
 
-    int deletePerson(Integer personId);
+    int deletePerson(Person person);
 
     int updatePerson(Person person);
 
+    Person loginPerson(Person person);
 
 }

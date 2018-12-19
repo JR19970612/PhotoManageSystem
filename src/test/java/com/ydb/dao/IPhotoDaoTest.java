@@ -24,7 +24,7 @@ IPhotoDaoTest {
 
     @Before
     public void init() {
-        photo.setPhotoId(0);
+        photo.setPhotoId(52);
         photo.setPhotoName("Name_A");
         photo.setPhotoDesc("Desc_A");
         photo.setPhotoCreateTime(new Date());
@@ -41,7 +41,7 @@ IPhotoDaoTest {
 
     @Test
     public void deletePhoto() {
-        Integer status = photoDao.deletePhoto(43);
+        Integer status = photoDao.deletePhoto(photo);
         System.out.println("受影响列：" + status);
     }
 
@@ -55,7 +55,7 @@ IPhotoDaoTest {
 
     @Test
     public void selectPhotoById() {
-        List<Photo> photo = photoDao.selectPhotoById(49);
+        List<Photo> photo = photoDao.selectPhotoById(51);
         System.out.println(photo);
     }
 
