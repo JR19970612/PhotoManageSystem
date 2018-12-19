@@ -18,20 +18,40 @@ public class CommentServiceImp implements ICommentService {
 
     @Override
     public ResultBean addComment(Comment comment) {
-        resultBean = new ResultBean();
-        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+        int status = 0;
+        String msg;
         comment.setCommentTime(new Date());
-        resultBean.setMsg("添加成功");
-        commentDao.addComment(comment);
+        status=commentDao.addComment(comment);
+        if (status > 0) {
+            msg = "添加成功";
+            status = 0;
+        } else {
+            msg = "添加失败";
+            status = -1;
+        }
+        //返回response
+        resultBean = new ResultBean<>();
+        resultBean.setStatus(status);
+        resultBean.setMsg(msg);
         return resultBean;
     }
 
     @Override
     public ResultBean dropComment(Comment comment) {
-        resultBean = new ResultBean();
-        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-        resultBean.setMsg("删除成功");
-        commentDao.deleteComment(comment);
+        int status = 0;
+        String msg; resultBean = new ResultBean();
+        status=commentDao.deleteComment(comment);
+        if (status > 0) {
+            msg = "添加成功";
+            status = 0;
+        } else {
+            msg = "添加失败";
+            status = -1;
+        }
+        //返回response
+        resultBean = new ResultBean<>();
+        resultBean.setStatus(status);
+        resultBean.setMsg(msg);
         return resultBean;
     }
 }

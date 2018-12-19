@@ -23,7 +23,6 @@ import java.util.List;
 public class PersonServiceimp implements IPersonService {
 
     @Autowired
-//    @Qualifier(value = "personDao")
     private IPersonDao mapper;
 
     ResultBean<Person> PersonResultBean;
