@@ -13,9 +13,9 @@
 
     <insert id="insertAlbum" parameterType="Album">
         INSERT INTO
-        album(albumName,album_desc,album_createtime)
+        album(album_name,album_desc,album_createtime)
         VALUES (#{albumName},#{albumDesc},#{albumCreatetime})
-        <selectKey resultType="int" keyProperty="album_id" order="AFTER">
+        <selectKey resultType="int" keyProperty="albumId" order="AFTER">
             select @@identity
         </selectKey>
     </insert>

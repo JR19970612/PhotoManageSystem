@@ -5,7 +5,8 @@ import com.ydb.JsonView.PhotoView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
-import com.ydb.service.IPhotoService;
+
+import com.ydb.service.imp.PhotoServiceImp;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import java.io.IOException;
 @RestController
 public class PhotoController {
     @Autowired
-    IPhotoService photoService;
+   PhotoServiceImp photoService;
 
 
     @ApiOperation(value = "上传单张图片信息")

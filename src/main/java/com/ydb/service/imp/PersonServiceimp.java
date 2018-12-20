@@ -37,12 +37,12 @@ public class PersonServiceimp implements IPersonService {
     }
 
     @Override
-    public ResultBean<List<Person>> queryPersons() {
+    public ResultBean<Person> queryPersons() {
         List<Person> persons = mapper.queryPersons();
-        ResultBean<List<Person>> resultBean = new ResultBean<>();
+        ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
-        resultBean.setData(Collections.singletonList(persons));
+        resultBean.setData(persons);
         return resultBean;
     }
 
