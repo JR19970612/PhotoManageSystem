@@ -52,7 +52,7 @@
     <select id="selectAlbumByName" resultMap="albumMap">
         select * from album
         <where>
-            album_name=#{albumName}
+            album_name like concat(concat('%',#{albumName}),'%')
         </where>
     </select>
 

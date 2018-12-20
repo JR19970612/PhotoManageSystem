@@ -61,11 +61,11 @@ public class AlbumServiceImp implements IAlbumService {
 
     @Override
     public ResultBean<Album> queryAlbum(String album_name) {
-        Album album = mapper.selectAlbumByName(album_name);
+        List<Album> album = mapper.selectAlbumByName(album_name);
         resultBean = new ResultBean<Album>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询相册成功");
-        resultBean.setData(Arrays.asList(album));
+        resultBean.setData(album);
         return resultBean;
     }
 

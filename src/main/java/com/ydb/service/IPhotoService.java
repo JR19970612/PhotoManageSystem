@@ -29,5 +29,7 @@ public interface IPhotoService {
 
     //分页查询全部图片信息
     ResultBean<Photo> queryPhoto(Integer pageSize,  Integer pageNum);
+
+//    ResultBean<Photo> selectPhotoByName();
 }
 
