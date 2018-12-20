@@ -16,16 +16,12 @@ import java.util.Map;
 public abstract class AbstractQueryCacheApsect<T> {
 
     //数据添加和更新的缓存切面
-    public Integer updateCache(ProceedingJoinPoint point) {
+    public Integer updateCache(ProceedingJoinPoint point) throws Throwable {
         T data = (T) point.getArgs()[0];
         Integer result = 0;//数据库操作受影响列
-        try {
-            result = (Integer) point.proceed();
-            if (result != 0) {//当数据真正对数据库产生影响时才进行缓存操作
-                update(data);
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        result = (Integer) point.proceed();
+        if (result != 0) {//当数据真正对数据库产生影响时才进行缓存操作
+            update(data);
         }
         return result;
     }
@@ -33,16 +29,12 @@ public abstract class AbstractQueryCacheApsect<T> {
     public abstract void update(T t);
 
     //数据添加和更新的缓存切面
-    public Integer deleteCache(ProceedingJoinPoint point) {
+    public Integer deleteCache(ProceedingJoinPoint point) throws Throwable {
         T args = (T) point.getArgs()[0];
         Integer result = 0;//数据库操作受影响列
-        try {
-            result = (Integer) point.proceed();
-            if (result != 0) {
-                delete(args);
-            }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        result = (Integer) point.proceed();
+        if (result != 0) {
+            delete(args);
         }
         return result;
     }
@@ -51,33 +43,28 @@ public abstract class AbstractQueryCacheApsect<T> {
     public abstract void delete(T args);
 
     //分组缓存数据到对象内
-    public void initObject(T t, Map<String, String> entries) {
+    public void initObject(T t, Map<String, String> entries) throws InvocationTargetException, IllegalAccessException {
         for (Map.Entry<String, String> entry : entries.entrySet()) {
-            try {
-                Method[] methods = t.getClass().getMethods();
-                for (Method method : methods) {
-                    if (method.getName().equals("set" + entry.getKey())) {
-                        Class<?> param = method.getParameterTypes()[0];
-                        switch (param.getSimpleName()) {
-                            case "String": {
-                                method.invoke(t, entry.getValue());
-                                break;
-                            }
-                            case "Date": {
-                                method.invoke(t, new Date(entry.getValue()));
-                                break;
-                            }
-                            case "Integer": {
-                                method.invoke(t, Integer.valueOf(entry.getValue()));
-                                break;
-                            }
+
+            Method[] methods = t.getClass().getMethods();
+            for (Method method : methods) {
+                if (method.getName().equals("set" + entry.getKey())) {
+                    Class<?> param = method.getParameterTypes()[0];
+                    switch (param.getSimpleName()) {
+                        case "String": {
+                            method.invoke(t, entry.getValue());
+                            break;
+                        }
+                        case "Date": {
+                            method.invoke(t, new Date(entry.getValue()));
+                            break;
+                        }
+                        case "Integer": {
+                            method.invoke(t, Integer.valueOf(entry.getValue()));
+                            break;
                         }
                     }
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
             }
         }
     }

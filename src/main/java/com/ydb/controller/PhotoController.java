@@ -5,7 +5,8 @@ import com.ydb.JsonView.PhotoView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
-import com.ydb.service.IPhotoService;
+
+import com.ydb.service.imp.PhotoServiceImp;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +22,7 @@ import java.util.List;
 @RestController
 public class PhotoController {
     @Autowired
-    IPhotoService photoService;
+   PhotoServiceImp photoService;
 
 
     @ApiOperation(value = "上传单张图片信息")
@@ -42,6 +43,7 @@ public class PhotoController {
     @ApiOperation(value = "删除单张图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "photoName", value = "图片名", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "photoOriginalUrl", value = "图片原图URL", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "photoThumUrl", value = "图片缩略图URL", required = true, paramType = "query", dataType = "String"),
     }
@@ -89,7 +91,7 @@ public class PhotoController {
     @ApiOperation(value = "获取图片信息", notes = "获取分页图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageSize", value = "页面大小", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "path", dataType = "int"),
     }
     )
     @GetMapping(value = "/photo/{pageSize}/{pageNum}")

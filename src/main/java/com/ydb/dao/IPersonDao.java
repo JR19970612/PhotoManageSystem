@@ -18,7 +18,6 @@ public interface IPersonDao {
 
     List<Person> queryPersons();
 
-
     Person queryPerson(Integer personId);
 
     int deletePerson(Person person);

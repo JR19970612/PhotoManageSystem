@@ -5,6 +5,8 @@ import com.ydb.JsonView.SuccessView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Comment;
 import com.ydb.service.ICommentService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +21,12 @@ public class CommentController {
     ICommentService commentService;
 
     @ApiOperation(value = "添加评论", notes = "添加评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "photoId", value = "评论图片ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "commentContent", value = "评论内容", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
+    }
+    )
     @PostMapping("/comment")
     @JsonView(SuccessView.class)
     public ResultBean addComment(Comment comment) {
@@ -27,6 +35,10 @@ public class CommentController {
 
 
     @ApiOperation(value = "删除评论", notes = "删除评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commentId", value = "评论ID", required = true, paramType = "query", dataType = "int"),
+    }
+    )
     @DeleteMapping("/comment")
     @JsonView(SuccessView.class)
     public ResultBean dropComment(Comment comment) {

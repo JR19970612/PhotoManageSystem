@@ -36,6 +36,7 @@ public class PersonServiceimp implements IPersonService {
         PersonResultBean = new ResultBean<>();
         PersonResultBean.setStatus(ResultBean.SUCCSSED_CODE);
         person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
+        //TODO 设置用户默认头像
         PersonResultBean.setData(Arrays.asList(person));
         int code = mapper.insertPerson(person);
         if (code == 1) {
