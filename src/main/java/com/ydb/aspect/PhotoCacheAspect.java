@@ -17,7 +17,7 @@ import java.util.*;
  * @date:2018/12/16
  */
 
-public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
+public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     private String namespace = "photo:photoId:%d:photoName:%s";//缓存命名空间
 

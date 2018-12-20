@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
 public class AlbumController {
 
@@ -31,7 +30,7 @@ public class AlbumController {
     )
     @PostMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> addAlbum(Album album) {
+    public ResultBean<Album> addAlbum(@PathVariable Album album) {
         return iAlbumService.addAlbum(album);
     }
 
@@ -56,7 +55,7 @@ public class AlbumController {
     )
     @PutMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> updateAlbum( Album album) {
+    public ResultBean<Album> updateAlbum(Album album) {
         return iAlbumService.updateAlbum(album);
     }
 

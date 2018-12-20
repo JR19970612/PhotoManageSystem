@@ -18,7 +18,7 @@ import java.util.*;
  * @description: Comment评论缓存切面
  * @date:2018/12/16
  */
-public class QueryCommentCacheAspect extends AbstractQueryCacheApsect<Comment> {
+public class CommentCacheAspect extends AbstractCacheApsect<Comment> {
     private String namespace = "comment:photoId:%d";//缓存命名空间
 
     @Autowired
