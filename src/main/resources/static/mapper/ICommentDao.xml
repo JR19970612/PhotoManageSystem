@@ -31,8 +31,8 @@
     <delete id="deleteComment">
         delete from comment
         <where>
-            <if test="photoId!=null">
-                photo_id=#{photoId}
+            <if test="commentId!=null">
+                comment_id=#{commentId}
             </if>
         </where>
     </delete>
