@@ -30,15 +30,15 @@
     <update id="updateAlbum" parameterType="Album">
         UPDATE album
         <set>
-            <if test="album_name!=null">
+            <if test="albumName!=null">
                 album_name =#{albumName},
             </if>
-            <if test="album_desc!=null">
+            <if test="albumDesc!=null">
                 album_desc=#{albumDesc},
             </if>
         </set>
         <where>
-            album_id=#{album_id}
+            album_id=#{albumId}
         </where>
     </update>
 

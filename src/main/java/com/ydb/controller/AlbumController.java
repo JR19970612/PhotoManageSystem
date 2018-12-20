@@ -55,7 +55,7 @@ public class AlbumController {
     )
     @PutMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> updateAlbum(@PathVariable Album album) {
+    public ResultBean<Album> updateAlbum(Album album) {
         return iAlbumService.updateAlbum(album);
     }
 

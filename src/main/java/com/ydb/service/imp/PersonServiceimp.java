@@ -93,8 +93,10 @@ public class PersonServiceimp implements IPersonService {
             loginPerson = null;
         }
         if (loginPerson == null) {
+            resultBean.setStatus(ResultBean.FAILURE_CODE);
             resultBean.setMsg("登陆失败");
         } else {
+            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
             resultBean.setMsg("登陆成功");
         }
         resultBean.setData(Arrays.asList(person));
