@@ -70,7 +70,7 @@ public class AlbumServiceImp implements IAlbumService {
     }
 
     @Override
-    public ResultBean<List<Album>> queryAlbum(Integer pageSize, Integer pageNub) {
+    public ResultBean<Album> queryAlbum(Integer pageSize, Integer pageNub) {
         PageHelper.startPage(pageNub, pageSize);
         Page<Album> page = mapper.selectAllAlbum();
         resultBean = new ResultBean<Album>();
@@ -81,7 +81,7 @@ public class AlbumServiceImp implements IAlbumService {
     }
 
     @Override
-    public ResultBean<List<Album>> queryAlbum() {
+    public ResultBean<Album> queryAlbum() {
         List<Album> albums = mapper.selectAllAlbum();
         resultBean = new ResultBean<Album>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);

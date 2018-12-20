@@ -64,7 +64,7 @@ public class PersonController {
     @ApiOperation(value = "查询所有用户信息")
     @GetMapping("/person")
     @JsonView(SuccessView.class)
-    public ResultBean<List<Person>> queryPersons() {
+    public ResultBean<Person> queryPersons() {
         return PersonService.queryPersons();
     }
 
