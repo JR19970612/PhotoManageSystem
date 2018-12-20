@@ -31,7 +31,7 @@ public class PhotoController {
             @ApiImplicitParam(name = "albumId", value = "相册ID", required = true, paramType = "form", dataType = "String"),
     }
     )
-    @PostMapping(value = "/photo")
+    @PostMapping(value = "/photo", params = {"photoName", "photoName", "photoDesc", "albumId"})
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> uploadPhoto(MultipartHttpServletRequest request, @Validated Photo photo) throws IOException {
         return photoService.addPhoto(request, photo);
@@ -46,7 +46,7 @@ public class PhotoController {
             @ApiImplicitParam(name = "photoThumUrl", value = "图片缩略图URL", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @DeleteMapping(value = "/photo")
+    @DeleteMapping(value = "/photo", params = {"photoId", "photoName", "photoOriginalUrl", "photoThumUrl"})
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> dropPhoto(Photo photo) {
         return photoService.dropPhoto(photo);
@@ -61,7 +61,7 @@ public class PhotoController {
             @ApiImplicitParam(name = "albumId", value = "相册ID", required = false, paramType = "query", dataType = "int"),
     }
     )
-    @PutMapping(value = "/photo")
+    @PutMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> updatePhoto(Photo photo) {
         return photoService.updatePhoto(photo);
@@ -73,7 +73,7 @@ public class PhotoController {
             @ApiImplicitParam(name = "params", value = "查询参数", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @GetMapping(value = "/photo/{type}")
+    @GetMapping(value = "/photo/{type}",params = "params")
     @JsonView(PhotoView.QueryDetail.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
         if (type != null & type.equals("photoId")) {

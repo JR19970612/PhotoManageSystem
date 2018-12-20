@@ -27,7 +27,7 @@ public class CommentController {
             @ApiImplicitParam(name = "personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @PostMapping("/comment")
+    @PostMapping(value = "/comment",params = {"photoId","commentContent","personId"})
     @JsonView(SuccessView.class)
     public ResultBean addComment(Comment comment) {
         return commentService.addComment(comment);
@@ -36,10 +36,11 @@ public class CommentController {
 
     @ApiOperation(value = "删除评论", notes = "删除评论")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "commentId", value = "评论ID", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @DeleteMapping("/comment")
+    @DeleteMapping(value = "/comment",params = {"photoId","commentId"})
     @JsonView(SuccessView.class)
     public ResultBean dropComment(Comment comment) {
         return commentService.dropComment(comment);

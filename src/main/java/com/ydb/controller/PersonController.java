@@ -25,11 +25,10 @@ public class PersonController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "personName", value = "用户名", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "personPassword", value = "用户密码", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "personAvatarUrl", value = "头像地址", required = false, paramType = "query", dataType = "String"),
     }
     )
-    @PostMapping("/person")
-    @JsonView(SuccessView.class)
+    @PostMapping(value = "/person", params = {"personName", "personPassword"})
+    @JsonView({SuccessView.class})
     public ResultBean<Person> insertPerson(Person Person) {
         return PersonService.insertPerson(Person);
     }
@@ -40,7 +39,7 @@ public class PersonController {
             @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "path", dataType = "int"),
     }
     )
-    @DeleteMapping("/person/{personId}")
+    @DeleteMapping(value = "/person/{personId}", params = "personId")
     @JsonView(SuccessView.class)
     public ResultBean<Person> deletePerson(@PathVariable Integer personId) {
         return PersonService.deletePerson(personId);
@@ -55,7 +54,7 @@ public class PersonController {
             @ApiImplicitParam(name = "personAvatarUrl", value = "头像地址", required = false, paramType = "query", dataType = "String"),
     }
     )
-    @PutMapping("/person")
+    @PutMapping(value = "/person",params = {"personId"})
     @JsonView(SuccessView.class)
     public ResultBean<Person> updatePerson(Person person) {
         return PersonService.updatePerson(person);
@@ -87,7 +86,7 @@ public class PersonController {
             @ApiImplicitParam(name = "personPassword", value = "用户密码", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @PutMapping("/loginPerson")
+    @GetMapping(value = "/loginPerson",params = {"personName","personPassword"})
     @JsonView(SuccessView.class)
     public ResultBean<Person> loginPerson(Person person) {
         return PersonService.loginPerson(person);

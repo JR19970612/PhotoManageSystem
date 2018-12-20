@@ -28,7 +28,7 @@ public class AlbumController {
 
     }
     )
-    @PostMapping("/Album")
+    @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})
     @JsonView(SuccessView.class)
     public ResultBean<Album> addAlbum(@PathVariable Album album) {
         return iAlbumService.addAlbum(album);
@@ -53,8 +53,8 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @PutMapping("/Album")
-    @JsonView(SuccessView.class)
+    @PutMapping(value = "/Album", params = "albumId")
+    @JsonView({SuccessView.class})
     public ResultBean<Album> updateAlbum(Album album) {
         return iAlbumService.updateAlbum(album);
     }
@@ -66,7 +66,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "params", value = "查询参数", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @GetMapping(value = "/album/{type}")
+    @GetMapping(value = "/album/{type}", params = "params")
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumById(@PathVariable String type, @RequestParam String params) {
         if (type != null & type.equals("AlbumId")) {
