@@ -31,6 +31,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
 
     @Bean
     public RedirectView redirectView() {
-        return new RedirectView("https://www.baidu.com");
+        return new RedirectView("http://127.0.0.1:8848/后台模版/index.html/2/9");
     }
 }
