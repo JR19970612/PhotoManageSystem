@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -57,9 +58,10 @@ public class AlbumController {
     )
     @PutMapping(value = "/Album", params = "albumId")
     @JsonView({SuccessView.class})
-    public void updateAlbum(HttpServletResponse response, Album album) throws IOException {
+    public ModelAndView updateAlbum(HttpServletResponse response, Album album) throws IOException {
         ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
-        response.sendRedirect("/index.html?status=" + resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("redirectView", "status", resultBean.getStatus());
+        return modelAndView;
     }
 
 

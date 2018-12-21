@@ -1,16 +1,13 @@
 package com.ydb.interceptor;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.ydb.JsonView.ExceptionView;
 import com.ydb.bean.ExceptionBean;
 import com.ydb.bean.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -19,70 +16,65 @@ import java.util.Date;
  * @description: 全局异常处理
  * @date:2018/12/16
  */
-@ResponseBody
+@ControllerAdvice
 public class ExceptionInterceptor {
     Logger logger = LoggerFactory.getLogger(ExceptionInterceptor.class);
 
     @ExceptionHandler({Exception.class})
-    @JsonView(ExceptionView.class)
-    public ResultBean handlerException(Exception e, HttpServletResponse response) {
+    public String handlerException(Exception e, HttpServletRequest request) {
         //控制台打印异常信息
         e.printStackTrace();
-        logger.error(e.getMessage(), e.getCause());
-        ResultBean exceptionResult = new ResultBean();
-        //判断异常类型
-        judgeException(e, response, exceptionResult);
         //封装异常信息
-        ExceptionBean exceptionBean = new ExceptionBean();
-        exceptionBean.setExceptionName(e.getClass().getName());
-        exceptionBean.setTime(new Date().toString());
-        exceptionBean.setExcetionMessage(e.getMessage());
-        exceptionResult.setException(exceptionBean);
-        return exceptionResult;
+        ResultBean exceptionResult = new ResultBean();
+        initException(e, request, exceptionResult);
+        //将异常信息存放到reqeust域中，供异常处理器处理
+        request.setAttribute("ERROR_BEAN", exceptionResult);
+        //转发到/error(自定义异常处理器:PmyErrorController)
+        return "forward:/error";
     }
 
-    public void judgeException(Exception e, HttpServletResponse response, ResultBean resultBean) {
+    public void initException(Exception e, HttpServletRequest request, ResultBean resultBean) {
         int status = ResultBean.FAILURE_CODE;
         String msg = "服务器异常";
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         switch (e.getClass().getSimpleName()) {
             case "BindException": {
                 status = ResultBean.BINDEXCEPTION_CODE;
                 msg = "数据校验异常";
-                response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
             case "ParamsException": {
                 status = ResultBean.PARAMSEXCPEITON_CODE;
                 msg = "参数异常";
-                response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
             case "MultipartException": {
                 status = ResultBean.UPLOADFILESIEZEXPTION_CODE;
                 msg = "上传文件大小超出界限";
-                response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
             case "FomatTypeException": {
                 status = ResultBean.FILEFOMATTYPEEZEXPTION_CODE;
                 msg = "不支持该格式文件上传";
-                response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
             case "DuplicateKeyException": {
                 status = ResultBean.DAOEXCEPTION;
                 msg = "请求确认上传参数";
-                response.setStatus(HttpStatus.FORBIDDEN.value());
                 break;
             }
         }
+        request.setAttribute("javax.servlet.error.status_code", 400);
         StackTraceElement stackTraceElement = e.getStackTrace()[0];
         String errorMsg = "文件名：" + stackTraceElement.getFileName() +
                 "\r\n类名：" + stackTraceElement.getClassName() +
                 "\r\n方法名：" + stackTraceElement.getMethodName() +
                 "\r\n抛出异常行号：" + stackTraceElement.getLineNumber();
+        ExceptionBean exceptionBean = new ExceptionBean();
+        exceptionBean.setExceptionName(e.getClass().getName());
+        exceptionBean.setTime(new Date().toString());
+        exceptionBean.setExcetionMessage(errorMsg);
+        resultBean.setException(exceptionBean);
         resultBean.setStatus(status);
-        resultBean.setMsg(errorMsg);
+        resultBean.setMsg(msg);
     }
 }
