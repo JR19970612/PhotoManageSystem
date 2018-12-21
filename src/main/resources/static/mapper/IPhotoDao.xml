@@ -54,7 +54,7 @@
     <select id="selectPhotoByName" resultMap="photoMap">
         select * from photo
         <where>
-            photo_name=#{name}
+            photo_name like concat(concat('%',#{name}),'%')
         </where>
     </select>
 
@@ -67,6 +67,7 @@
     </select>
 
     <select id="selectPhotoByAlbumId" resultType="Photo">
+
         select * from photo
         <where>
             album_id=#{albumId}
