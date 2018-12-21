@@ -1,9 +1,12 @@
 package com.ydb.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.RedirectView;
+
 /**
  * @author: create by JR
  * @version: v1.0
@@ -12,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果这里集成WebMvcConfigurerSupport的话，接下来的配置将会覆盖父类的方法配置，比如这里配置资源索引话，Springboot默认的资源索引路径（/static、/resource...）将不起作用，
-
 
 
     @Override
@@ -25,5 +27,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         super.addCorsMappings(registry);
+    }
+
+    @Bean
+    public RedirectView redirectView() {
+        return new RedirectView("https://www.baidu.com");
     }
 }

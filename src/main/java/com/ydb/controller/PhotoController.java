@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.io.IOException;
 public class PhotoController {
     @Autowired
     PhotoServiceImp photoService;
-
 
     @ApiOperation(value = "上传单张图片信息")
     @ApiImplicitParams({
@@ -33,9 +33,10 @@ public class PhotoController {
     )
     @PostMapping(value = "/photo", params = {"photoName", "photoDesc", "albumId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public void uploadPhoto(MultipartHttpServletRequest request, HttpServletResponse response, Photo photo) throws IOException {
+    public ModelAndView uploadPhoto(MultipartHttpServletRequest request, HttpServletResponse response, Photo photo) throws IOException {
         ResultBean resultBean = photoService.addPhoto(request, photo);
-        response.sendRedirect("/index.html?status="+resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("redirectView", "status", resultBean.getStatus());
+        return modelAndView;
     }
 
 
