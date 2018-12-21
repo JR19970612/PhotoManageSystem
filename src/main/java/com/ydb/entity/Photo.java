@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.PhotoView;
 import com.ydb.JsonView.SuccessView;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,18 +18,15 @@ public class Photo implements Serializable {
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Integer photoId;
 
-    @NotNull
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoName;
 
-    @NotNull
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private String photoDesc;
 
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Date photoCreateTime;
 
-    @NotNull
     @JsonView({PhotoView.QueryRoughly.class, SuccessView.class})
     private Integer albumId;
 

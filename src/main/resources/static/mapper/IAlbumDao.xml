@@ -36,7 +36,6 @@
             <if test="album_desc!=null">
                 album_desc=#{albumDesc},
             </if>
-
         </set>
         <where>
             album_id=#{album_id}

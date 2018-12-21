@@ -3,6 +3,8 @@ package com.ydb.service;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Album;
 
+import java.util.List;
+
 
 public interface IAlbumService {
     //添加相册的信息
@@ -15,11 +17,14 @@ public interface IAlbumService {
     ResultBean<Album> updateAlbum(Album album);
 
     //根据相册的id来查询相册
-    ResultBean<Album> queryAlbumById(Integer album_id);
+    ResultBean<Album> queryAlbum(Integer album_id);
 
     //根据相册的name来查询相册
-    ResultBean<Album> queryAlbumByName(String album_name);
+    ResultBean<Album> queryAlbum(String album_name);
+
+    //分页查询相册
+    ResultBean<List<Album>> queryAlbum(Integer pageSize, Integer pageNum);
 
     //查询所有相册
-    ResultBean<Album> queryAllAlbum();
+    ResultBean<List<Album>> queryAlbum();
 }

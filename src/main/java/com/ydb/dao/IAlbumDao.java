@@ -1,9 +1,8 @@
 package com.ydb.dao;
 
+import com.github.pagehelper.Page;
 import com.ydb.entity.Album;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface IAlbumDao {
@@ -17,5 +16,5 @@ public interface IAlbumDao {
 
     Album selectAlbumByName(String album_name);
 
-    List<Album> selectAllAlbum();
+    Page<Album> selectAllAlbum();
 }

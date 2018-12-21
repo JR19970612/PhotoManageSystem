@@ -17,7 +17,7 @@ import java.util.*;
  * @date:2018/12/16
  */
 
-public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
+public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     private String namespace = "photo:photoId:%d:photoName:%s";//缓存命名空间
 
@@ -30,15 +30,27 @@ public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
 
     @Override
     public void update(Photo photo) {
-        Map<String, String> photoMap = new HashMap<>();
-        photoMap.put("PhotoId", String.valueOf(photo.getPhotoId()));
-        photoMap.put("PhotoName", photo.getPhotoName());
-        photoMap.put("AlbumId", String.valueOf(photo.getAlbumId()));
-        photoMap.put("PhotoCreateTime", photo.getPhotoCreateTime().toString());
-        photoMap.put("PhotoDesc", photo.getPhotoDesc());
-        photoMap.put("PhotoOriginalUrl", photo.getPhotoOriginalUrl());
-        photoMap.put("PhotoThumUrl", photo.getPhotoThumUrl());
-        hashOperations.putAll(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), photoMap);
+        if (photo != null && photo.getPhotoId() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
+        }
+        if (photo != null && photo.getPhotoName() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoName", photo.getPhotoName());
+        }
+        if (photo != null && photo.getAlbumId() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "AlbumId", String.valueOf(photo.getAlbumId()));
+        }
+        if (photo != null && photo.getPhotoDesc() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoDesc", photo.getPhotoDesc());
+        }
+        if (photo != null && photo.getPhotoCreateTime() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime());
+        }
+        if (photo != null && photo.getPhotoOriginalUrl() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());
+        }
+        if (photo != null && photo.getPhotoThumUrl() != null) {
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoThumUrl", photo.getPhotoThumUrl());
+        }
     }
 
 
@@ -48,7 +60,7 @@ public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
-    public List<Photo> queryCacheBeforeSelectDao(ProceedingJoinPoint point) {
+    public List<Photo> queryCacheBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
         Object args = point.getArgs()[0];
         List<Photo> photos = new ArrayList<>();
         Set keys;
@@ -70,11 +82,7 @@ public class QueryPhotoCacheAspect extends AbstractQueryCacheApsect<Photo> {
                 photos.add(photo);
             }
         } else {//不存在则去查询数据库中的数据
-            try {
-                photos = (List<Photo>) point.proceed();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            photos = (List<Photo>) point.proceed();
         }
         return photos;
     }
