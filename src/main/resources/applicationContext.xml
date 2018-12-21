@@ -8,9 +8,9 @@
         <property name="basePackage" value="com.ydb.dao"></property>
     </bean>
     <!--注册缓存处理切面-->
-    <bean id="photoCacheAspect" class="com.ydb.aspect.QueryPhotoCacheAspect"></bean>
-    <bean id="commentCacheAspect" class="com.ydb.aspect.QueryCommentCacheAspect"></bean>
-    <bean id="personCacheAspect" class="com.ydb.aspect.QueryPersonCacheAspect"></bean>
+    <!--<bean id="photoCacheAspect" class="com.ydb.aspect.QueryPhotoCacheAspect"></bean>-->
+    <!--<bean id="commentCacheAspect" class="com.ydb.aspect.QueryCommentCacheAspect"></bean>-->
+    <!--<bean id="personCacheAspect" class="com.ydb.aspect.QueryPersonCacheAspect"></bean>-->
     <!--aspectj织入切面-->
     <!--<aop:config>-->
         <!--&lt;!&ndash;定义IPhotoDao切入点&ndash;&gt;-->
