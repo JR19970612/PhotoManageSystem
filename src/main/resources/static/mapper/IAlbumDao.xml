@@ -13,9 +13,9 @@
 
     <insert id="insertAlbum" parameterType="Album">
         INSERT INTO
-        album(albumName,album_desc,album_createtime)
+        album(album_name,album_desc,album_createtime)
         VALUES (#{albumName},#{albumDesc},#{albumCreatetime})
-        <selectKey resultType="int" keyProperty="album_id" order="AFTER">
+        <selectKey resultType="int" keyProperty="albumId" order="AFTER">
             select @@identity
         </selectKey>
     </insert>
@@ -30,15 +30,15 @@
     <update id="updateAlbum" parameterType="Album">
         UPDATE album
         <set>
-            <if test="album_name!=null">
+            <if test="albumName!=null">
                 album_name =#{albumName},
             </if>
-            <if test="album_desc!=null">
+            <if test="albumDesc!=null">
                 album_desc=#{albumDesc},
             </if>
         </set>
         <where>
-            album_id=#{album_id}
+            album_id=#{albumId}
         </where>
     </update>
 
@@ -52,7 +52,7 @@
     <select id="selectAlbumByName" resultMap="albumMap">
         select * from album
         <where>
-            album_name=#{albumName}
+            album_name like concat(concat('%',#{albumName}),'%')
         </where>
     </select>
 

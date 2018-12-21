@@ -23,8 +23,8 @@ public interface IAlbumService {
     ResultBean<Album> queryAlbum(String album_name);
 
     //分页查询相册
-    ResultBean<List<Album>> queryAlbum(Integer pageSize, Integer pageNum);
+    ResultBean<Album> queryAlbum(Integer pageSize, Integer pageNum);
 
     //查询所有相册
-    ResultBean<List<Album>> queryAlbum();
+    ResultBean<Album> queryAlbum();
 }

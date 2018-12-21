@@ -35,14 +35,14 @@ public class PhotoServiceImp implements IPhotoService {
     @Autowired
     PhotoUtil photoUtil;
 
-    ResultBean resultBean;
 
     @Autowired
     ApplicationContext applicationContext;
 
     @Override
     public ResultBean<Photo> addPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
-
+        int code = -1;
+        ResultBean<Photo> resultBean = new ResultBean();
         MultipartFile multipartFile = request.getFile("photo");
         //判断文件格式
         if (!photoUtil.judgeFormat(multipartFile)) {
@@ -54,15 +54,12 @@ public class PhotoServiceImp implements IPhotoService {
         photo.setPhotoCreateTime(new Date());
         //出现异常删除本地图片
         try {
-            photoDao.insertPhoto(photo);
+            code = photoDao.insertPhoto(photo);
         } catch (Exception e) {
             photoUtil.dropPhoto(photo);
             throw e;
         }
-        //返回response
-        resultBean = new ResultBean<>();
-        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-        resultBean.setMsg("添加成功");
+        initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(photo));
         return resultBean;
     }
@@ -70,30 +67,28 @@ public class PhotoServiceImp implements IPhotoService {
 
     @Override
     public ResultBean<Photo> dropPhoto(Photo photo) {
+        ResultBean<Photo> resultBean = new ResultBean();
         //删除数据库图片信息
-        photoDao.deletePhoto(photo);
+        int code = photoDao.deletePhoto(photo);
         //删除本地磁盘图片
         photoUtil.dropPhoto(photo);
-        //返回reponse数据
-        resultBean = new ResultBean<>();
-        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-        resultBean.setMsg("删除成功");
+        initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList());
         return resultBean;
     }
 
     @Override
     public ResultBean<Photo> updatePhoto(Photo photo) {
-        photoDao.updatePhoto(photo);
-        resultBean = new ResultBean<>();
-        resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-        resultBean.setMsg("修改成功");
+        ResultBean<Photo> resultBean = new ResultBean();
+        int code = photoDao.updatePhoto(photo);
+        initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(photo));
         return resultBean;
     }
 
     @Override
     public ResultBean<Photo> queryPhoto(Integer photoId) {
+        ResultBean<Photo> resultBean = new ResultBean();
         List<Photo> photos = photoDao.selectPhotoById(photoId);
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -104,6 +99,7 @@ public class PhotoServiceImp implements IPhotoService {
 
     @Override
     public ResultBean<Photo> queryPhoto(String photoName) {
+        ResultBean<Photo> resultBean = new ResultBean();
         List<Photo> photos = photoDao.selectPhotoByName(photoName);
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -113,8 +109,9 @@ public class PhotoServiceImp implements IPhotoService {
     }
 
     @Override
-    public ResultBean<List<Photo>> queryPhoto(Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum,pageSize);
+    public ResultBean<Photo> queryPhoto(Integer pageSize, Integer pageNum) {
+        ResultBean<Photo> resultBean = new ResultBean();
+        PageHelper.startPage(pageNum, pageSize);
         Page<Photo> photos = photoDao.selectAllPhoto();
         resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
@@ -123,4 +120,14 @@ public class PhotoServiceImp implements IPhotoService {
         return resultBean;
     }
 
+    private void initResultBean(int code, ResultBean resultBean) {
+        if (code > 0) {
+            //插入数据成功
+            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
+            resultBean.setMsg("操作成功");
+        } else {
+            resultBean.setStatus(ResultBean.FAILURE_CODE);
+            resultBean.setMsg("操作失败");
+        }
+    }
 }

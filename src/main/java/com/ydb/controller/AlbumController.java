@@ -29,9 +29,9 @@ public class AlbumController {
 
     }
     )
-    @PostMapping("/Album")
+    @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})
     @JsonView(SuccessView.class)
-    public ResultBean<Album> addAlbum(@PathVariable Album album) {
+    public ResultBean<Album> addAlbum( Album album) {
         return iAlbumService.addAlbum(album);
     }
 
@@ -40,10 +40,10 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumId", value = "相册ID", required = true, paramType = "path", dataType = "int"),
     }
     )
-    @DeleteMapping(value = "/Album/{album_id}")
+    @DeleteMapping(value = "/Album/{albumId}")
     @JsonView(SuccessView.class)
-    public ResultBean<Album> dropAlbum(@PathVariable Integer album_id) {
-        return iAlbumService.dropAlbum(album_id);
+    public ResultBean<Album> dropAlbum(@PathVariable Integer albumId) {
+        return iAlbumService.dropAlbum(albumId);
     }
 
 
@@ -54,9 +54,9 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @PutMapping("/Album")
-    @JsonView(SuccessView.class)
-    public ResultBean<Album> updateAlbum(@PathVariable Album album) {
+    @PutMapping(value = "/Album", params = "albumId")
+    @JsonView({SuccessView.class})
+    public ResultBean<Album> updateAlbum(Album album) {
         return iAlbumService.updateAlbum(album);
     }
 
@@ -67,7 +67,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "params", value = "查询参数", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @GetMapping(value = "/album/{type}")
+    @GetMapping(value = "/album/{type}", params = "params")
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumById(@PathVariable String type, @RequestParam String params) {
         if (type != null & type.equals("AlbumId")) {
@@ -87,7 +87,7 @@ public class AlbumController {
     )
     @GetMapping(value = "/Album/{pageSize}/{pageNum}")
     @JsonView(SuccessView.class)
-    public ResultBean<List<Album>> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
+    public ResultBean<Album> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
         return iAlbumService.queryAlbum(pageSize, pageNum);
     }
 
@@ -95,7 +95,7 @@ public class AlbumController {
     @ApiOperation(value = "查询所有相册信息")
     @GetMapping("/Album")
     @JsonView(SuccessView.class)
-    public ResultBean<List<Album>> getAllAlbum() {
+    public ResultBean<Album> getAllAlbum() {
         return iAlbumService.queryAlbum();
     }
 

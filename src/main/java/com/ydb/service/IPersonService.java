@@ -10,7 +10,7 @@ public interface IPersonService {
     ResultBean<Person> insertPerson(Person person);
 
     //查询所有个人信息
-    ResultBean<List<Person>> queryPersons();
+    ResultBean<Person> queryPersons();
 
     //查询指定Id的个人信息
     ResultBean<Person> queryPerson(Integer personId);
