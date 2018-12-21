@@ -60,7 +60,7 @@ public class PersonController {
     @JsonView(SuccessView.class)
     public ModelAndView updatePerson(HttpServletResponse response,Person person) throws IOException {
         ResultBean<Person> resultBean = PersonService.updatePerson(person);
-        ModelAndView modelAndView = new ModelAndView("baiduView", "status", resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
         return modelAndView;
     }
 

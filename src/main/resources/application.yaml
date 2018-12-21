@@ -30,6 +30,7 @@ mybatis:
     map-underscore-to-camel-case: true #开启驼峰命名
 
 
+
 #日志配置
 logging:
   level: #输出日志级别

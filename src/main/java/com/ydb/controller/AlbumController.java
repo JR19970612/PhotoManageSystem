@@ -60,7 +60,7 @@ public class AlbumController {
     @JsonView({SuccessView.class})
     public ModelAndView updateAlbum(HttpServletResponse response, Album album) throws IOException {
         ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
-        ModelAndView modelAndView = new ModelAndView("redirectView", "status", resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
         return modelAndView;
     }
 

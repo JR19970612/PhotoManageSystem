@@ -30,7 +30,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
     }
 
     @Bean
-    public RedirectView redirectView() {
-        return new RedirectView("http://127.0.0.1:8848/后台模版/index.html/2/9");
+    public RedirectView manageRedirectView() {
+        return new RedirectView("/manage/photo/index.html");
     }
 }
