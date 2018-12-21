@@ -35,7 +35,8 @@ public class PhotoController {
     @JsonView(PhotoView.QueryRoughly.class)
     public void uploadPhoto(MultipartHttpServletRequest request, HttpServletResponse response, Photo photo) throws IOException {
         ResultBean resultBean = photoService.addPhoto(request, photo);
-        response.sendRedirect("/index.html?status="+resultBean.getStatus());
+
+        response.sendRedirect("www.baidu.com");
     }
 
 
