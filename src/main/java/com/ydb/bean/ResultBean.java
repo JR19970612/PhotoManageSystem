@@ -6,6 +6,7 @@ import com.ydb.JsonView.ExceptionView;
 import com.ydb.JsonView.SuccessView;
 
 import java.util.List;
+
 /**
  * @author: create by JR
  * @version: v1.0
@@ -17,13 +18,8 @@ public class ResultBean<E> {
     /**
      * 状态码定义
      */
-    public static final Integer FAILURE_CODE = -1;//失败
-    public static final Integer SUCCSSED_CODE = 0;//成功
-    public static final Integer BINDEXCEPTION_CODE = 1;//数据校验异常
-    public static final Integer PARAMSEXCPEITON_CODE = 2;//携带参数异常
-    public static final Integer UPLOADFILESIEZEXPTION_CODE = 3;//上传文件超出界限
-    public static final Integer FILEFOMATTYPEEZEXPTION_CODE = 4;
-    public static final Integer DAOEXCEPTION = 5;
+    public static final Integer FAILURE_CODE = 400;//失败
+    public static final Integer SUCCSSED_CODE = 200;//成功
 
     /**
      * 定义返回字段

@@ -38,36 +38,37 @@ public class ExceptionInterceptor {
     }
 
     public void initException(Exception e, HttpServletRequest request, ResultBean resultBean) {
+
         int status = ResultBean.FAILURE_CODE;
         String msg = "服务器异常";
         switch (e.getClass().getSimpleName()) {
             case "BindException": {
-                status = ResultBean.BINDEXCEPTION_CODE;
+                status = 400;
                 msg = "数据校验异常";
                 break;
             }
             case "ParamsException": {
-                status = ResultBean.PARAMSEXCPEITON_CODE;
+                status = 400;
                 msg = "参数异常";
                 break;
             }
             case "MultipartException": {
-                status = ResultBean.UPLOADFILESIEZEXPTION_CODE;
+                status = 413;
                 msg = "上传文件大小超出界限";
                 break;
             }
             case "FomatTypeException": {
-                status = ResultBean.FILEFOMATTYPEEZEXPTION_CODE;
+                status = 415;
                 msg = "不支持该格式文件上传";
                 break;
             }
             case "DuplicateKeyException": {
-                status = ResultBean.DAOEXCEPTION;
+                status = 417;
                 msg = "请求确认上传参数";
                 break;
             }
         }
-        request.setAttribute("javax.servlet.error.status_code", 400);
+        request.setAttribute("javax.servlet.error.status_code", status);
         StackTraceElement stackTraceElement = e.getStackTrace()[0];
         String errorMsg = "文件名：" + stackTraceElement.getFileName() +
                 "\r\n类名：" + stackTraceElement.getClassName() +

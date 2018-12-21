@@ -59,6 +59,7 @@ public class PmyErrorController extends AbstractErrorController {
         HttpStatus status = getStatus(request);
         return new ResponseEntity<ResultBean>((ResultBean) body.get("error"), status);
     }
+
     @Override
     public String getErrorPath() {
         return this.errorProperties.getPath();

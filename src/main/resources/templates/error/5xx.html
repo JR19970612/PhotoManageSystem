@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>异常处理页面</title>
+    <title>500异常页面</title>
 </head>
 <body>
-<h3>400---499之内错误代码的处理页面</h3>
-<h2>404错误代码服务器错误</h2>
-<h5>错误代码:[[${status}]]</h5>
-<h5>时间戳:[[${timestamp}]]</h5>
-<h5>状态码:[[${status}]]</h5>
-<h5>错误提示:[[${error}]]</h5>
-<h5>异常对象:[[${exception}]]</h5>
-<h5>异常消息:[[${message}]]</h5>
-<h5>JSR303数据校验的错误都在这里:[[${errors}]]</h5>
-
+<div th:inline="text">响应状态码:[[${error.status}]]</div>
+<div th:inline="text">错误信息:[[${error.msg}]]</div>
+<div th:inline="text">异常对象名:[[${error.exception.exceptionName}]]</div>
+<div th:inline="text">异常信息:[[${error.exception.excetionMessage}]]</div>
+<div th:inline="text">错误时间:[[${error.exception.time}]]</div>
 </body>
 </html>

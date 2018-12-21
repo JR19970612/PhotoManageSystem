@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: com.ydb.config
+ * @description: 全局异常处理配置
  * @date:2018/12/21
  */
 @Configuration
@@ -32,7 +32,9 @@ public class ErrorConfig {
         this.errorViewResolvers = errorViewResolversProvider.getIfAvailable();
     }
 
-
+    /**
+     * 定制错误响应信息
+     */
     private class ErrorAttributes extends DefaultErrorAttributes {
         public static final String ERROR_ATTRIBUTE = "ERROR_BEAN";
 
@@ -49,7 +51,6 @@ public class ErrorConfig {
     public ErrorAttributes errorAttributes() {
         return new ErrorAttributes();
     }
-
 
 
     @Bean
