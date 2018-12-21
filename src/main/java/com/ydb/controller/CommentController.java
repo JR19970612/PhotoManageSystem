@@ -27,7 +27,7 @@ public class CommentController {
             @ApiImplicitParam(name = "personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @PostMapping(value = "/comment",params = {"photoId","commentContent","personId"})
+    @PostMapping(value = "/comment",params = {"photoId","commentContent","person.personId"})
     @JsonView(SuccessView.class)
     public ResultBean addComment(Comment comment) {
         return commentService.addComment(comment);

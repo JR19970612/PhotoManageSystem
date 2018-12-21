@@ -10,8 +10,10 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
@@ -56,8 +58,10 @@ public class PersonController {
     )
     @PutMapping(value = "/person",params = {"personId"})
     @JsonView(SuccessView.class)
-    public ResultBean<Person> updatePerson(Person person) {
-        return PersonService.updatePerson(person);
+    public ModelAndView updatePerson(HttpServletResponse response,Person person) throws IOException {
+        ResultBean<Person> resultBean = PersonService.updatePerson(person);
+        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
+        return modelAndView;
     }
 
     @ApiOperation(value = "查询所有用户信息")

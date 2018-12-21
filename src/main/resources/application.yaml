@@ -25,9 +25,10 @@ spring:
 #Mybatis配置
 mybatis:
   type-aliases-package: com.ydb.entity  #别名
-  mapper-locations:  classpath:static/mapper/*.xml  #映射文件
+  mapper-locations:  classpath:mybatis/mapper/*.xml  #映射文件
   configuration:
     map-underscore-to-camel-case: true #开启驼峰命名
+
 
 
 #日志配置

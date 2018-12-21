@@ -35,7 +35,6 @@ public class PhotoServiceImp implements IPhotoService {
     @Autowired
     PhotoUtil photoUtil;
 
-
     @Autowired
     ApplicationContext applicationContext;
 
