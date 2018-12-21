@@ -41,6 +41,7 @@ public class PmyErrorController extends AbstractErrorController {
     @RequestMapping(produces = "text/html")
     public ModelAndView errorHtml(HttpServletRequest request,
                                   HttpServletResponse response) {
+
         HttpStatus status = getStatus(request);
         Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(
                 request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));

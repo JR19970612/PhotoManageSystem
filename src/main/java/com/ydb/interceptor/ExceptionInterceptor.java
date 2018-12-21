@@ -4,8 +4,10 @@ import com.ydb.bean.ExceptionBean;
 import com.ydb.bean.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -18,6 +20,8 @@ import java.util.Date;
  */
 @ControllerAdvice
 public class ExceptionInterceptor {
+    @Autowired
+    WebApplicationContext applicationContext;
     Logger logger = LoggerFactory.getLogger(ExceptionInterceptor.class);
 
     @ExceptionHandler({Exception.class})

@@ -4,7 +4,6 @@ import com.ydb.bean.ResultBean;
 import com.ydb.controller.PmyErrorController;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorViewResolver;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -51,8 +50,10 @@ public class ErrorConfig {
         return new ErrorAttributes();
     }
 
+
+
     @Bean
-    public ErrorController errorController(org.springframework.boot.autoconfigure.web.ErrorAttributes errorAttributes) {
+    public PmyErrorController errorController(org.springframework.boot.autoconfigure.web.ErrorAttributes errorAttributes) {
         return new PmyErrorController(errorAttributes, this.serverProperties.getError(),
                 this.errorViewResolvers);
     }
