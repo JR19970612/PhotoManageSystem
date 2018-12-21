@@ -5,23 +5,22 @@ import com.ydb.JsonView.PhotoView;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
-
 import com.ydb.service.imp.PhotoServiceImp;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @CrossOrigin
 @RestController
 public class PhotoController {
     @Autowired
-   PhotoServiceImp photoService;
+    PhotoServiceImp photoService;
 
 
     @ApiOperation(value = "上传单张图片信息")
@@ -32,10 +31,11 @@ public class PhotoController {
             @ApiImplicitParam(name = "albumId", value = "相册ID", required = true, paramType = "form", dataType = "String"),
     }
     )
-    @PostMapping(value = "/photo", params = {"photoName", "photoName", "photoDesc", "albumId"})
+    @PostMapping(value = "/photo", params = {"photoName", "photoDesc", "albumId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<Photo> uploadPhoto(MultipartHttpServletRequest request, @Validated Photo photo) throws IOException {
-        return photoService.addPhoto(request, photo);
+    public void uploadPhoto(MultipartHttpServletRequest request, HttpServletResponse response, Photo photo) throws IOException {
+        ResultBean resultBean = photoService.addPhoto(request, photo);
+        response.sendRedirect("/index.html?status="+resultBean.getStatus());
     }
 
 
@@ -74,7 +74,7 @@ public class PhotoController {
             @ApiImplicitParam(name = "params", value = "查询参数", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @GetMapping(value = "/photo/{type}",params = "params")
+    @GetMapping(value = "/photo/{type}", params = "params")
     @JsonView(PhotoView.QueryDetail.class)
     public ResultBean<Photo> getPhotoByType(@PathVariable String type, String params) {
         if (type != null & type.equals("photoId")) {

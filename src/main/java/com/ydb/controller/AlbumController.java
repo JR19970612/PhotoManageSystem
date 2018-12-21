@@ -12,7 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @CrossOrigin
@@ -31,7 +32,7 @@ public class AlbumController {
     )
     @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})
     @JsonView(SuccessView.class)
-    public ResultBean<Album> addAlbum( Album album) {
+    public ResultBean<Album> addAlbum(Album album) {
         return iAlbumService.addAlbum(album);
     }
 
@@ -56,8 +57,9 @@ public class AlbumController {
     )
     @PutMapping(value = "/Album", params = "albumId")
     @JsonView({SuccessView.class})
-    public ResultBean<Album> updateAlbum(Album album) {
-        return iAlbumService.updateAlbum(album);
+    public void updateAlbum(HttpServletResponse response, Album album) throws IOException {
+        ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
+        response.sendRedirect("/index.html?status=" + resultBean.getStatus());
     }
 
 

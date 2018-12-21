@@ -11,7 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
@@ -56,8 +57,9 @@ public class PersonController {
     )
     @PutMapping(value = "/person",params = {"personId"})
     @JsonView(SuccessView.class)
-    public ResultBean<Person> updatePerson(Person person) {
-        return PersonService.updatePerson(person);
+    public void updatePerson(HttpServletResponse response,Person person) throws IOException {
+        ResultBean<Person> resultBean = PersonService.updatePerson(person);
+        response.sendRedirect("/index.html?status="+resultBean.getStatus());
     }
 
     @ApiOperation(value = "查询所有用户信息")
