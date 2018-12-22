@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @CrossOrigin
@@ -34,7 +33,7 @@ public class PhotoController {
     )
     @PostMapping(value = "/photo", params = {"photoName", "photoDesc", "albumId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public ModelAndView uploadPhoto(MultipartHttpServletRequest request, HttpServletResponse response, Photo photo) throws IOException {
+    public ModelAndView uploadPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
         ResultBean resultBean = photoService.addPhoto(request, photo);
         ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
         return modelAndView;

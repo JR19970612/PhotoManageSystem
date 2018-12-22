@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -58,7 +57,7 @@ public class AlbumController {
     )
     @PutMapping(value = "/Album", params = "albumId")
     @JsonView({SuccessView.class})
-    public ModelAndView updateAlbum(HttpServletResponse response, Album album) throws IOException {
+    public ModelAndView updateAlbum(Album album) throws IOException {
         ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
         ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
         return modelAndView;

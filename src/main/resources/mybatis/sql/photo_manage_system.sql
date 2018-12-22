@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 13/12/2018 22:58:01
+ Date: 21/12/2018 20:32:09
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,7 @@ CREATE TABLE `comment`  (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `person_id` int(11) NOT NULL,
   `photo_id` int(11) NOT NULL,
-  `comment_time` timestamp(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `comment_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `comment_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `COMMENT_PHOTOID_FORIGNKEY`(`photo_id`) USING BTREE,
@@ -72,7 +72,7 @@ CREATE TABLE `person`  (
   `person_password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `person_avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`person_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 135 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 205 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for photo
@@ -80,17 +80,17 @@ CREATE TABLE `person`  (
 DROP TABLE IF EXISTS `photo`;
 CREATE TABLE `photo`  (
   `photo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `photo_name` char(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `photo_name` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `photo_desc` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `photo_createtime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `album_id` int(11) NULL DEFAULT NULL,
   `photo_original_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `photo_thum_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`photo_id`) USING BTREE,
-  INDEX `album_id_forignkey`(`album_id`) USING BTREE,
   UNIQUE INDEX `album_id_photo_name`(`photo_name`, `album_id`) USING BTREE,
+  INDEX `album_id_forignkey`(`album_id`) USING BTREE,
   CONSTRAINT `album_id_forignkey` FOREIGN KEY (`album_id`) REFERENCES `album` (`album_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 143 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for role

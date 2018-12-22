@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @CrossOrigin
@@ -58,7 +57,7 @@ public class PersonController {
     )
     @PutMapping(value = "/person",params = {"personId"})
     @JsonView(SuccessView.class)
-    public ModelAndView updatePerson(HttpServletResponse response,Person person) throws IOException {
+    public ModelAndView updatePerson(Person person) throws IOException {
         ResultBean<Person> resultBean = PersonService.updatePerson(person);
         ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
         return modelAndView;
