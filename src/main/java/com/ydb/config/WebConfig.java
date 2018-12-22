@@ -3,6 +3,7 @@ package com.ydb.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -21,6 +22,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
         registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:D://originalphoto/");
         registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:D://thumphoto/");
         super.addResourceHandlers(registry);
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/client/index.html");
+        super.addViewControllers(registry);
     }
 
     @Bean

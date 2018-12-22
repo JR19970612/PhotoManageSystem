@@ -38,14 +38,13 @@ logging:
 #SpringSecurity配置
 security:
   basic:
-    enabled: false #是否开始SpringSecurity
+    enabled: false #是否开启SpringSecurity的basic表单验证
 
 server:
   tomcat:
     uri-encoding: UTF-8 #tomcat编码格式
-  context-path: /gdpi/
+  context-path: "/gdpi"
   display-name: "图片管理系统"
-
 #Swagger配置
 swagger:
   basePackage:  com.ydb.controller  #测试Controller接口包名
