@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author: create by JR
@@ -17,7 +15,7 @@ import java.util.Set;
  * @date:2018/12/17
  */
 public class PersonCacheAspect extends AbstractCacheApsect<Person> {
-    private String namespace = "person:personId:%d";//缓存命名空间
+    private String namespace = "person:personId:%s";//缓存命名空间
 
     @Autowired
     RedisTemplate redisTemplate;
@@ -47,10 +45,9 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
-    public Person queryCacheBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
+    public Person queryCacheByIdBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
         Integer personId = (Integer) point.getArgs()[0];
         Person person = new Person();
-
         Set keys = redisTemplate.keys(String.format(namespace, personId));
         if (keys != null && !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
             Iterator iterator = keys.iterator();
@@ -63,5 +60,24 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
             person = (Person) point.proceed();
         }
         return person;
+    }
+
+    //在查询数据库之前先会查询缓存是否存在该数据
+    public List<Person> queryAllCacheBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
+        List<Person> persons = new ArrayList<>();
+        Set keys = redisTemplate.keys(String.format(namespace, "*"));
+        if (keys != null && !keys.isEmpty()) {//若Redis缓存存在数据则直接读取返回
+            Iterator iterator = keys.iterator();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                Person person = new Person();
+                Map personMap = hashOperations.entries(key);
+                initObject(person, personMap);
+                persons.add(person);
+            }
+        } else {//不存在则去查询数据库中的数据
+            persons = (List<Person>) point.proceed();
+        }
+        return persons;
     }
 }
