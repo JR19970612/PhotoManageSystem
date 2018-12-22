@@ -30,7 +30,6 @@ mybatis:
     map-underscore-to-camel-case: true #开启驼峰命名
 
 
-
 #日志配置
 logging:
   level: #输出日志级别
@@ -44,7 +43,8 @@ security:
 server:
   tomcat:
     uri-encoding: UTF-8 #tomcat编码格式
-
+  context-path: /gdpi/
+  display-name: "图片管理系统"
 
 #Swagger配置
 swagger:
