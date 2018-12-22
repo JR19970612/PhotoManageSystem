@@ -19,7 +19,7 @@ import java.util.*;
 
 public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
-    private String namespace = "photo:photoId:%d:photoName:%s";//缓存命名空间
+    private String namespace = "photo:photoId:%s:photoName:%s";//缓存命名空间
 
     @Autowired
     RedisTemplate redisTemplate;
@@ -43,7 +43,7 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
             hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoDesc", photo.getPhotoDesc());
         }
         if (photo != null && photo.getPhotoCreateTime() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime().toString());
         }
         if (photo != null && photo.getPhotoOriginalUrl() != null) {
             hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());

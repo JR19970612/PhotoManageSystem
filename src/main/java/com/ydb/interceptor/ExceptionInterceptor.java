@@ -4,10 +4,8 @@ import com.ydb.bean.ExceptionBean;
 import com.ydb.bean.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -20,8 +18,6 @@ import java.util.Date;
  */
 @ControllerAdvice
 public class ExceptionInterceptor {
-    @Autowired
-    WebApplicationContext applicationContext;
     Logger logger = LoggerFactory.getLogger(ExceptionInterceptor.class);
 
     @ExceptionHandler({Exception.class})
@@ -38,18 +34,12 @@ public class ExceptionInterceptor {
     }
 
     public void initException(Exception e, HttpServletRequest request, ResultBean resultBean) {
-
-        int status = ResultBean.FAILURE_CODE;
         String msg = "服务器异常";
+        int status = 500;
         switch (e.getClass().getSimpleName()) {
             case "BindException": {
                 status = 400;
                 msg = "数据校验异常";
-                break;
-            }
-            case "ParamsException": {
-                status = 400;
-                msg = "参数异常";
                 break;
             }
             case "MultipartException": {
