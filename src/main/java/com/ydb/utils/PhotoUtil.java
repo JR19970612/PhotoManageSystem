@@ -38,7 +38,8 @@ public class PhotoUtil implements ServletContextListener {
 
     //判断文件格式
     public boolean judgeFormat(MultipartFile multipartFile) {
-        String format = multipartFile.getOriginalFilename().split("\\.")[1].toLowerCase();
+
+        String format = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1) ;
         String type = "jpg" + "png" + "jpeg" + "bmp";
         if (format == null || !type.contains(format)) {
             return false;

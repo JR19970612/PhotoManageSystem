@@ -22,6 +22,9 @@ public class Person implements Serializable {
     private String personPassword;
 
     @JsonView(SuccessView.class)
+    private String openId;
+
+    @JsonView(SuccessView.class)
     private String personAvatarUrl;
 
     public Integer getPersonId() {
@@ -56,12 +59,21 @@ public class Person implements Serializable {
         this.personAvatarUrl = personAvatarUrl == null ? null : personAvatarUrl.trim();
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "personId=" + personId +
                 ", personName='" + personName + '\'' +
                 ", personPassword='" + personPassword + '\'' +
+                ", openId='" + openId + '\'' +
                 ", personAvatarUrl='" + personAvatarUrl + '\'' +
                 '}';
     }

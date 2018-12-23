@@ -4,13 +4,14 @@ import com.ydb.bean.ResultBean;
 import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
 import com.ydb.service.IPersonService;
-import com.ydb.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @program: com.ydb.dao
@@ -24,14 +25,31 @@ public class PersonServiceimp implements IPersonService {
     @Autowired
     private IPersonDao mapper;
 
+    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    @Override
+    public ResultBean<Person> register(Person person) {
+        ResultBean<Person> resultBean = new ResultBean<>();
+        if (person.getPersonAvatarUrl() == null) {
+            //TODO 设置用户默认头像
+            Random random = new Random();
+            person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
+        }
+        int code = mapper.insertPerson(person);
+        resultBean.setData(Arrays.asList(person));
+        initResultBean(code, resultBean);
+        return resultBean;
+    }
 
     @Override
     public ResultBean<Person> insertPerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
+        person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
         //TODO 设置用户默认头像
-        resultBean.setData(Arrays.asList(person));
+        Random random = new Random();
+        person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         int code = mapper.insertPerson(person);
+        resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
         return resultBean;
     }
@@ -39,6 +57,11 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> queryPersons() {
         List<Person> persons = mapper.queryPersons();
+        for (Person person : persons) {//移除微信用户
+            if (person.getOpenId() != null) {
+                persons.remove(person);
+            }
+        }
         ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
@@ -48,8 +71,8 @@ public class PersonServiceimp implements IPersonService {
 
 
     @Override
-    public ResultBean<Person> queryPerson(Integer personId) {
-        Person person = mapper.queryPerson(personId);
+    public ResultBean<Person> queryPerson(String personName) {
+        Person person = mapper.queryPersonByName(personName);
         ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
@@ -72,7 +95,7 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> updatePerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
+        person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
         int code = mapper.updatePerson(person);
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(person));
@@ -82,15 +105,12 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> loginPerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        Person loginPerson = new Person();
-        if (person.getPersonPassword() != null || person.getPersonPassword() != "" || person.getPersonPassword().length() > 0) {
-            person.setPersonPassword(MD5Util.encode(person.getPersonPassword()));//MD5加密
-        }
-        if (person.getPersonId() != null || person.getPersonName() != null) {
-            System.out.print("getPersonId:" + person.getPersonId() + ",getPersonName:" + person.getPersonName());
-            loginPerson = mapper.loginPerson(person);
-        } else {
-            loginPerson = null;
+        Person loginPerson = mapper.loginPerson(person);
+        //判断管理员用户,微信用户直接过
+        if (loginPerson != null && person.getPersonPassword() != null) {
+            if (!bCryptPasswordEncoder.matches(person.getPersonPassword(), loginPerson.getPersonPassword())) {
+                loginPerson = null;
+            }
         }
         if (loginPerson == null) {
             resultBean.setStatus(ResultBean.FAILURE_CODE);
@@ -99,9 +119,8 @@ public class PersonServiceimp implements IPersonService {
             resultBean.setStatus(ResultBean.SUCCSSED_CODE);
             resultBean.setMsg("登陆成功");
         }
-        resultBean.setData(Arrays.asList(person));
+        resultBean.setData(Arrays.asList(loginPerson));
         return resultBean;
-
     }
 
     private void initResultBean(int code, ResultBean resultBean) {

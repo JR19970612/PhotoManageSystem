@@ -19,7 +19,7 @@ public class ResultBean<E> {
      * 状态码定义
      */
     public static final Integer FAILURE_CODE = 400;//失败
-    public static final Integer SUCCSSED_CODE = 200;//成功
+    public static final Integer SUCCSSED_CODE = 0;//成功
 
     /**
      * 定义返回字段

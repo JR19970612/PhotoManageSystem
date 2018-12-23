@@ -13,7 +13,6 @@
         <result property="photoThumUrl" column="photo_thum_url"></result>
         <collection property="comments" select="com.ydb.dao.ICommentDao.selectCommentByPhotoId" ofType="Comment"
                     column="photo_id"></collection>
-
     </resultMap>
 
     <insert id="insertPhoto" parameterType="Photo">
@@ -67,7 +66,6 @@
     </select>
 
     <select id="selectPhotoByAlbumId" resultType="Photo">
-
         select * from photo
         <where>
             album_id=#{albumId}

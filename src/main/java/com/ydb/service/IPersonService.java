@@ -3,17 +3,18 @@ package com.ydb.service;
 import com.ydb.bean.ResultBean;
 import com.ydb.entity.Person;
 
-import java.util.List;
-
 public interface IPersonService {
-    //添加个人信息
+    //微信注册突通用户信息
+    ResultBean<Person> register(Person person);
+
+    //超级管理员添加管理员信息
     ResultBean<Person> insertPerson(Person person);
 
     //查询所有个人信息
     ResultBean<Person> queryPersons();
 
-    //查询指定Id的个人信息
-    ResultBean<Person> queryPerson(Integer personId);
+    //查询指定Name的个人信息
+    ResultBean<Person> queryPerson(String personName);
 
     //删除指定Id的个人信息
     ResultBean<Person> deletePerson(Integer personId);

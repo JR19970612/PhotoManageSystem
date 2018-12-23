@@ -62,7 +62,7 @@ public class CommentCacheAspect extends AbstractCacheApsect<Comment> {
                     Map<String, String> commentMap = (Map<String, String>) JSON.parse(commentString);
                     Comment comment = new Comment();
                     initObject(comment, commentMap);
-                    Person person = personDao.queryPerson(Integer.valueOf(commentMap.get("PersonId")));
+                    Person person = personDao.queryPersonById("CACHE_TAG" + commentMap.get("PersonId"));
                     comment.setPerson(person);
                     comments.add(comment);
                 }

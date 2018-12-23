@@ -42,7 +42,7 @@ public class ICommentDaoTest {
 
     @Test
     public void selectCommentByPhotoId() {
-        List<Comment> comment = iCommentDao.selectCommentByPhotoId(51);
+        List<Comment> comment = iCommentDao.selectCommentByPhotoId(1);
         System.out.println(comment);
     }
 }

@@ -18,7 +18,9 @@ public interface IPersonDao {
 
     List<Person> queryPersons();
 
-    Person queryPerson(Integer personId);
+    Person queryPersonByName(String personName);
+
+    Person queryPersonById(String personId);
 
     int deletePerson(Person person);
 
