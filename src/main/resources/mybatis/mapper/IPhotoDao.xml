@@ -11,7 +11,9 @@
         <result property="albumId" column="album_id"></result>
         <result property="photoOriginalUrl" column="photo_original_url"></result>
         <result property="photoThumUrl" column="photo_thum_url"></result>
-        <collection property="comments" select="com.ydb.dao.ICommentDao.selectCommentByPhotoId" ofType="Comment"
+        <collection property="comments"
+                    select="com.ydb.dao.ICommentDao.selectCommentByPhotoId"
+                    ofType="Comment"
                     column="photo_id"></collection>
     </resultMap>
 

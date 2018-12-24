@@ -1,5 +1,6 @@
-package com.ydb.config.security.authencationconfig;
+package com.ydb.security.config.authencationconfig;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +15,10 @@ import org.springframework.stereotype.Component;
 public class AuthorizeConfig {
     public void configure(HttpSecurity builder) throws Exception {
         builder.authorizeRequests()
-                .antMatchers("/", "/login.html").permitAll()//首页和登陆页不进行认证拦截
+                .antMatchers("/", "/login.html", "/loginPerson").permitAll()//首页和登陆页不进行认证拦截
+                .antMatchers(HttpMethod.POST, "/person").permitAll()
                 .antMatchers("/client/**").anonymous()//图片浏览页面任何用户都可进行访问
                 .antMatchers("/manage/User/**").hasRole("SuperAdmin")//管理员管理资源只有超级管理员才拥有权限
-                .anyRequest().authenticated();
-//                .anyRequest().access("@");
+                .anyRequest().access("@rbacService.hasPermission(request, authentication)");
     }
 }

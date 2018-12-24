@@ -2,8 +2,23 @@ package com.ydb.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+/**
+ * 笔记
+ * Authentication顶级接口主要变量的意义
+ * principal:
+ * credentials:    存放客户端提交密码，该数据从客户端获取
+ * authoritials:   经过认证后存放的权限信息
+ * details:    主要客户端主机信息（包括IP和sessionId）
+ * authenticated:   boolean类型表示该Authentication对象是否经过认证
+ */
 
 /**
  * @program: com.ydb.entity
@@ -11,7 +26,7 @@ import java.io.Serializable;
  * @author: Jun
  * @create: 2018-12-11 15:45
  **/
-public class Person implements Serializable {
+public class Person implements Serializable, UserDetails {
     @JsonView(SuccessView.class)
     private Integer personId;
 
@@ -26,6 +41,25 @@ public class Person implements Serializable {
 
     @JsonView(SuccessView.class)
     private String personAvatarUrl;
+
+    //用户的所有角色
+    private List<Role> roles;
+
+    //用户有权访问的所有url，不持久化到数据库
+    private Set<String> urls = new HashSet<>();
+
+    public Person() {
+    }
+
+    public Person(Integer personId, String personName, String personPassword, String openId, String personAvatarUrl, List<Role> roles, Set<String> urls) {
+        this.personId = personId;
+        this.personName = personName;
+        this.personPassword = personPassword;
+        this.openId = openId;
+        this.personAvatarUrl = personAvatarUrl;
+        this.roles = roles;
+        this.urls = urls;
+    }
 
     public Integer getPersonId() {
         return personId;
@@ -67,6 +101,61 @@ public class Person implements Serializable {
         this.openId = openId;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<String> getUrls() {
+        for (Role role : this.roles) {
+            for (ResourecesType resourecesType : role.getResourecesTypes()) {
+                for (ResourecesUrl resourecesUrl : resourecesType.getResourecesUrls()) {
+                    urls.add(resourecesUrl.getResourecesUrl());
+                }
+            }
+        }
+        return urls;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return personPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return personName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -75,6 +164,9 @@ public class Person implements Serializable {
                 ", personPassword='" + personPassword + '\'' +
                 ", openId='" + openId + '\'' +
                 ", personAvatarUrl='" + personAvatarUrl + '\'' +
+                ", roles=" + roles +
+                ", urls=" + urls +
                 '}';
     }
 }
+

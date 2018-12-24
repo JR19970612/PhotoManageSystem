@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ydb.config.security.formconfig;
+package com.ydb.security.config.formconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

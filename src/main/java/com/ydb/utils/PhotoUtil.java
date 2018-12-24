@@ -10,6 +10,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
+
 /**
  * @program: com.ydb.dao
  * @description: 图片操作工具类
@@ -38,10 +40,8 @@ public class PhotoUtil implements ServletContextListener {
 
     //判断文件格式
     public boolean judgeFormat(MultipartFile multipartFile) {
-
-        String format = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1) ;
-        String type = "jpg" + "png" + "jpeg" + "bmp";
-        if (format == null || !type.contains(format)) {
+        String fileName= multipartFile.getOriginalFilename();
+        if (fileName == null && !Pattern.matches("(.JPEG|.jpeg|.JPG|.jpg|.png|.PNG|.bmp|.BMP)$",fileName)) {
             return false;
         }
         return true;

@@ -1,4 +1,4 @@
-package com.ydb.config.security.formconfig;
+package com.ydb.security.config.formconfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @date:2018/12/22
  */
 @Component
-public class FormAuthenticationConfig  {
+public class FormAuthenticationConfig {
 
     @Autowired
     FormAuthenticationSuccessHandler successHandler;

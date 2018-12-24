@@ -44,6 +44,6 @@ public class IPersonDaoTest {
 
     @Test
     public void queryPerson() {
-        System.out.println(personDao.queryPersonById("9"));
+        System.out.println(personDao.findPersonByUserNamePassword("JR"));
     }
 }
