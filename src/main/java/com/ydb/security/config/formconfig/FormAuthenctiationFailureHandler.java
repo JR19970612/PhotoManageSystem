@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: 浏览器环境下登录失败的处理器
+ * @description: 环境下认证失败的处理器
  * @date:2018/12/22
  */
 @Component("formAuthenctiationFailureHandler")

@@ -3,6 +3,7 @@ package com.ydb.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.SuccessView;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 /**
  * 笔记
- * Authentication顶级接口主要变量的意义
- * principal:
+ * Authentication（实现类有：UsernamePasswordAuthenticationToken...）顶级接口主要变量的意义
+ * principal:       认证之前存放的是客户端提交密码的用户名，认证通过之后存放的是数据库内的用户详情信息
  * credentials:    存放客户端提交密码，该数据从客户端获取
  * authoritials:   经过认证后存放的权限信息
  * details:    主要客户端主机信息（包括IP和sessionId）
@@ -123,7 +124,11 @@ public class Person implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+        return authorities;
     }
 
     @Override

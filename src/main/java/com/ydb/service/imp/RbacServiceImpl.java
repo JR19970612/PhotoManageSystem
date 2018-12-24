@@ -25,12 +25,11 @@ public class RbacServiceImpl implements IRbacService {
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         Object principal = authentication.getPrincipal();
-
         boolean hasPermission = false;
 
         if (principal instanceof Person) {
             //如果用户名是admin，就永远返回true
-            if (((Person) principal).getUsername().equals("admin")) {
+            if (((Person) principal).getUsername().equals("Admin")) {
                 hasPermission = true;
             } else {
                 // 读取用户所拥有权限的所有URL
