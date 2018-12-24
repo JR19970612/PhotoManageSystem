@@ -55,7 +55,7 @@ IPhotoDaoTest {
 
     @Test
     public void selectPhotoById() {
-        List<Photo> photo = photoDao.selectPhotoById(51);
+        List<Photo> photo = photoDao.selectPhotoById(1);
         System.out.println(photo);
     }
 

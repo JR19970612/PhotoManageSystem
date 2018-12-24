@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -16,7 +17,7 @@ import java.util.*;
  * @description: Photo图片信息缓存
  * @date:2018/12/16
  */
-
+@Component
 public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     private String namespace = "photo:photoId:%s:photoName:%s";//缓存命名空间
@@ -31,25 +32,25 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
     @Override
     public void update(Photo photo) {
         if (photo != null && photo.getPhotoId() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
         }
         if (photo != null && photo.getPhotoName() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoName", photo.getPhotoName());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoName", photo.getPhotoName());
         }
         if (photo != null && photo.getAlbumId() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "AlbumId", String.valueOf(photo.getAlbumId()));
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "AlbumId", String.valueOf(photo.getAlbumId()));
         }
         if (photo != null && photo.getPhotoDesc() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoDesc", photo.getPhotoDesc());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoDesc", photo.getPhotoDesc());
         }
         if (photo != null && photo.getPhotoCreateTime() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime().toString());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoCreateTime", photo.getPhotoCreateTime().toString());
         }
         if (photo != null && photo.getPhotoOriginalUrl() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoOriginalUrl", photo.getPhotoOriginalUrl());
         }
         if (photo != null && photo.getPhotoThumUrl() != null) {
-            hashOperations.put(String.format(namespace, photo.getPhotoId(),photo.getPhotoName()), "PhotoThumUrl", photo.getPhotoThumUrl());
+            hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoThumUrl", photo.getPhotoThumUrl());
         }
     }
 

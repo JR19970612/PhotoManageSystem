@@ -24,7 +24,7 @@ public class CommentController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "photoId", value = "评论图片ID", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "commentContent", value = "评论内容", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "person.personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
     }
     )
     @PostMapping(value = "/comment",params = {"photoId","commentContent","person.personId"})

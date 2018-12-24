@@ -5,31 +5,15 @@
         <id column="person_id" property="personId" jdbcType="INTEGER"/>
         <result column="person_name" property="personName" jdbcType="CHAR"/>
         <result column="person_password" property="personPassword" jdbcType="CHAR"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
         <result column="person_avatar_url" property="personAvatarUrl" jdbcType="VARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List">
-    person_id, person_name, person_password, person_avatar_url
-  </sql>
-    <select id="queryPerson" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    person_id, person_name, person_avatar_url
-    from person
-    where person_id = #{personId,jdbcType=INTEGER}
-  </select>
+
     <delete id="deletePerson" parameterType="java.lang.Integer">
     delete from person
     where person_id = #{personId,jdbcType=INTEGER}
   </delete>
     <insert id="insertPerson" parameterType="com.ydb.entity.Person">
-        insert into person (person_name, person_password,
-        person_avatar_url)
-        values(#{personName,jdbcType=CHAR}, #{personPassword,jdbcType=CHAR},
-        #{personAvatarUrl,jdbcType=VARCHAR})
-        <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
-            select @@identity
-        </selectKey>
-    </insert>
-    <insert id="insertSelective" parameterType="com.ydb.entity.Person">
         insert into person
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="personId != null">
@@ -40,6 +24,9 @@
             </if>
             <if test="personPassword != null">
                 person_password,
+            </if>
+            <if test="openId!= null">
+                open_id,
             </if>
             <if test="personAvatarUrl != null">
                 person_avatar_url,
@@ -55,10 +42,16 @@
             <if test="personPassword != null">
                 #{personPassword,jdbcType=CHAR},
             </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
             <if test="personAvatarUrl != null">
                 #{personAvatarUrl,jdbcType=VARCHAR},
             </if>
         </trim>
+        <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
+            select @@identity
+        </selectKey>
     </insert>
     <update id="updatePerson" parameterType="com.ydb.entity.Person">
         update person
@@ -77,27 +70,40 @@
             person_id = #{personId,jdbcType=INTEGER}
         </where>
     </update>
+    <select id="queryPersonByName" resultMap="BaseResultMap">
+        select
+        person_id, person_name,person_password, open_id,person_avatar_url
+        from person
+        where person_name = #{personName,jdbcType=CHAR}
+    </select>
+    <select id="queryPersonById" resultMap="BaseResultMap">
+        select
+        person_id, person_name,person_password, open_id,person_avatar_url
+        from person
+        where person_id = #{personId,jdbcType=INTEGER}
+    </select>
     <select id="queryPersons" resultMap="BaseResultMap">
-    select
-    person_id, person_name, person_avatar_url
-    from person
-  </select>
+        select
+        *
+        from
+        person
+    </select>
     <select id="loginPerson" resultMap="BaseResultMap">
         select
-        person_id, person_name, person_avatar_url
+        person_id, person_name, open_id,person_password, person_avatar_url
         from person
-        　　
-        <trim prefix="WHERE" prefixOverrides="and ">
-            <if test="personId != null">
-
-                and person_id = #{personId,jdbcType=INTEGER}
-            </if>
-            <if test="personId == null and personName != null ">
-                and person_name = #{personName,jdbcType=CHAR}
-            </if>
-            <if test="personName != null or personId !=null">
-                and person_password = #{personPassword,jdbcType=CHAR}
-            </if>
-        </trim>
+        <where>
+            <choose>
+                <when test="openId!=null">
+                    open_id=#{openId,jdbcType=VARCHAR}
+                </when>
+                <when test="personName!=null">
+                    person_name=#{personName,jdbcType=CHAR}
+                </when>
+                <otherwise>
+                    1=0
+                </otherwise>
+            </choose>
+        </where>
     </select>
 </mapper>

@@ -12,7 +12,7 @@
         <result column="comment_content" property="commentContent"></result>
         <association
                 property="person"
-                select="com.ydb.dao.IPersonDao.queryPerson"
+                select="com.ydb.dao.IPersonDao.queryPersonById"
                 javaType="Person"
                 column="person_id">
         </association>
@@ -38,7 +38,7 @@
     </delete>
 
 
-    <select id="selectCommentByPhotoId" parameterType="Comment" resultMap="commentMap">
+    <select id="selectCommentByPhotoId" parameterType="Integer" resultMap="commentMap">
         select * from comment where photo_id=#{photoId}
     </select>
 </mapper> 

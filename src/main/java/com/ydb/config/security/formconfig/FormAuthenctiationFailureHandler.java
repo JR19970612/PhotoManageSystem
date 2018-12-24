@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ydb.config.security.fomauthentication;
+package com.ydb.config.security.formconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,16 +36,9 @@ public class FormAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
                                         AuthenticationException exception) throws IOException, ServletException {
 
         logger.info("登录失败");
-        String accept = request.getHeader("Accept");
-        //根据appcet响应头判断客户端是浏览器还是移动端，在进行指定响应动作
-        if (accept != null & accept.contains("text/html")) {
-            //重新跳转到登陆页面
-            super.onAuthenticationFailure(request, response, exception);
-        } else {
-            //返回Json错误信息
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(exception.getMessage());
-        }
+        //返回Json错误信息
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(exception.getMessage());
     }
 }
