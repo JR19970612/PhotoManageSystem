@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div @keyup.enter="sendComment();">
         <el-input v-model="input" placeholder="我要对图片进行评论"></el-input>
         <el-button type="primary" style="margin-top:10px; float:right" @click="sendComment();">发表</el-button>
       </div>

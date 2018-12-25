@@ -7,7 +7,6 @@ import VueRouter from 'vue-router'
 import routerConfig from './router.config.js'
 import store from './store.js' //导入store对象
 import VueResource from 'vue-resource'
-import GlobeVariable from './resource/GlobeVariable'//应用常量文件
 /*使用VueResource插件*/
 Vue.use(VueResource);
 
@@ -17,8 +16,9 @@ Vue.use(VueRouter);
 //创建路由实例
 const router = new VueRouter(routerConfig);
 Vue.prototype.$notify = ElementUI.Notification;
+Vue.prototype.$loading = ElementUI.Loading;
+
 //引入全局变量
-Vue.prototype.$gVar = GlobeVariable;
 Vue.prototype.$covertDate = function (value) {
     var date = new Date(value);
     var fmt = "yyyy-MM-dd hh:mm:ss";
