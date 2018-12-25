@@ -27,7 +27,6 @@ public class AlbumController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "albumName", value = "相册名称", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
-
     }
     )
     @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})

@@ -20,7 +20,7 @@ public interface IPersonDao {
 
     Person queryPersonByName(String personName);
 
-    Person queryPersonById(String personId);
+    Person queryPersonById(Integer personId);
 
     int deletePerson(Person person);
 

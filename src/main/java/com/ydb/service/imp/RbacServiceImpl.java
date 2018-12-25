@@ -4,6 +4,7 @@
 package com.ydb.service.imp;
 
 import com.ydb.entity.Person;
+import com.ydb.entity.ResourecesUrl;
 import com.ydb.service.IRbacService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,9 @@ public class RbacServiceImpl implements IRbacService {
         boolean hasPermission = false;
         if (principal instanceof Person) {
             // 读取用户所拥有权限的所有URL
-            Set<String> urls = ((Person) principal).getUrls();
-            for (String url : urls) {
-                if (antPathMatcher.match(url, request.getRequestURI())) {
+            Set<ResourecesUrl> urls = ((Person) principal).getUrls();
+            for (ResourecesUrl url : urls) {
+                if (antPathMatcher.match(url.getResourecesUrl(), request.getRequestURI())&url.getResourecesUrlMethod().equals(request.getMethod())) {
                     hasPermission = true;
                     break;
                 }

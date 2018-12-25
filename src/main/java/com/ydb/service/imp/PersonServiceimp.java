@@ -96,7 +96,9 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> updatePerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        if (person.getPassword() != null) {
+            person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        }
         int code = mapper.updatePerson(person);
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(person));

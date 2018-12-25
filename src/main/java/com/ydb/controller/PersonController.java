@@ -54,7 +54,7 @@ public class PersonController {
             @ApiImplicitParam(name = "personId", value = "用户ID", required = true, paramType = "path", dataType = "int"),
     }
     )
-    @DeleteMapping(value = "/person/{personId}", params = "personId")
+    @DeleteMapping(value = "/person/{personId}")
     @JsonView(SuccessView.class)
     public ResultBean<Person> deletePerson(@PathVariable Integer personId) {
         return PersonService.deletePerson(personId);
