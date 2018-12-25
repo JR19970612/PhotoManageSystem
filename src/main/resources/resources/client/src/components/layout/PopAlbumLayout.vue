@@ -72,7 +72,8 @@ export default {
     "showAlbum",
     "popAlbumId",
     "allAlbums",
-    "popPhotoAlbumInfo"
+    "popPhotoAlbumInfo",
+      "URL"
   ]),
   methods: {
     setShowPhoto(val) {
@@ -152,7 +153,7 @@ export default {
         console.log("服务器请求出错了");
       };
       this.$http
-        .get("http://127.0.0.1:8080/album/AlbumId?params=" + popAlbumId)
+        .get(this.URL.getPopPhotoAlbumInfoUrl + popAlbumId)
         .then(successCallback, errorCallback);
     }
   }

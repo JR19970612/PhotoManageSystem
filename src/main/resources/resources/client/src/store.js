@@ -6,7 +6,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex);
 let port = 8080;
-let projectName = "";
+let projectName = "/gdpi";
 let head =
     "http://127.0.0.1:" + port + projectName;
 

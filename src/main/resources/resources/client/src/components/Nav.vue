@@ -78,7 +78,7 @@
                     console.log("服务器请求出错了");
                 };
                 this.$http
-                    .post(this.URL.loginUrl+"&userName="+this.form.name)
+                    .post(this.URL.loginUrl+"&personName="+this.form.name+"&personPassword="+this.form.password)
                     .then(successCallback, errorCallback);
             }
         },
