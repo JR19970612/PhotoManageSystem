@@ -53,10 +53,10 @@
 				</thead>
 				<tr v-for="(item,key) in listphotos">
 					<td>
-						<span v-for="(comments,key) in item.comments">commentId:{{comments.commentId}}<br /></span>
+						<span v-for="(comments,key) in item.comments">评论id:{{comments.commentId}}<br /></span>
 					</td>
 					<td>
-						<span v-for="(comments,key) in item.comments">评论时间:{{dateFormat(comments.commentTime)}}<br /></span>
+						<span v-for="(comments,key) in item.comments">{{dateFormat(comments.commentTime)}}<br /></span>
 					</td>
 					<td>
 						<span v-for="(comments,key) in item.comments">评论内容:{{comments.commentContent}}<br /></span>
@@ -90,7 +90,6 @@
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
-
 				})
 			},
 			show_confirm: function(commentId) { //删除单个评论确认框
@@ -103,10 +102,10 @@
 					alert("已取消");
 				}
 			},
-			delectCommentId: function(photoId,commentId) { //删除单个评论
+			delectCommentId: function(commentId) { //删除单个评论
 				$.ajax({
 					//http://localhost:8080/gdpi/comment?photoId=158&commentId=1
-					url: URL+"comment?photoId="+photoId+"&commentId="+commentId,
+					url: URL+"comment?photoId="+this.byIdSearch+"&commentId="+commentId,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);
