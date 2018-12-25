@@ -36,7 +36,6 @@ public class CommentController {
 
     @ApiOperation(value = "删除评论", notes = "删除评论")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "commentId", value = "评论ID", required = true, paramType = "query", dataType = "int"),
     }
     )
