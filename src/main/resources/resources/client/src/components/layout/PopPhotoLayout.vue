@@ -1,5 +1,5 @@
 <template>
-  <div @keyup.enter="incPopPhotoIndex">
+  <div>
     <!-- <transition name="el-zoom-in-top"> -->
     <transition name="el-zoom-in-top">
 

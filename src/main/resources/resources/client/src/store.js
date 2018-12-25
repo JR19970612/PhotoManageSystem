@@ -227,7 +227,7 @@ const actions = {
             console.log("服务器请求出错了");
         };
         Vue.http
-            .get(state.URL.addPagePhotos+ pageCount + "/" + (++this.state.photosPage))
+            .get(state.URL.addPagePhotosUrl+ pageCount + "/" + (++this.state.photosPage))
             .then(successCallback, errorCallback);
 
     },
@@ -263,10 +263,18 @@ const actions = {
                 "setAllPhotos",
                 response.data.data
             );
+            loading.close();
         };
         var errorCallback = response => {
             console.log("服务器请求出错了");
         };
+        const loading = Vue.prototype.$loading({
+            lock: true,
+            text: '加载数据中...',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+        });
+
         Vue.http
             .get(state.URL.getSearchPhotosByPhotoNameUrl + keyword)
             .then(successCallback, errorCallback);
