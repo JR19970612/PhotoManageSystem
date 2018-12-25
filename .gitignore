@@ -24,6 +24,9 @@ mvnw.cmd
 /nbproject/private/
 /build/
 /nbbuild/
-
+/dist/
 /nbdist/
 /.nb-gradle/
+
+### VUE Package
+src/main/resources/resources/client/node_modules/

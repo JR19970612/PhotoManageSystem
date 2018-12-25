@@ -1,4 +1,4 @@
-# The Photo Manage System 图片管理系统 [TPMS]
+# the Photo Manage System 图片管理系统 [PMS]
 
 > This is my personal project for homework.
 > Useing Vue and Vuex develop a web site about system of photo for convenience a company to browse and modify themselves photos or albums;

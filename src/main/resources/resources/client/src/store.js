@@ -227,7 +227,7 @@ const actions = {
             console.log("服务器请求出错了");
         };
         Vue.http
-            .get(state.URL.addPagePhotos+ pageCount + "/" + (++this.state.photosPage))
+            .get(state.URL.addPagePhotosUrl+ pageCount + "/" + (++this.state.photosPage))
             .then(successCallback, errorCallback);
 
     },

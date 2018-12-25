@@ -79,7 +79,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
 
-    @Bean
+//    @Bean
     public LoadingDataToRedis loadingDataToRedis() {
         return new LoadingDataToRedis();
     }
