@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="../allvariable.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app1">
+    <div style="margin-top: 20px; margin-left: 25px;">
+        照片id:<input v-model="byIdSearch" type="text" class="abc input-default">&nbsp;&nbsp;
+        <button class="btn btn-primary" @click="getPhotoComment">查找照片的评论</button>
+    </div>
+    <table class="table table-bordered table-hover definewidth m10">
+        <thead>
+        <tr>
+            <th>评论的id</th>
+            <th>评论时间</th>
+            <th>评论内容</th>
+            <th>用户id</th>
+            <th>用户名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tr v-for="(item,key) in comments">
+            <td>
+                <span>评论id:{{item.commentId}}</span>
+            </td>
+            <td>
+                <span>{{dateFormat(item.commentTime)}}</span>
+            </td>
+            <td>
+                <span>{{item.commentContent}}</span>
+            </td>
+            <td>
+                <span>{{item.person.personId}} </span>
+            </td>
+            <td>
+                <span>{{item.person.personName}} </span>
+            </td>
+            <td>
+                <a @click="show_confirm(comments.commentId)" style="cursor: pointer">删除</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el: '#app1',
+        data: {
+            byIdSearch: "",
+            comments: [],
+        },
+        mounted: function () {
+        },
+        methods: {
+            getPhotoComment: function () { //查找单张照片
+                var url = URL + "photo/photoId?params=" + this.byIdSearch;
+                var _self = this;
+                $.get(url, function (data) {
+                    _self.comments = data.data[0].comments;
+                    console.log("comments:", data.data[0].comments);
+                })
+            },
+            show_confirm: function (commentId) { //删除单个评论确认框
+                var r = confirm("确定要删除该评论？");
+                if (r == true) {
+                    this.delectCommentId(commentId);
+                    location.reload();//刷新当前页面
+
+                } else {
+                    alert("已取消");
+                }
+            },
+            delectCommentId: function (commentId) { //删除单个评论
+                $.ajax({
+                    //http://localhost:8080/gdpi/comment?photoId=158&commentId=1
+                    url: URL + "comment?photoId=" + this.byIdSearch + "&commentId=" + commentId,
+                    type: 'DELETE',
+                    success: function (result) {
+                        alert(result.msg);
+                    }
+                });
+            },
+            //时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
+            dateFormat: function (time) {
+                var date = new Date(time);
+                var year = date.getFullYear();
+                /* 在日期格式中，月份是从0开始的，因此要加0
+                 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+                 * */
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                // 拼接
+                return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+            }
+        }
+    });
+</script>
