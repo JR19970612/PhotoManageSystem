@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
+		<link rel="stylesheet" type="text/css" href="../Css/style.css" />
+		<script type="text/javascript" src="../Js/jquery.js"></script>
+		<script type="text/javascript" src="../Js/bootstrap.js"></script>
+		<script type="text/javascript" src="../Js/ckform.js"></script>
+		<script type="text/javascript" src="../Js/common.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
+
+
+		<style type="text/css">
+			body {
+				padding-bottom: 40px;
+			}
+
+			.sidebar-nav {
+				padding: 9px 0;
+			}
+
+			@media (max-width: 980px) {
+
+				/* Enable use of floated navbar text */
+				.navbar-text.pull-right {
+					float: none;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div style="margin-top: 20px; margin-left: 25px;">
+				<select v-model="type">
+					<option value="AlbumName">相册名称</option>
+					<option value="AlbumId">相册id</option>
+				</select>
+				<input v-model="searchKey" type="text" class="abc input-default" value="">&nbsp;&nbsp;
+				<button class="btn btn-primary" @click="getAlbumSearchResult">查找相册</button>&nbsp;&nbsp; 
+				<button type="button" class="btn btn-success" id="addalbum">添加相册</button>
+			<table class="table table-bordered table-hover definewidth m10">
+				<thead>
+					<tr>
+						<th>相册id</th>
+						<th>相册名称</th>
+						<th>相册描述</th>
+						<th>相册创建时间</th>
+						<th>所含照片id</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tr v-for="(item,key) in listAlbums">
+					<td>{{item.albumId}}</td>
+					<td>{{item.albumName}}</td>
+					<td>{{item.albumDesc}}</td>
+					<td>{{dateFormat(item.albumCreatetime)}}</td>
+					<td>
+						<span v-for="(photos,key) in item.photos">photoId:{{photos.photoId}}&nbsp;</span>
+					</td>
+					<td>
+						<a :href="'edit.html?albumId=' + item.albumId">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a @click="show_confirm(item.albumId)">删除</a>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el: '#app',
+		data: {
+			type: "AlbumName",
+			searchKey: "",
+			listAlbums: [],
+		},
+		mounted: function() {
+			this.getAlbum();
+		},
+		methods: {
+			getAlbumSearchResult: function() { //查找单个相册
+				var url = URL+"album/" + this.type + "?params=" + this.searchKey;
+				var _self = this;
+				$.get(url, function(data) {
+					_self.listAlbums = data.data;
+				})
+			},
+			getAlbum: function() { //查找所有相册
+				var url = URL+"Album";
+				var _self = this;
+				$.get(url, function(data) {
+					_self.listAlbums = data.data;
+				})
+			},
+			show_confirm: function(albumId) { //删除单个相册确认框
+				var r = confirm("确定要删除该相册？");
+				if (r == true) {
+					this.delectAlbum(albumId);
+					location. reload();//刷新当前页面
+				} else {
+					alert("已取消");
+				}
+			},
+			delectAlbum: function(albumId) { //删除单个相册
+				$.ajax({
+					url: URL+"Album/"+albumId,
+					type: 'DELETE',
+					success: function(result) {
+						alert(result.msg);
+					}
+				});
+			},
+			
+			dateFormat: function(time) {//时间格式化函数，此处仅针对yyyy-MM-dd hh:mm:ss 的格式进行格式化
+				var date = new Date(time);
+				var year = date.getFullYear();
+				/* 在日期格式中，月份是从0开始的，因此要加0
+				* 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+				* */
+				var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+				var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+				var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+				var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+				var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				// 拼接
+				return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+			}
+		}
+	});
+
+	$(function() { //添加相册
+		$('#addalbum').click(function() {
+
+			window.location.href = "add.html";
+		});
+	});
+
+</script>
