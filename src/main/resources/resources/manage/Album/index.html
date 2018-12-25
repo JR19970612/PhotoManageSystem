@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 		<style type="text/css">
@@ -86,14 +86,14 @@
 		},
 		methods: {
 			getAlbumSearchResult: function() { //查找单个相册
-				var url = "http://127.0.0.1:8080/album/" + this.type + "?params=" + this.searchKey;
+				var url = URL+"album/" + this.type + "?params=" + this.searchKey;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listAlbums = data.data;
 				})
 			},
 			getAlbum: function() { //查找所有相册
-				var url = "http://127.0.0.1:8080/Album";
+				var url = URL+"Album";
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listAlbums = data.data;
@@ -110,7 +110,7 @@
 			},
 			delectAlbum: function(albumId) { //删除单个相册
 				$.ajax({
-					url: "http://127.0.0.1:8080/Album/"+albumId,
+					url: URL+"Album/"+albumId,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);

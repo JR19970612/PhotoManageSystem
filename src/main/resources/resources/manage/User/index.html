@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script src="../allvariable.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -38,7 +38,7 @@
 	<body>
 		<div id="app">
 			<div style="margin-top: 20px; margin-left: 25px;">
-				用户id：<input v-model="searchKey" type="text" class="abc input-default" value="">&nbsp;&nbsp;
+				用户名称：<input v-model="searchKey" type="text" class="abc input-default" value="">&nbsp;&nbsp;
 				<button class="btn btn-primary" @click="getPersonSearchResult">查找用户</button>&nbsp;&nbsp;
 				<button type="button" class="btn btn-success" id="addPerson">添加用户</button>
 			<table class="table table-bordered table-hover definewidth m10">
@@ -53,7 +53,7 @@
 					<td>{{item.personId}}</td>
 					<td>{{item.personName}}</td>
 					<td>
-						<a :href="'edit.html?personId=' + item.personId">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a :href="'edit.html?personName=' + item.personName">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a @click="show_confirm(item.personId)">删除</a>
 					</td>
 				</tr>
@@ -75,14 +75,14 @@
 		},
 		methods: {
 			getPersonSearchResult: function() { //查找单个用户
-				var url = "http://127.0.0.1:8080/person/" + this.searchKey;
+				var url = URL+"person?personName=" + this.searchKey;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listpersons = data.data;
 				})
 			},
 			getPerson: function() { //查找所有用户
-				var url = "http://127.0.0.1:8080/person";
+				var url = URL+"persons";
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listpersons = data.data;
@@ -99,7 +99,7 @@
 			},
 			delectPerson: function(personId) { //删除单个用户
 				$.ajax({
-					url: "http://127.0.0.1:8080/person/"+personId,
+					url: URL+"person/"+personId,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);

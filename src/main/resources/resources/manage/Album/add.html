@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -70,7 +71,7 @@
 				methods: {
 					submit: function() { //添加相册
 					$.ajax({
-						url: "http://127.0.0.1:8080/Album?albumName=" + this.albumName + "&albumDesc="+this.albumDesc,
+						url: URL+"Album?albumName=" + this.albumName + "&albumDesc="+this.albumDesc,
 						type: 'post',
 						success: function(result) {
 							alert(result.msg);

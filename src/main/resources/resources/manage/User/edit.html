@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -36,7 +37,7 @@
 	</head>
 	<body>
 		<div id="app">
-		<form action="http://127.0.0.1:8080/person" method="post" class="definewidth m20">
+		<form action="http://localhost:8080/gdpi/person" method="post" class="definewidth m20">
 			<input type="hidden" name="_method" value="PUT">
 			<table class="table table-bordered table-hover definewidth m10">
 				<tr>
@@ -46,6 +47,10 @@
 				<tr>
 					<td width="10%" class="tableleft">用户名称</td>
 					<td><input v-model="listPerson.personName" type="text" name="personName" /></td>
+				</tr>
+				<tr>
+					<td width="10%" class="tableleft">用户密码</td>
+					<td><input type="text" name="personPassword" /></td>
 				</tr>
 				<tr>
 				<td class="tableleft"></td>
@@ -66,13 +71,13 @@
 			listPerson: [],
 		},
 		mounted: function() {
-			var personId = this.GetRequest().personId; //拿到对应id
-			this.getPersonSearchResult(personId);
-			console.log(personId)
+			var personName = this.GetRequest().personName; //拿到对应id
+			this.getPersonSearchResult(personName);
+			console.log(personName)
 		},
 		methods: {
-			getPersonSearchResult: function(personId) { //查找单个相册
-				var url = "http://127.0.0.1:8080/person/" + personId;
+			getPersonSearchResult: function(personName) { //查找单个用户
+				var url = URL+"person?personName=" + personName;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listPerson = data.data[0];

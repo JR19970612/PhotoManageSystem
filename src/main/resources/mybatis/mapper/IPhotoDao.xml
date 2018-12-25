@@ -63,7 +63,7 @@
     <select id="selectPhotoById" resultMap="photoMap">
         select * from photo
         <where>
-            photo_id=#{id}
+            photo_id=#{photo_id}
         </where>
     </select>
 
