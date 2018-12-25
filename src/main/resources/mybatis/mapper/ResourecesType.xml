@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydb.dao.IResourecesTypeDao">
+    <resultMap id="resourecesTypeMap" type="ResourecesType">
+        <id column="resoureces_type_id" property="resourecesTypeId"></id>
+        <result column="resourece_type_name" property="resoureceTypeName"></result>
+        <collection
+                property="resourecesUrls"
+                column="resoureces_type_id"
+                ofType="ResourecesUrl"
+                select="com.ydb.dao.IResourecesUrlDao.selectByResourceTypeId"></collection>
+    </resultMap>
+    <select id="selectByRoleId" resultMap="resourecesTypeMap">
+        select
+            *
+        from
+            resoureces_type
+        where
+            resoureces_type_id = (SELECT resoureces_type_id from assocation_role_resoureces where role_id=1)
+    </select>
+</mapper> 

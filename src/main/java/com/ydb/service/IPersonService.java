@@ -22,5 +22,7 @@ public interface IPersonService {
     //更新个人信息
     ResultBean<Person> updatePerson(Person person);
 
-    ResultBean<Person> loginPerson(Person person);
+    //微信端根据OpenId
+    ResultBean<Person> loginPerson(String openId);
+
 }

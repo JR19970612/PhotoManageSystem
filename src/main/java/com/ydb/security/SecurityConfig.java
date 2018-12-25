@@ -1,11 +1,14 @@
-package com.ydb.config.security;
+package com.ydb.security;
 
-import com.ydb.config.security.authencationconfig.AuthorizeConfig;
-import com.ydb.config.security.formconfig.FormAuthenticationConfig;
+import com.ydb.security.config.authencationconfig.AuthorizeConfig;
+import com.ydb.security.config.formconfig.FormAuthenticationConfig;
+import com.ydb.service.imp.AdminDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author: create by JR
@@ -13,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @description: SpringSecurity配置
  * @date:2018/12/21
  */
-//@Configuration
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -21,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     AuthorizeConfig authorizeConfig;
+
+    @Autowired
+    AdminDetailsService adminDetailsService;
 
 
     @Override
@@ -41,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/signOut")//退出拦截器处理的退出url
                 .logoutSuccessUrl("/login.html")//退出后重定向的页面
                 .and();
-//TODO 用户注册 默认头像
     }
 
     /**
@@ -52,13 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("admin")
-                .roles("SuperAdmin")
-                .and()
-                .withUser("user")
-                .password("user")
-                .roles("Admin");
+        auth
+                .userDetailsService(adminDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 }

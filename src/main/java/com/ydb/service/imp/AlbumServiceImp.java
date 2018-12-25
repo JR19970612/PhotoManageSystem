@@ -92,7 +92,6 @@ public class AlbumServiceImp implements IAlbumService {
 
     private void initResultBean(int code, ResultBean resultBean) {
         if (code > 0) {
-            //插入数据成功
             resultBean.setStatus(ResultBean.SUCCSSED_CODE);
             resultBean.setMsg("操作成功");
         } else {

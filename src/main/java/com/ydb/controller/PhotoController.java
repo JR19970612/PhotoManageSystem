@@ -43,12 +43,9 @@ public class PhotoController {
     @ApiOperation(value = "删除单张图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "photoName", value = "图片名", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "photoOriginalUrl", value = "图片原图URL", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "photoThumUrl", value = "图片缩略图URL", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @DeleteMapping(value = "/photo", params = {"photoId", "photoName", "photoOriginalUrl", "photoThumUrl"})
+    @DeleteMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> dropPhoto(Photo photo) {
         return photoService.dropPhoto(photo);

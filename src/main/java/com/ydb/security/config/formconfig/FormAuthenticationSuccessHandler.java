@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ydb.config.security.formconfig;
+package com.ydb.security.config.formconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: 浏览器环境下登录成功的处理器
+ * @description: 认证成功的处理器，注意！！！认证成功并不代表登陆成功，因为之后还需要进行权限的验证
  * @date:2018/12/22
  */
 @Component("formAuthenticationSuccessHandler")
@@ -30,7 +30,7 @@ public class FormAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        logger.info("登录成功");
+        logger.info("认证成功");
         String accept = request.getHeader("Accept");
         //根据appcet响应头判断客户端是浏览器还是移动端，在进行指定响应动作
         if (accept != null & accept.contains("text/html")) {//若是浏览器端则重定向到指定页面

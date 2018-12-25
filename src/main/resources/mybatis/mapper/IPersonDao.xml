@@ -7,6 +7,10 @@
         <result column="person_password" property="personPassword" jdbcType="CHAR"/>
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
         <result column="person_avatar_url" property="personAvatarUrl" jdbcType="VARCHAR"/>
+        <collection property="roles"
+                    column="person_id"
+                    select="com.ydb.dao.IRoleDao.selectByPersonId"
+                    ofType="Role"></collection>
     </resultMap>
 
     <delete id="deletePerson" parameterType="java.lang.Integer">
@@ -70,40 +74,40 @@
             person_id = #{personId,jdbcType=INTEGER}
         </where>
     </update>
-    <select id="queryPersonByName" resultMap="BaseResultMap">
+    <select id="queryPersonByName" resultType="Person">
         select
         person_id, person_name,person_password, open_id,person_avatar_url
         from person
         where person_name = #{personName,jdbcType=CHAR}
     </select>
-    <select id="queryPersonById" resultMap="BaseResultMap">
+    <select id="queryPersonById" resultType="Person">
         select
         person_id, person_name,person_password, open_id,person_avatar_url
         from person
         where person_id = #{personId,jdbcType=INTEGER}
     </select>
-    <select id="queryPersons" resultMap="BaseResultMap">
+    <select id="queryPersons" resultType="Person">
         select
         *
         from
         person
     </select>
-    <select id="loginPerson" resultMap="BaseResultMap">
+    <!--微信端根据openId查找-->
+    <select id="findPersonByOpenId" parameterType="String" resultType="Person">
         select
-        person_id, person_name, open_id,person_password, person_avatar_url
+        person_id, person_name, open_id, person_avatar_url
         from person
         <where>
-            <choose>
-                <when test="openId!=null">
-                    open_id=#{openId,jdbcType=VARCHAR}
-                </when>
-                <when test="personName!=null">
-                    person_name=#{personName,jdbcType=CHAR}
-                </when>
-                <otherwise>
-                    1=0
-                </otherwise>
-            </choose>
+            open_id=#{openId,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!--浏览器端根据用户名密码查找-->
+    <select id="findPersonByUserNamePassword" parameterType="String" resultMap="BaseResultMap">
+        select
+        person_id, person_name,person_password, person_avatar_url
+        from person
+        <where>
+            person_name=#{personName,jdbcType=CHAR}
         </where>
     </select>
 </mapper>

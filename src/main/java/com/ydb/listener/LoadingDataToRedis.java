@@ -12,6 +12,7 @@ import com.ydb.entity.Photo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
@@ -24,6 +25,8 @@ import java.util.List;
  */
 
 public class LoadingDataToRedis implements ApplicationListener<ContextRefreshedEvent> {
+    @Autowired
+    RedisTemplate redisTemplate;
     @Autowired
     IPhotoDao photoDao;
     @Autowired
@@ -40,8 +43,8 @@ public class LoadingDataToRedis implements ApplicationListener<ContextRefreshedE
     @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        System.out.println("我的父容器为：" + contextRefreshedEvent.getApplicationContext().getParent());
-        System.out.println("初始化时我被调用了。");
+        System.out.println("初始化缓存-----重新装载数据");
+        redisTemplate.delete(redisTemplate.keys("*"));//格式化缓存数据
         List<Photo> photos = photoDao.selectAllPhoto().getResult();
         for (Photo photo : photos) {
             photoCacheAspect.update(photo);

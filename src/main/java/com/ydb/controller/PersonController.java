@@ -97,16 +97,14 @@ public class PersonController {
     }
 
 
-    @ApiOperation(value = "登陆")
+    @ApiOperation(value = "微信用户登陆")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "personName", value = "用户名", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "personPassword", value = "密码", required = false, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "openId", value = "微信openId", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "openId", value = "微信openId", required = true, paramType = "query", dataType = "string"),
     }
     )
-    @GetMapping(value = "/loginPerson")
+    @PostMapping(value = "/loginPerson")
     @JsonView(SuccessView.class)
-    public ResultBean<Person> loginPerson(Person person) {
-        return PersonService.loginPerson(person);
+    public ResultBean<Person> loginPerson(String openId) {
+        return PersonService.loginPerson(openId);
     }
 }
