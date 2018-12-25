@@ -6,9 +6,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist1'),
     // PUBLISH
-    // publicPath: './dist1/',
+    publicPath: './dist1/',
     //  DEBUG
-    publicPath: '/dist1/',
+    // publicPath: '/dist1/',
     filename: 'build.js'
   },
   module: {
