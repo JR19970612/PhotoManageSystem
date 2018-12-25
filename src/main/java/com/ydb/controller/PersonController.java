@@ -51,11 +51,11 @@ public class PersonController {
     @PostMapping(value = "/person", params = {"personName", "personPassword"}, headers = "platform=browser")
     @JsonView({SuccessView.class})
     public ResultBean<Person> insert(Person Person, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin","*");
-        // 响应类型
-        response.setHeader("Access-Control-Allow-Methods","POST");
-        // 响应头设置
-        response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
+//        response.setHeader("Access-Control-Allow-Origin","*");
+//        // 响应类型
+//        response.setHeader("Access-Control-Allow-Methods","POST");
+//        // 响应头设置
+//        response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
         return PersonService.insertPerson(Person);
     }
 

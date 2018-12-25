@@ -37,7 +37,7 @@
 	</head>
 	<body>
 		<div id="app">
-		<form action="http://localhost:8080/gdpi/Album" method="post" class="definewidth m20">
+		<form action="http://localhost:8080/gdpi/album" method="post" class="definewidth m20">
 			<input type="hidden" name="_method" value="PUT">
 			<table class="table table-bordered table-hover definewidth m10">
 				<tr>
@@ -77,7 +77,7 @@
 		},
 		methods: {
 			getPhotoSearchResult: function(albumId) { //查找单个相册
-				var url = URL+"album/AlbumId?params=" + albumId;
+				var url = URL+"album/albumId?params=" + albumId;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listalbum = data.data[0];

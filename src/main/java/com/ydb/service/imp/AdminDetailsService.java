@@ -21,7 +21,7 @@ public class AdminDetailsService implements UserDetailsService {
 
     @Override
     public Person loadUserByUsername(String username) throws UsernameNotFoundException {
-        Person person = personDao.findPersonByUserNamePassword(username);
+        Person person = personDao.findPersonByUserName(username);
         return person;
     }
 }

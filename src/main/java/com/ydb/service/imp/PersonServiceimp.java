@@ -38,7 +38,7 @@ public class PersonServiceimp implements IPersonService {
         }
         int code = personDao.insertPerson(person);
         //设置用户匿名角色
-        personDao.assigningRoles(3,person.getPersonId());
+        personDao.assigningRoles(3, person.getPersonId());
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
         return resultBean;
@@ -56,7 +56,7 @@ public class PersonServiceimp implements IPersonService {
         }
         int code = personDao.insertPerson(person);
         //设置用户管理员角色
-        personDao.assigningRoles(2,person.getPersonId());
+        personDao.assigningRoles(2, person.getPersonId());
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
         return resultBean;
@@ -66,8 +66,8 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> queryPersons() {
         List<Person> persons = personDao.queryPersons();
         for (int index = 0; index < persons.size(); index++) {//移除微信用户
-            Person person = new Person();
-            if (person.getOpenId() != null) {
+            Person person = persons.get(index);
+            if (person.getPersonName().equals("Admin") || person.getOpenId() != null) {
                 persons.remove(person);
             }
         }
@@ -81,7 +81,7 @@ public class PersonServiceimp implements IPersonService {
 
     @Override
     public ResultBean<Person> queryPerson(String personName) {
-        Person person = personDao.findPersonByUserNamePassword(personName);
+        Person person = personDao.findPersonByUserName(personName);
         ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");

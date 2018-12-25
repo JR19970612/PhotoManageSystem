@@ -18,6 +18,6 @@
         from
             resoureces_type
         where
-            resoureces_type_id = (SELECT resoureces_type_id from assocation_role_resoureces where role_id=1)
+            resoureces_type_id in (SELECT resoureces_type_id from assocation_role_resoureces where role_id=#{roleId})
     </select>
 </mapper> 

@@ -15,13 +15,14 @@ import org.springframework.stereotype.Component;
 public class AuthorizeConfig {
     public void configure(HttpSecurity builder) throws Exception {
         builder.authorizeRequests()
-                .antMatchers("/", "/login.html", "/loginPerson", "/client/**").permitAll()//首页和登陆页、图片浏览页面不进行认证拦截，任何用户都可进行访问
-                .antMatchers(HttpMethod.POST, "/person", "/loginPerson").permitAll()//用户注册登陆注册不进行拦截
-                .antMatchers(HttpMethod.GET, "/Album/**", "/photo/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/comment").permitAll()
-                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**","/swagger-resources/configuration/ui","/swagge‌​r-ui.html").hasAuthority("SuperAdmin")//Swagger接口测试只对超级管理员开通
+                .antMatchers("/", "/login.html", "/client/**", "/originalphoto/**", "/thumphoto/**").permitAll()//首页和登陆页、图片浏览页面不进行认证拦截，任何用户都可进行访问
+                //开放接口
+                .antMatchers(HttpMethod.GET, "/album/**", "/albums", "/photo/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/person", "/loginPerson","/comment").permitAll()
+                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagge‌​r-ui.html").hasAuthority("SuperAdmin")//Swagger接口测试只对超级管理员开通
+                .antMatchers("/manage/assets/**", "/manage/Css/**","/manage/front/**", "/manage/Images/**", "/manage/Js/**", "/manage/allvariable.js").hasAnyAuthority("SuperAdmin", "Admin")//后台公共静态资源，也就是超级管理员和管理员都能访问的资源
                 .antMatchers("/manage/user.html", "/manage/User/**").hasAuthority("SuperAdmin")//管理员管理资源只有超级管理员才拥有权限
                 .antMatchers("/manage/photo.html", "/manage/Album/**", "/manage/Comment/**", "/manage/Photo/**").hasAuthority("Admin")//相册管理资源只有管理员才拥有权限
-                .anyRequest().access("@rbacService.hasPermission(request, authentication)");//接口采用RBAC数据模型控制
+                .anyRequest().access("@rbacService.hasPermission(request, authentication)");//其它接口采用RBAC数据模型控制
     }
 }

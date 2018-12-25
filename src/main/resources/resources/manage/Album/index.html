@@ -93,7 +93,7 @@
 				})
 			},
 			getAlbum: function() { //查找所有相册
-				var url = URL+"Album";
+				var url = URL+"albums";
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listAlbums = data.data;
@@ -110,7 +110,7 @@
 			},
 			delectAlbum: function(albumId) { //删除单个相册
 				$.ajax({
-					url: URL+"Album/"+albumId,
+					url: URL+"album/"+albumId,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);

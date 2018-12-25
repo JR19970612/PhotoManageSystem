@@ -34,7 +34,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})
+    @PostMapping(value = "/album", params = {"albumName", "albumDesc"})
     @JsonView(SuccessView.class)
     public ResultBean<Album> addAlbum(Album album) {
         return iAlbumService.addAlbum(album);
@@ -45,7 +45,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumId", value = "相册ID", required = true, paramType = "path", dataType = "int"),
     }
     )
-    @DeleteMapping(value = "/Album/{albumId}")
+    @DeleteMapping(value = "/album/{albumId}")
     @JsonView(SuccessView.class)
     public ResultBean<Album> dropAlbum(@PathVariable Integer albumId) {
         return iAlbumService.dropAlbum(albumId);
@@ -59,7 +59,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @PutMapping(value = "/Album", params = "albumId")
+    @PutMapping(value = "/album", params = "albumId")
     @JsonView({SuccessView.class})
     public ModelAndView updateAlbum(Album album) throws IOException {
         ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
@@ -77,9 +77,9 @@ public class AlbumController {
     @GetMapping(value = "/album/{type}", params = "params")
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAlbumById(@PathVariable String type, @RequestParam String params) {
-        if (type != null & type.equals("AlbumId")) {
+        if (type != null & type.equals("albumId")) {
             return iAlbumService.queryAlbum(Integer.parseInt(params));
-        } else if (type != null & type.equals("AlbumName")) {
+        } else if (type != null & type.equals("albumName")) {
             return iAlbumService.queryAlbum(params);
         } else {
             throw new ParamsException("非法的查询方式");
@@ -92,7 +92,7 @@ public class AlbumController {
             @ApiImplicitParam(name = "pageNum", value = "当前页面", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @GetMapping(value = "/Album/{pageSize}/{pageNum}")
+    @GetMapping(value = "/album/{pageSize}/{pageNum}")
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAllPhoto(@PathVariable Integer pageSize, @PathVariable Integer pageNum) {
         return iAlbumService.queryAlbum(pageSize, pageNum);
@@ -100,7 +100,7 @@ public class AlbumController {
 
 
     @ApiOperation(value = "查询所有相册信息")
-    @GetMapping("/Album")
+    @GetMapping("/albums")
     @JsonView(SuccessView.class)
     public ResultBean<Album> getAllAlbum() {
         return iAlbumService.queryAlbum();

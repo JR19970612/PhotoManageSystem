@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //退出配置
                 .logout()
                 .logoutUrl("/signOut")//退出拦截器处理的退出url
-                .logoutSuccessUrl("/login.html")//退出后重定向的页面
+                .logoutSuccessUrl("/client/index.html")//退出后重定向的页面
                 .and();
     }
 
@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 配置临时用户信息
+     * 配置认证管理器
      *
      * @param auth
      * @throws Exception

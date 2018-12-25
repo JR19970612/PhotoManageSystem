@@ -20,6 +20,6 @@
       FROM
 	   role
       WHERE
-	    role_id = ( SELECT role_id FROM association_role_user WHERE person_id = #{personId} )
+	    role_id in ( SELECT role_id FROM association_role_user WHERE person_id = #{personId} )
     </select>
 </mapper> 
