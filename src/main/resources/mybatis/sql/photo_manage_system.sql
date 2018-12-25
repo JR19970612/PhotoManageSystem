@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 25/12/2018 20:11:41
+ Date: 26/12/2018 00:41:34
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `album`  (
   `album_desc` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `album_createtime` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`album_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for assocation_role_resoureces
@@ -65,13 +65,12 @@ CREATE TABLE `association_role_user`  (
   INDEX `association_role_user_personid_fk`(`person_id`) USING BTREE,
   CONSTRAINT `association_role_user_personid_fk` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `association_role_user_roleid_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of association_role_user
 -- ----------------------------
 INSERT INTO `association_role_user` VALUES (1, 1, 1);
-INSERT INTO `association_role_user` VALUES (2, 2, 2);
 
 -- ----------------------------
 -- Table structure for comment
@@ -103,13 +102,14 @@ CREATE TABLE `person`  (
   PRIMARY KEY (`person_id`) USING BTREE,
   UNIQUE INDEX `person_name`(`person_name`) USING BTREE,
   UNIQUE INDEX `person_openid`(`open_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of person
 -- ----------------------------
-INSERT INTO `person` VALUES (1, 'SuperAdmin', '$2a$10$Pf800vGDQaopuRyzU88Bx.DigPhGQ41nknFfWUYowAebBVe6GYNku', 'http://localhost:8080/gdpi/favicon/8.bmp', NULL);
-INSERT INTO `person` VALUES (2, 'Admin', '$2a$10$RRBKaojYzCs2qfR/Hy3H4u0wtz65w9Q3MMqn/o1p39nEEO1/oOidm', 'http://localhost:8080/gdpi/favicon/1.bmp', NULL);
+INSERT INTO `person` VALUES (1, 'Admin', '$2a$10$Pf800vGDQaopuRyzU88Bx.DigPhGQ41nknFfWUYowAebBVe6GYNku', 'http://localhost:8080/gdpi/favicon/8.bmp', NULL);
+INSERT INTO `person` VALUES (32, 'JR', '$2a$10$6no3NKfCHjbss8TPso709u8zmRmVE4.zsGzWyp08j1RDnThwSoIiO', 'http://localhost:8080/gdpi/favicon/0.bmp', NULL);
+INSERT INTO `person` VALUES (34, 'SB', '$2a$10$s4tn.jqDelHK6.p5O9.EtuVQq0zWeX6/Ql3vHMBaE9k9jgNtG5rI2', 'http://localhost:8080/gdpi/favicon/4.bmp', NULL);
 
 -- ----------------------------
 -- Table structure for photo
@@ -127,7 +127,7 @@ CREATE TABLE `photo`  (
   UNIQUE INDEX `album_id_photo_name`(`photo_name`, `album_id`) USING BTREE,
   INDEX `album_id_forignkey`(`album_id`) USING BTREE,
   CONSTRAINT `album_id_forignkey` FOREIGN KEY (`album_id`) REFERENCES `album` (`album_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 157 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for resoureces_type
@@ -169,14 +169,14 @@ CREATE TABLE `resoureces_urls`  (
 INSERT INTO `resoureces_urls` VALUES (1, 1, '/photo', '图片添加', 'POST');
 INSERT INTO `resoureces_urls` VALUES (2, 1, '/photo', '图片删除', 'DELETE');
 INSERT INTO `resoureces_urls` VALUES (3, 1, '/photo', '图片修改', 'PUT');
-INSERT INTO `resoureces_urls` VALUES (4, 2, '/Album', '相册添加', 'POST');
-INSERT INTO `resoureces_urls` VALUES (5, 2, '/Album', '相册删除', 'DELETE');
-INSERT INTO `resoureces_urls` VALUES (6, 2, '/Album', '相册修改', 'PUT');
+INSERT INTO `resoureces_urls` VALUES (4, 2, '/album', '相册添加', 'POST');
+INSERT INTO `resoureces_urls` VALUES (5, 2, '/album/*', '相册删除', 'DELETE');
+INSERT INTO `resoureces_urls` VALUES (6, 2, '/album', '相册修改', 'PUT');
 INSERT INTO `resoureces_urls` VALUES (7, 3, '/persons', '用户获取所有', 'GET');
 INSERT INTO `resoureces_urls` VALUES (8, 3, '/person', '用户获取指定', 'GET');
 INSERT INTO `resoureces_urls` VALUES (9, 3, '/person', '用户添加', 'POST');
-INSERT INTO `resoureces_urls` VALUES (10, 3, '/person', '用户删除', 'DELETE');
-INSERT INTO `resoureces_urls` VALUES (11, 3, '/person', '用户修改', 'POST');
+INSERT INTO `resoureces_urls` VALUES (10, 3, '/person/*', '用户删除', 'DELETE');
+INSERT INTO `resoureces_urls` VALUES (11, 3, '/person', '用户修改', 'PUT');
 INSERT INTO `resoureces_urls` VALUES (12, 4, '/comment', '评论删除', 'DELETE');
 
 -- ----------------------------
