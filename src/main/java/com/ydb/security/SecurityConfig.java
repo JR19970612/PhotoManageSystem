@@ -6,6 +6,7 @@ import com.ydb.service.imp.AdminDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -38,13 +39,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()//关闭csrf
                 //访问请求头配置
-                .headers()
-                .frameOptions().disable()//关闭拦截嵌入式网页
-                .and()
+                .headers().disable()
+//                .frameOptions().disable()//关闭拦截嵌入式网页
+//                .and()
                 //退出配置
                 .logout()
                 .logoutUrl("/signOut")//退出拦截器处理的退出url
                 .logoutSuccessUrl("/login.html")//退出后重定向的页面
+                .and();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        //对静态资源进行放行
+        web.
+                ignoring()
+                .mvcMatchers("/manage/assets/**","/manage/Js/**","/manage/Images/**","/manage/front/**","/manage/allvariable.js")
                 .and();
     }
 

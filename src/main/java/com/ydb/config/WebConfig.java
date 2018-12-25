@@ -30,14 +30,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
         super.addViewControllers(registry);
     }
 
+
     @Bean
     public RedirectView redirectPhotoView() {
         return new RedirectView("/gdpi/manage/Photo/index.html");
     }
+
     @Bean
     public RedirectView redirectAlbumView() {
         return new RedirectView("/gdpi/manage/Album/index.html");
     }
+
     @Bean
     public RedirectView redirectUserView() {
         return new RedirectView("/gdpi/manage/User/index.html");

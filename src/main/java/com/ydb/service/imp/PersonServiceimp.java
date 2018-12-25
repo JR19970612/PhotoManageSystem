@@ -3,11 +3,11 @@ package com.ydb.service.imp;
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
-import com.ydb.entity.Role;
 import com.ydb.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,7 +24,7 @@ import java.util.Random;
 public class PersonServiceimp implements IPersonService {
 
     @Autowired
-    private IPersonDao mapper;
+    private IPersonDao personDao;
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -36,16 +36,15 @@ public class PersonServiceimp implements IPersonService {
             Random random = new Random();
             person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         }
-        //设置用户角色
-        Role role = new Role();
-        role.setRoleName("Anonymity");
-        person.getRoles().add(role);
-        int code = mapper.insertPerson(person);
+        int code = personDao.insertPerson(person);
+        //设置用户匿名角色
+        personDao.assigningRoles(3,person.getPersonId());
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
         return resultBean;
     }
 
+    @Transactional
     @Override
     public ResultBean<Person> insertPerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
@@ -55,10 +54,9 @@ public class PersonServiceimp implements IPersonService {
             Random random = new Random();
             person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         }
-        Role role = new Role();
-        role.setRoleName("Admin");
-        person.getRoles().add(role);
-        int code = mapper.insertPerson(person);
+        int code = personDao.insertPerson(person);
+        //设置用户管理员角色
+        personDao.assigningRoles(2,person.getPersonId());
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
         return resultBean;
@@ -66,7 +64,7 @@ public class PersonServiceimp implements IPersonService {
 
     @Override
     public ResultBean<Person> queryPersons() {
-        List<Person> persons = mapper.queryPersons();
+        List<Person> persons = personDao.queryPersons();
         for (int index = 0; index < persons.size(); index++) {//移除微信用户
             Person person = new Person();
             if (person.getOpenId() != null) {
@@ -83,7 +81,7 @@ public class PersonServiceimp implements IPersonService {
 
     @Override
     public ResultBean<Person> queryPerson(String personName) {
-        Person person = mapper.findPersonByUserNamePassword(personName);
+        Person person = personDao.findPersonByUserNamePassword(personName);
         ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
@@ -95,7 +93,7 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> deletePerson(Integer personId) {
         Person person = new Person();
         person.setPersonId(personId);
-        int code = mapper.deletePerson(person);
+        int code = personDao.deletePerson(person);
         ResultBean<Person> resultBean = new ResultBean<>();
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList());
@@ -109,7 +107,7 @@ public class PersonServiceimp implements IPersonService {
         if (person.getPassword() != null) {
             person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
         }
-        int code = mapper.updatePerson(person);
+        int code = personDao.updatePerson(person);
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(person));
         return resultBean;
@@ -118,7 +116,7 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> loginPerson(String openId) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        Person loginPerson = mapper.findPersonByOpenId(openId);
+        Person loginPerson = personDao.findPersonByOpenId(openId);
         if (loginPerson == null) {
             initResultBean(1, resultBean);
         } else {

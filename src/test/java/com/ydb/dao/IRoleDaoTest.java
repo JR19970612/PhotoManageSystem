@@ -23,7 +23,7 @@ public class IRoleDaoTest {
     @Test
     public void selectRoleByPersonId() {
         Person person=new Person();
-        person.setPersonId(10);
+        person.setPersonId(21);
         System.out.println(roleDao.selectByPersonId(person));
     }
 }

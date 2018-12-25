@@ -16,8 +16,9 @@ public interface IPersonDao {
 
     int insertPerson(Person person);
 
-    List<Person> queryPersons();
+    void assigningRoles(Integer roleId,Integer personId);
 
+    List<Person> queryPersons();
 
     Person queryPersonById(Integer personId);
 

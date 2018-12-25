@@ -3,7 +3,6 @@ package com.ydb.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.PhotoView;
 import com.ydb.bean.ResultBean;
-import com.ydb.entity.Album;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
 import com.ydb.service.imp.PhotoServiceImp;
@@ -17,7 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
-@CrossOrigin
+@CrossOrigin(
+        origins = "*",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = RequestMethod.GET,
+        maxAge = 3600
+)
 @RestController
 public class PhotoController {
     @Autowired

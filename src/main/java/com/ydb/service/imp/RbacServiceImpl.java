@@ -32,7 +32,7 @@ public class RbacServiceImpl implements IRbacService {
             // 读取用户所拥有权限的所有URL
             Set<ResourecesUrl> urls = ((Person) principal).getUrls();
             for (ResourecesUrl url : urls) {
-                if (antPathMatcher.match(url.getResourecesUrl(), request.getRequestURI())&url.getResourecesUrlMethod().equals(request.getMethod())) {
+                if (antPathMatcher.match("/gdpi"+url.getResourecesUrl(), request.getRequestURI())&url.getResourecesUrlMethod().equals(request.getMethod().toUpperCase())) {
                     hasPermission = true;
                     break;
                 }

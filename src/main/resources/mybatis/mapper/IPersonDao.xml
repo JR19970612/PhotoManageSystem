@@ -53,16 +53,10 @@
         <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
             select @@identity;
         </selectKey>
-        <foreach collection="roles" item="role">
-            <choose>
-                <when test="role.roleName=='Admin'">
-                    insert into association_role_user(role_id,person_id) values(2,1)
-                </when>
-                <when test="role.roleName=='Anonymity'">
-                    insert into association_role_user(role_id,person_id) values(2,1)
-                </when>
-            </choose>
-        </foreach>
+    </insert>
+
+    <insert id="assigningRoles">
+                insert into association_role_user(role_id,person_id) values(#{param1},#{param2})
     </insert>
 
     <delete id="deletePerson" parameterType="java.lang.Integer">
