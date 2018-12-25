@@ -4,6 +4,7 @@ import com.ydb.security.config.authencationconfig.AuthorizeConfig;
 import com.ydb.security.config.formconfig.FormAuthenticationConfig;
 import com.ydb.service.imp.AdminDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @description: SpringSecurity配置
  * @date:2018/12/21
  */
-//@Configuration
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -41,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //访问请求头配置
                 .headers().disable()
 //                .frameOptions().disable()//关闭拦截嵌入式网页
-//                .and()
                 //退出配置
                 .logout()
                 .logoutUrl("/signOut")//退出拦截器处理的退出url
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //对静态资源进行放行
         web.
                 ignoring()
-                .mvcMatchers("/manage/assets/**","/manage/Js/**","/manage/Images/**","/manage/front/**","/manage/allvariable.js")
+                .mvcMatchers("/manage/assets/**", "/manage/Js/**", "/manage/Images/**", "/manage/front/**", "/manage/allvariable.js")
                 .and();
     }
 
