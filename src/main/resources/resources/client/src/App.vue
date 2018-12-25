@@ -7,9 +7,9 @@
         <router-view></router-view>
       </keep-alive>
     </div>
-    <Footer></Footer>
-    <button @click="setShowPhoto">显示照片？{{showPhoto}}</button>
-    <button @click="setShowAlbum">显示相册？{{showAlbum}}</button>
+    <MFooter></MFooter>
+    <!--<button @click="setShowPhoto">显示照片？{{showPhoto}}</button>-->
+    <!--<button @click="setShowAlbum">显示相册？{{showAlbum}}</button>-->
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import { mapState, mapGetters, mapActions } from "vuex";
 import Nav from "./components/Nav.vue";
 import Search from "./components/Search.vue";
 import Classify from "./components/Classify.vue";
-import Footer from "./components/Footer.vue";
+import MFooter from "./components/MFooter.vue";
 
 export default {
   name: "app",
@@ -45,7 +45,7 @@ export default {
     Nav,
     Search,
     Classify,
-    Footer
+      MFooter
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
