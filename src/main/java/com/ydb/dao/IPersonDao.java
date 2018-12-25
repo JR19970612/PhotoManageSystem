@@ -18,7 +18,6 @@ public interface IPersonDao {
 
     List<Person> queryPersons();
 
-    Person queryPersonByName(String personName);
 
     Person queryPersonById(Integer personId);
 

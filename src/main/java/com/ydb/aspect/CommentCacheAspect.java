@@ -44,8 +44,7 @@ public class CommentCacheAspect extends AbstractCacheApsect<Comment> {
     //数据删除的缓存切面
     @Override
     public void delete(Comment comment) {
-        Set keys = redisTemplate.keys(String.format(namespace, "*", comment.getCommentId()));
-        redisTemplate.delete(keys.iterator().next());
+        hashOperations.delete(String.format(namespace,comment.getPhotoId()),String.valueOf(comment.getCommentId()));
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据

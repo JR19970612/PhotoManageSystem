@@ -13,10 +13,7 @@
                     ofType="Role"></collection>
     </resultMap>
 
-    <delete id="deletePerson" parameterType="java.lang.Integer">
-    delete from person
-    where person_id = #{personId,jdbcType=INTEGER}
-  </delete>
+
     <insert id="insertPerson" parameterType="com.ydb.entity.Person">
         insert into person
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -54,9 +51,26 @@
             </if>
         </trim>
         <selectKey keyProperty="personId" keyColumn="person_id" resultType="int" order="AFTER">
-            select @@identity
+            select @@identity;
         </selectKey>
+        <foreach collection="roles" item="role">
+            <choose>
+                <when test="role.roleName=='Admin'">
+                    insert into association_role_user(role_id,person_id) values(2,1)
+                </when>
+                <when test="role.roleName=='Anonymity'">
+                    insert into association_role_user(role_id,person_id) values(2,1)
+                </when>
+            </choose>
+        </foreach>
     </insert>
+
+    <delete id="deletePerson" parameterType="java.lang.Integer">
+        delete from person
+        where person_id = #{personId,jdbcType=INTEGER}
+    </delete>
+
+
     <update id="updatePerson" parameterType="com.ydb.entity.Person">
         update person
         <set>
@@ -74,12 +88,7 @@
             person_id = #{personId,jdbcType=INTEGER}
         </where>
     </update>
-    <select id="queryPersonByName" resultType="Person">
-        select
-        person_id, person_name,person_password, open_id,person_avatar_url
-        from person
-        where person_name = #{personName,jdbcType=CHAR}
-    </select>
+
     <select id="queryPersonById" resultType="Person">
         select
         person_id, person_name,person_password, open_id,person_avatar_url
