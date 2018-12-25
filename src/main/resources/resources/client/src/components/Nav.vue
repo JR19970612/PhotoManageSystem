@@ -20,7 +20,7 @@
         <el-menu-item index="4" style="float:right">
             <el-button type="text" @click="dialogFormVisible = true">管理员登陆</el-button>
             <el-dialog title="管理员登陆" :visible.sync="dialogFormVisible">
-                <el-form :model="form" method="post" action="gdpi/login">
+                <el-form :model="form" method="post" action="/gdpi/login">
                     <el-form-item >
                         <el-input id="name" name="personName" v-model="form.name" placeholder="请输入帐号">
                             <template slot="prepend">帐号</template>
