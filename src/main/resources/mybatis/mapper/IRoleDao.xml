@@ -12,6 +12,8 @@
                 ofType="ResourecesType"
                 select="com.ydb.dao.IResourecesTypeDao.selectByRoleId"></collection>
     </resultMap>
+
+
     <select id="selectByPersonId" resultMap="roleMap">
       SELECT
     	*

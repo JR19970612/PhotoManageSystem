@@ -12,5 +12,6 @@ import java.util.List;
  * @date:2018/12/24
  */
 public interface IRoleDao {
+
     List<Role> selectByPersonId(Person person);
 }

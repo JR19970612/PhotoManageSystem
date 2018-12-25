@@ -1,6 +1,7 @@
 package com.ydb.service;
 
 import com.ydb.entity.Person;
+import com.ydb.entity.Role;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class IPersonServiceTest {
         person.setPersonName("JR");
         person.setPersonPassword("123456");
         person.setPersonAvatarUrl("http://localhost/image.url");
+        Role role = new Role();
+        role.setRoleName("Anonymity");
+        person.getRoles().add(role);
         personService.insertPerson(person);
     }
 }

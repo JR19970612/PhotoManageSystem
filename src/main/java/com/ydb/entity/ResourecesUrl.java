@@ -10,6 +10,7 @@ public class ResourecesUrl {
     private Integer resourecesTypeId;
     private String resourecesUrl;
     private String resourecesUrlAction;
+    private String resourecesUrlMethod;
 
     public Integer getResourecesTypeId() {
         return resourecesTypeId;
@@ -35,12 +36,21 @@ public class ResourecesUrl {
         this.resourecesUrlAction = resourecesUrlAction;
     }
 
+    public String getResourecesUrlMethod() {
+        return resourecesUrlMethod;
+    }
+
+    public void setResourecesUrlMethod(String resourecesUrlMethod) {
+        this.resourecesUrlMethod = resourecesUrlMethod;
+    }
+
     @Override
     public String toString() {
         return "ResourecesUrl{" +
                 "resourecesTypeId=" + resourecesTypeId +
                 ", resourecesUrl='" + resourecesUrl + '\'' +
                 ", resourecesUrlAction='" + resourecesUrlAction + '\'' +
+                ", resourecesUrlMethod='" + resourecesUrlMethod + '\'' +
                 '}';
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Set;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestConnect {
@@ -19,12 +21,13 @@ public class TestConnect {
 
     @Test
     public void testConnection() {
-        redisTemplate.opsForValue().set("stringKey", "stringValue");
-        System.out.println(redisTemplate.opsForValue().get("stringKey"));
+        String namespace = "person:personId:%s:personName:%s";//缓存命名空间
+        Set keys = redisTemplate.keys(String.format(namespace, 11, "*"));
+        redisTemplate.delete(keys.iterator().next());
     }
 
     @Test
     public void testHasKey() {
-        System.out.println("hasKey"+redisTemplate.keys("photo:photoId-*photoName-Name_A"));
+        System.out.println("hasKey" + redisTemplate.keys("photo:photoId-*photoName-Name_A"));
     }
 }

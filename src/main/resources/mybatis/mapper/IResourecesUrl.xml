@@ -7,6 +7,7 @@
         <id column="resoureces_type_id" property="resourecesTypeId"></id>
         <result column="resoureces_url" property="resourecesUrl"></result>
         <result column="resoureces_url_action" property="resourecesUrlAction"></result>
+        <result column="resoureces_url_method" property="resourecesUrlMethod"></result>
     </resultMap>
     <select id="selectByResourceTypeId" resultMap="resoureceUrlMap">
         select * from resoureces_urls

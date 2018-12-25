@@ -1,5 +1,6 @@
 package com.ydb.aspect;
 
+import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,17 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
     RedisTemplate redisTemplate;
     @Autowired
     HashOperations hashOperations;
-
+    @Autowired
+    IPersonDao personDao;
 
     @Override
     public void update(Person person) {
+        //先删除缓存，之后拿数据库中的数据更新缓存
+        person = personDao.queryPersonById(person.getPersonId());
+        if (person != null) {
+            redisTemplate.delete(String.format(namespace, person.getPersonId(), person.getPersonName()));
+        }
+        person = personDao.queryPersonById(person.getPersonId());
         if (person != null && person.getPersonId() != null) {
             hashOperations.put(String.format(namespace, person.getPersonId(), person.getPersonName()), "PersonId", String.valueOf(person.getPersonId()));
         }
@@ -44,16 +52,17 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
 
     @Override
     public void delete(Person person) {
-        redisTemplate.delete(String.format(namespace, person.getPersonId(), "*"));
+        Set keys = redisTemplate.keys(String.format(namespace, person.getPersonId(), "*"));
+        redisTemplate.delete(keys.iterator().next());
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据
     public Person queryCacheByArgsBeforeSelectDao(ProceedingJoinPoint point) throws Throwable {
-        String args = (String) point.getArgs()[0];
+        Object args = point.getArgs()[0];
         Set keys;
-        if (args.startsWith("CACHE_TAG")) {
-            keys = redisTemplate.keys(String.format(namespace, args.replace("CACHE_TAG", ""), "*"));
-        } else {
+        if (args instanceof Integer) {//根据ID查询用户
+            keys = redisTemplate.keys(String.format(namespace, args, "*"));
+        } else {//根据用户名查询用户
             keys = redisTemplate.keys(String.format(namespace, "*", args));
         }
         Person person = new Person();
@@ -65,11 +74,7 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
                 initObject(person, personMap);
             }
         } else {//不存在则去查询数据库中的数据
-            if (args.startsWith("CACHE_TAG")) {
-                person = (Person) point.proceed(new Object[]{args.replace("CACHE_TAG", "")});
-            } else {
-                person = (Person) point.proceed();
-            }
+            person = (Person) point.proceed();
         }
         return person;
     }

@@ -3,6 +3,7 @@ package com.ydb.service.imp;
 import com.ydb.bean.ResultBean;
 import com.ydb.dao.IPersonDao;
 import com.ydb.entity.Person;
+import com.ydb.entity.Role;
 import com.ydb.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,10 +32,14 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> register(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
         if (person.getPersonAvatarUrl() == null) {
-            //TODO 设置用户默认头像
+            // 设置用户默认头像
             Random random = new Random();
             person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         }
+        //设置用户角色
+        Role role = new Role();
+        role.setRoleName("Anonymity");
+        person.getRoles().add(role);
         int code = mapper.insertPerson(person);
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
@@ -45,9 +50,14 @@ public class PersonServiceimp implements IPersonService {
     public ResultBean<Person> insertPerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
         person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
-        //TODO 设置用户默认头像
-        Random random = new Random();
-        person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
+        if (person.getPersonAvatarUrl() == null) {
+            // 设置用户默认头像
+            Random random = new Random();
+            person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
+        }
+        Role role = new Role();
+        role.setRoleName("Admin");
+        person.getRoles().add(role);
         int code = mapper.insertPerson(person);
         resultBean.setData(Arrays.asList(person));
         initResultBean(code, resultBean);
@@ -73,7 +83,7 @@ public class PersonServiceimp implements IPersonService {
 
     @Override
     public ResultBean<Person> queryPerson(String personName) {
-        Person person = mapper.queryPersonByName(personName);
+        Person person = mapper.findPersonByUserNamePassword(personName);
         ResultBean<Person> resultBean = new ResultBean<>();
         resultBean.setStatus(ResultBean.SUCCSSED_CODE);
         resultBean.setMsg("查询成功");
@@ -96,7 +106,9 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> updatePerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        if (person.getPassword() != null) {
+            person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        }
         int code = mapper.updatePerson(person);
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(person));

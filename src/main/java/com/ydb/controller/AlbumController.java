@@ -27,7 +27,6 @@ public class AlbumController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "albumName", value = "相册名称", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "albumDesc", value = "相册描述", required = true, paramType = "query", dataType = "String"),
-
     }
     )
     @PostMapping(value = "/Album", params = {"albumName", "albumDesc"})
@@ -59,7 +58,7 @@ public class AlbumController {
     @JsonView({SuccessView.class})
     public ModelAndView updateAlbum(Album album) throws IOException {
         ResultBean<Album> resultBean = iAlbumService.updateAlbum(album);
-        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("redirectAlbumView", "status", resultBean.getStatus());
         return modelAndView;
     }
 

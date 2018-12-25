@@ -7,10 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 /**
  * 笔记
  * Authentication（实现类有：UsernamePasswordAuthenticationToken...）顶级接口主要变量的意义
@@ -44,15 +41,15 @@ public class Person implements Serializable, UserDetails {
     private String personAvatarUrl;
 
     //用户的所有角色
-    private List<Role> roles;
+    private List<Role> roles=new ArrayList<>();
 
     //用户有权访问的所有url，不持久化到数据库
-    private Set<String> urls = new HashSet<>();
+    private Set<ResourecesUrl> urls = new HashSet<>();
 
     public Person() {
     }
 
-    public Person(Integer personId, String personName, String personPassword, String openId, String personAvatarUrl, List<Role> roles, Set<String> urls) {
+    public Person(Integer personId, String personName, String personPassword, String openId, String personAvatarUrl, List<Role> roles, Set<ResourecesUrl> urls) {
         this.personId = personId;
         this.personName = personName;
         this.personPassword = personPassword;
@@ -110,11 +107,11 @@ public class Person implements Serializable, UserDetails {
         this.roles = roles;
     }
 
-    public Set<String> getUrls() {
+    public Set<ResourecesUrl> getUrls() {
         for (Role role : this.roles) {
             for (ResourecesType resourecesType : role.getResourecesTypes()) {
                 for (ResourecesUrl resourecesUrl : resourecesType.getResourecesUrls()) {
-                    urls.add(resourecesUrl.getResourecesUrl());
+                    urls.add(resourecesUrl);
                 }
             }
         }
