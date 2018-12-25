@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -69,11 +70,19 @@
 				methods: {
 					submit: function() { //添加用户
 					$.ajax({
-						url: "http://127.0.0.1:8080/person?personName=" + this.personName + "&personPassword="+this.personPassword,
+						url: URL+"person",
 						type: 'post',
+						header:{
+							"Content-type":"application/x-www-form-urlencoded",
+							"platform":"browser",
+						},
+						data:{
+							"personName":this.personName,
+							"personPassword":this.personPassword
+						},
 						success: function(result) {
 							alert(result.msg);
-							location. reload();//刷新当前页面
+							location.reload();//刷新当前页面
 						}
 					});
 						

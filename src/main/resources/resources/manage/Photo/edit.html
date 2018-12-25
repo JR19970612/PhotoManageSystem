@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -36,7 +37,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<form action="http://127.0.0.1:8080/photo" method="post" class="definewidth m20" >
+			<form action="http://localhost:8080/gdpi/photo" method="post" class="definewidth m20" >
 				 <input type="hidden" name="_method" value="PUT">
 				<table class="table table-bordered table-hover definewidth m10">
 					<div>
@@ -93,7 +94,7 @@
 		methods: {
 			
 			getPhotoSearchResult: function(photoId) { //查找单张照片
-				var url = "http://127.0.0.1:8080/photo/photoId?params=" + photoId;
+				var url = URL+"photo/photoId?params=" + photoId;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listphoto = data.data[0];

@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 		<style type="text/css">
 			body {
@@ -68,7 +69,7 @@
 					<td>{{item.photoThumUrl}}</td>
 					<td>
 						<a :href="'edit.html?photoId=' + item.photoId">编&nbsp;辑</a>&nbsp;&nbsp;&nbsp;
-						<a @click="show_confirm(item.photoId,item.photoOriginalUrl,item.photoThumUrl)">删&nbsp;除</a>
+						<a @click="show_confirm(item.photoId,item.photoName,item.photoOriginalUrl,item.photoThumUrl)">删&nbsp;除</a>
 					</td>
 				</tr>
 			</table>
@@ -92,14 +93,14 @@
 		},
 		methods: {
 			getPhotoSearchResult: function() { //查找单张照片
-				var url = "http://127.0.0.1:8080/photo/" + this.type + "?params=" + this.searchKey;
+				var url = URL+"photo/" + this.type + "?params=" + this.searchKey;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
 				})
 			},
 			getPhoto: function() { //查找所有照片
-				var url = "http://127.0.0.1:8080/photo/" + this.pageConut + "/" + this.page;
+				var url = URL+"photo/" + this.pageConut + "/" + this.page;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
@@ -107,7 +108,7 @@
 			},
 			addpage: function() { //查看更多
 				this.page = this.page + 1;
-				var url = "http://127.0.0.1:8080/photo/" + this.pageConut + "/" +this.page;
+				var url = URL+"photo/" + this.pageConut + "/" +this.page;
 				var _self = this;
 				$.get(url, function(data) {
 					// this.arr.concat(anotherArr);
@@ -125,9 +126,9 @@
 					alert("已取消");
 				}
 			},
-			delectPhoto: function(photoId, photoOriginalUrl, photoThumUrl) { //删除单张照片
-				$.ajax({
-					url: "http://127.0.0.1:8080/photo?photoId=" + photoId + "&photoOriginalUrl=" + photoOriginalUrl +
+			delectPhoto: function(photoId,photoName, photoOriginalUrl, photoThumUrl) { //删除单张照片
+				$.ajax({				
+					url: URL+"photo?photoId=" + photoId +"&photoName="+photoName+"&photoOriginalUrl=" + photoOriginalUrl +
 						"&photoThumUrl=" + photoThumUrl,
 					type: 'DELETE',
 					success: function(result) {

@@ -80,7 +80,7 @@
         select
         person_id, person_name,person_password, open_id,person_avatar_url
         from person
-        where person_id = #{personId,jdbcType=INTEGER}
+        where person_id = #{personId,jdbcType=INTEGER}queryPersons
     </select>
     <select id="queryPersons" resultMap="BaseResultMap">
         select

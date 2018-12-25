@@ -3,6 +3,7 @@ package com.ydb.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ydb.JsonView.PhotoView;
 import com.ydb.bean.ResultBean;
+import com.ydb.entity.Album;
 import com.ydb.entity.Photo;
 import com.ydb.exception.ParamsException;
 import com.ydb.service.imp.PhotoServiceImp;
@@ -35,7 +36,7 @@ public class PhotoController {
     @JsonView(PhotoView.QueryRoughly.class)
     public ModelAndView uploadPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
         ResultBean resultBean = photoService.addPhoto(request, photo);
-        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("redirectPhotoView", "status", resultBean.getStatus());
         return modelAndView;
     }
 
@@ -65,8 +66,13 @@ public class PhotoController {
     )
     @PutMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public ResultBean<Photo> updatePhoto(Photo photo) {
+    /*public ResultBean<Photo> updatePhoto(Photo photo) {
         return photoService.updatePhoto(photo);
+    }*/
+    public ModelAndView updatePhoto(Photo photo) throws IOException {
+        ResultBean<Photo> resultBean = iAlbumService.updatePhoto(photo);
+        ModelAndView modelAndView = new ModelAndView("redirectAlbumView", "status", resultBean.getStatus());
+        return modelAndView;
     }
 
     @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或名称获取用户")

@@ -57,7 +57,8 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> queryPersons() {
         List<Person> persons = mapper.queryPersons();
-        for (Person person : persons) {//移除微信用户
+        for (int i = 0; i < persons.size(); i++) {
+           Person person=persons.get(i);
             if (person.getOpenId() != null) {
                 persons.remove(person);
             }
