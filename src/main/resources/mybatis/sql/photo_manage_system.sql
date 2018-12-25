@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 24/12/2018 09:01:32
+ Date: 25/12/2018 20:11:41
 */
 
 SET NAMES utf8mb4;
@@ -36,13 +36,21 @@ DROP TABLE IF EXISTS `assocation_role_resoureces`;
 CREATE TABLE `assocation_role_resoureces`  (
   `association_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NULL DEFAULT NULL,
-  `resourece_id` int(11) NULL DEFAULT NULL,
+  `resoureces_type_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`association_id`) USING BTREE,
-  INDEX `ASSOCATION_ROLE_RESOURECES_RESOURECEID_FORGIKEY`(`resourece_id`) USING BTREE,
+  INDEX `ASSOCATION_ROLE_RESOURECES_RESOURECEID_FORGIKEY`(`resoureces_type_id`) USING BTREE,
   INDEX `ASSOCATION_ROLE_RESOURECES_ROLEID_FORGIKEY`(`role_id`) USING BTREE,
-  CONSTRAINT `ASSOCATION_ROLE_RESOURECES_RESOURECEID_FORGIKEY` FOREIGN KEY (`resourece_id`) REFERENCES `resoureces_type` (`resoureces_type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ASSOCATION_ROLE_RESOURECES_RESOURECEID_FORGIKEY` FOREIGN KEY (`resoureces_type_id`) REFERENCES `resoureces_type` (`resoureces_type_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ASSOCATION_ROLE_RESOURECES_ROLEID_FORGIKEY` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of assocation_role_resoureces
+-- ----------------------------
+INSERT INTO `assocation_role_resoureces` VALUES (1, 1, 3);
+INSERT INTO `assocation_role_resoureces` VALUES (2, 2, 1);
+INSERT INTO `assocation_role_resoureces` VALUES (3, 2, 2);
+INSERT INTO `assocation_role_resoureces` VALUES (4, 2, 4);
 
 -- ----------------------------
 -- Table structure for association_role_user
@@ -57,7 +65,13 @@ CREATE TABLE `association_role_user`  (
   INDEX `association_role_user_personid_fk`(`person_id`) USING BTREE,
   CONSTRAINT `association_role_user_personid_fk` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `association_role_user_roleid_fk` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of association_role_user
+-- ----------------------------
+INSERT INTO `association_role_user` VALUES (1, 1, 1);
+INSERT INTO `association_role_user` VALUES (2, 2, 2);
 
 -- ----------------------------
 -- Table structure for comment
@@ -87,8 +101,15 @@ CREATE TABLE `person`  (
   `person_avatar_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `open_id` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`person_id`) USING BTREE,
-  UNIQUE INDEX `person_name`(`person_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `person_name`(`person_name`) USING BTREE,
+  UNIQUE INDEX `person_openid`(`open_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of person
+-- ----------------------------
+INSERT INTO `person` VALUES (1, 'SuperAdmin', '$2a$10$Pf800vGDQaopuRyzU88Bx.DigPhGQ41nknFfWUYowAebBVe6GYNku', 'http://localhost:8080/gdpi/favicon/8.bmp', NULL);
+INSERT INTO `person` VALUES (2, 'Admin', '$2a$10$RRBKaojYzCs2qfR/Hy3H4u0wtz65w9Q3MMqn/o1p39nEEO1/oOidm', 'http://localhost:8080/gdpi/favicon/1.bmp', NULL);
 
 -- ----------------------------
 -- Table structure for photo
@@ -117,19 +138,46 @@ CREATE TABLE `resoureces_type`  (
   `resourece_type_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`resoureces_type_id`) USING BTREE,
   INDEX `resourece_type_name`(`resourece_type_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of resoureces_type
+-- ----------------------------
+INSERT INTO `resoureces_type` VALUES (1, '图片管理');
+INSERT INTO `resoureces_type` VALUES (2, '相册管理');
+INSERT INTO `resoureces_type` VALUES (3, '管理员管理');
+INSERT INTO `resoureces_type` VALUES (4, '评论管理');
 
 -- ----------------------------
 -- Table structure for resoureces_urls
 -- ----------------------------
 DROP TABLE IF EXISTS `resoureces_urls`;
 CREATE TABLE `resoureces_urls`  (
-  `resoureces_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `resoureces_url_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `resoureces_url_id` int(11) NOT NULL AUTO_INCREMENT,
+  `resoureces_type_id` int(11) NOT NULL,
+  `resoureces_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `resoureces_url_action` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`resoureces_type_id`) USING BTREE,
-  CONSTRAINT `resoureces_urls_typeId_fk` FOREIGN KEY (`resoureces_type_id`) REFERENCES `resoureces_type` (`resoureces_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+  `resoureces_url_method` char(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`resoureces_url_id`) USING BTREE,
+  INDEX `resoureces_urls_rtid_fk`(`resoureces_type_id`) USING BTREE,
+  CONSTRAINT `resoureces_urls_rtid_fk` FOREIGN KEY (`resoureces_type_id`) REFERENCES `resoureces_type` (`resoureces_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of resoureces_urls
+-- ----------------------------
+INSERT INTO `resoureces_urls` VALUES (1, 1, '/photo', '图片添加', 'POST');
+INSERT INTO `resoureces_urls` VALUES (2, 1, '/photo', '图片删除', 'DELETE');
+INSERT INTO `resoureces_urls` VALUES (3, 1, '/photo', '图片修改', 'PUT');
+INSERT INTO `resoureces_urls` VALUES (4, 2, '/Album', '相册添加', 'POST');
+INSERT INTO `resoureces_urls` VALUES (5, 2, '/Album', '相册删除', 'DELETE');
+INSERT INTO `resoureces_urls` VALUES (6, 2, '/Album', '相册修改', 'PUT');
+INSERT INTO `resoureces_urls` VALUES (7, 3, '/persons', '用户获取所有', 'GET');
+INSERT INTO `resoureces_urls` VALUES (8, 3, '/person', '用户获取指定', 'GET');
+INSERT INTO `resoureces_urls` VALUES (9, 3, '/person', '用户添加', 'POST');
+INSERT INTO `resoureces_urls` VALUES (10, 3, '/person', '用户删除', 'DELETE');
+INSERT INTO `resoureces_urls` VALUES (11, 3, '/person', '用户修改', 'POST');
+INSERT INTO `resoureces_urls` VALUES (12, 4, '/comment', '评论删除', 'DELETE');
 
 -- ----------------------------
 -- Table structure for role
@@ -139,6 +187,13 @@ CREATE TABLE `role`  (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES (1, 'SuperAdmin');
+INSERT INTO `role` VALUES (2, 'Admin');
+INSERT INTO `role` VALUES (3, 'Anonymity');
 
 SET FOREIGN_KEY_CHECKS = 1;

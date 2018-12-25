@@ -34,7 +34,6 @@ public class FormAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-
         logger.info("登录失败");
         //返回Json错误信息
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

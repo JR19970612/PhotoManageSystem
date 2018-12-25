@@ -14,8 +14,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-@CrossOrigin
+@CrossOrigin(
+        origins = "*",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = RequestMethod.GET,
+        maxAge = 3600
+)
 @RestController
 public class PersonController {
 
