@@ -108,8 +108,6 @@ CREATE TABLE `person`  (
 -- Records of person
 -- ----------------------------
 INSERT INTO `person` VALUES (1, 'Admin', '$2a$10$Pf800vGDQaopuRyzU88Bx.DigPhGQ41nknFfWUYowAebBVe6GYNku', 'http://localhost:8080/gdpi/favicon/8.bmp', NULL);
-INSERT INTO `person` VALUES (32, 'JR', '$2a$10$6no3NKfCHjbss8TPso709u8zmRmVE4.zsGzWyp08j1RDnThwSoIiO', 'http://localhost:8080/gdpi/favicon/0.bmp', NULL);
-INSERT INTO `person` VALUES (34, 'SB', '$2a$10$s4tn.jqDelHK6.p5O9.EtuVQq0zWeX6/Ql3vHMBaE9k9jgNtG5rI2', 'http://localhost:8080/gdpi/favicon/4.bmp', NULL);
 
 -- ----------------------------
 -- Table structure for photo
