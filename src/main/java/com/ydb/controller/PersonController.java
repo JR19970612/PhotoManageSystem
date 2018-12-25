@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @CrossOrigin
@@ -44,7 +45,12 @@ public class PersonController {
     )
     @PostMapping(value = "/person", params = {"personName", "personPassword"}, headers = "platform=browser")
     @JsonView({SuccessView.class})
-    public ResultBean<Person> insert(Person Person) {
+    public ResultBean<Person> insert(Person Person, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        // 响应类型
+        response.setHeader("Access-Control-Allow-Methods","POST");
+        // 响应头设置
+        response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
         return PersonService.insertPerson(Person);
     }
 
@@ -73,7 +79,7 @@ public class PersonController {
     @JsonView(SuccessView.class)
     public ModelAndView updatePerson(Person person) throws IOException {
         ResultBean<Person> resultBean = PersonService.updatePerson(person);
-        ModelAndView modelAndView = new ModelAndView("manageRedirectView", "status", resultBean.getStatus());
+        ModelAndView modelAndView = new ModelAndView("redirectUserView", "status", resultBean.getStatus());
         return modelAndView;
     }
 
@@ -97,16 +103,14 @@ public class PersonController {
     }
 
 
-    @ApiOperation(value = "登陆")
+    @ApiOperation(value = "微信用户登陆")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "personName", value = "用户名", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "personPassword", value = "密码", required = false, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "openId", value = "微信openId", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "openId", value = "微信openId", required = true, paramType = "query", dataType = "string"),
     }
     )
-    @GetMapping(value = "/loginPerson")
+    @PostMapping(value = "/loginPerson")
     @JsonView(SuccessView.class)
-    public ResultBean<Person> loginPerson(Person person) {
-        return PersonService.loginPerson(person);
+    public ResultBean<Person> loginPerson(String openId) {
+        return PersonService.loginPerson(openId);
     }
 }

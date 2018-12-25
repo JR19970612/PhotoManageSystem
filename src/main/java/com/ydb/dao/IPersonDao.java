@@ -20,12 +20,16 @@ public interface IPersonDao {
 
     Person queryPersonByName(String personName);
 
-    Person queryPersonById(String personId);
+    Person queryPersonById(Integer personId);
 
     int deletePerson(Person person);
 
     int updatePerson(Person person);
 
-    Person loginPerson(Person person);
+    //浏览器端登陆接口，该接口会查询用户的权限信息
+    Person findPersonByUserNamePassword(String personName);
+
+    //移动端登陆接口,该接口只查询简单用户信息
+    Person findPersonByOpenId(String openId);
 
 }

@@ -57,8 +57,8 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> queryPersons() {
         List<Person> persons = mapper.queryPersons();
-        for (int i = 0; i < persons.size(); i++) {
-           Person person=persons.get(i);
+        for (int index = 0; index < persons.size(); index++) {//移除微信用户
+            Person person = new Person();
             if (person.getOpenId() != null) {
                 persons.remove(person);
             }
@@ -96,7 +96,9 @@ public class PersonServiceimp implements IPersonService {
     @Override
     public ResultBean<Person> updatePerson(Person person) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        if (person.getPassword() != null) {
+            person.setPersonPassword(bCryptPasswordEncoder.encode(person.getPersonPassword()));
+        }
         int code = mapper.updatePerson(person);
         initResultBean(code, resultBean);
         resultBean.setData(Arrays.asList(person));
@@ -104,21 +106,13 @@ public class PersonServiceimp implements IPersonService {
     }
 
     @Override
-    public ResultBean<Person> loginPerson(Person person) {
+    public ResultBean<Person> loginPerson(String openId) {
         ResultBean<Person> resultBean = new ResultBean<>();
-        Person loginPerson = mapper.loginPerson(person);
-        //判断管理员用户,微信用户直接过
-        if (loginPerson != null && person.getPersonPassword() != null) {
-            if (!bCryptPasswordEncoder.matches(person.getPersonPassword(), loginPerson.getPersonPassword())) {
-                loginPerson = null;
-            }
-        }
+        Person loginPerson = mapper.findPersonByOpenId(openId);
         if (loginPerson == null) {
-            resultBean.setStatus(ResultBean.FAILURE_CODE);
-            resultBean.setMsg("登陆失败");
+            initResultBean(1, resultBean);
         } else {
-            resultBean.setStatus(ResultBean.SUCCSSED_CODE);
-            resultBean.setMsg("登陆成功");
+            initResultBean(0, resultBean);
         }
         resultBean.setData(Arrays.asList(loginPerson));
         return resultBean;
@@ -126,7 +120,6 @@ public class PersonServiceimp implements IPersonService {
 
     private void initResultBean(int code, ResultBean resultBean) {
         if (code > 0) {
-            //插入数据成功
             resultBean.setStatus(ResultBean.SUCCSSED_CODE);
             resultBean.setMsg("操作成功");
         } else {

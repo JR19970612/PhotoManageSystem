@@ -44,12 +44,9 @@ public class PhotoController {
     @ApiOperation(value = "删除单张图片信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "photoId", value = "图片ID", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "photoName", value = "图片名", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "photoOriginalUrl", value = "图片原图URL", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "photoThumUrl", value = "图片缩略图URL", required = true, paramType = "query", dataType = "String"),
     }
     )
-    @DeleteMapping(value = "/photo", params = {"photoId", "photoName", "photoOriginalUrl", "photoThumUrl"})
+    @DeleteMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
     public ResultBean<Photo> dropPhoto(Photo photo) {
         return photoService.dropPhoto(photo);
@@ -66,12 +63,9 @@ public class PhotoController {
     )
     @PutMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    /*public ResultBean<Photo> updatePhoto(Photo photo) {
-        return photoService.updatePhoto(photo);
-    }*/
     public ModelAndView updatePhoto(Photo photo) throws IOException {
-        ResultBean<Photo> resultBean = iAlbumService.updatePhoto(photo);
-        ModelAndView modelAndView = new ModelAndView("redirectAlbumView", "status", resultBean.getStatus());
+        ResultBean<Photo> resultBean = photoService.updatePhoto(photo);
+        ModelAndView modelAndView = new ModelAndView("redirectPhotoView", "status", resultBean.getStatus());
         return modelAndView;
     }
 

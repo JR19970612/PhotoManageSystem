@@ -1,6 +1,7 @@
 package com.ydb.aspect;
 
 import com.ydb.dao.ICommentDao;
+import com.ydb.dao.IPhotoDao;
 import com.ydb.entity.Comment;
 import com.ydb.entity.Photo;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -28,9 +29,17 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
     HashOperations hashOperations;
     @Autowired
     ICommentDao commentDao;
+    @Autowired
+    IPhotoDao photoDao;
 
     @Override
     public void update(Photo photo) {
+        //先删除缓存，之后拿数据库中的数据更新缓存
+        photo = photoDao.selectPhotoById(photo.getPhotoId()).get(0);
+        if (photo != null) {
+            redisTemplate.delete(String.format(namespace, photo.getPhotoName(), photo.getPhotoName()));
+        }
+        photo = photoDao.selectPhotoById(photo.getPhotoId()).get(0);
         if (photo != null && photo.getPhotoId() != null) {
             hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
         }
@@ -57,7 +66,9 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     @Override
     public void delete(Photo photo) {
-        redisTemplate.delete(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()));
+        Set keys = redisTemplate.keys(String.format(namespace, photo.getPhotoId(), "*"));
+        redisTemplate.delete(keys.iterator().next());
+//        redisTemplate.delete(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()));
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据

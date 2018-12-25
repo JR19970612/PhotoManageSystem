@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="../Js/ckform.js"></script>
 		<script type="text/javascript" src="../Js/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script  type="text/javascript" src="../allvariable.js"></script>
 
 
 
@@ -85,7 +86,7 @@
 		mounted: function() {},
 		methods: {
 			getPhotoComment: function() { //查找单张照片
-				var url = "http://127.0.0.1:8080/photo/photoId?params=" + this.byIdSearch;
+				var url = URL+"photo/photoId?params=" + this.byIdSearch;
 				var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
@@ -102,9 +103,10 @@
 					alert("已取消");
 				}
 			},
-			delectCommentId: function(commentId) { //删除单个评论
+			delectCommentId: function(photoId,commentId) { //删除单个评论
 				$.ajax({
-					url: "http://127.0.0.1:8080/comment?commentId="+commentId,
+					//http://localhost:8080/gdpi/comment?photoId=158&commentId=1
+					url: URL+"comment?photoId="+photoId+"&commentId="+commentId,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);
