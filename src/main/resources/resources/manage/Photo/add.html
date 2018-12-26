@@ -52,7 +52,7 @@
 					<td>
 						<!--<input type="text" name="albumId" />-->
 						<select  name="albumId" v-for="item in albums" >
-							<option :value="item.albumId">A</option>
+							<option :value="item.albumId">{{item.albumName}}</option>
 						</select>
 					</td>
 				</tr>

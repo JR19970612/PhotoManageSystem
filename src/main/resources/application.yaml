@@ -8,7 +8,13 @@ spring:
   #http配置
   http:
     multipart:
-      max-file-size: 3MB #文件上传大小
+      max-file-size: 3MB  #文件上传大小
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+    
+
   #Redis配置
 #  redis:
 #    host: localhost #Redis服务器地址

@@ -34,14 +34,9 @@ public class ExceptionInterceptor {
     }
 
     public void initException(Exception e, HttpServletRequest request, ResultBean resultBean) {
-        String msg = "服务器异常";
-        int status = 500;
+        String msg;
+        int status;
         switch (e.getClass().getSimpleName()) {
-            case "BindException": {
-                status = 400;
-                msg = "数据校验异常";
-                break;
-            }
             case "MultipartException": {
                 status = 413;
                 msg = "上传文件大小超出界限";
@@ -49,13 +44,22 @@ public class ExceptionInterceptor {
             }
             case "FomatTypeException": {
                 status = 415;
-                msg = "不支持该格式文件上传";
+                msg = "请重新确认上传文件";
                 break;
             }
             case "DuplicateKeyException": {
                 status = 417;
                 msg = "请求确认上传参数";
                 break;
+            }
+            case "BindException": {
+                status = 417;
+                msg = "请求确认上传参数";
+                break;
+            }
+            default: {
+                status = 500;
+                msg = "服务器异常";
             }
         }
         request.setAttribute("javax.servlet.error.status_code", status);

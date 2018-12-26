@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ public class PmyErrorController extends AbstractErrorController {
 
     private final ErrorProperties errorProperties;
 
-
     public PmyErrorController(ErrorAttributes errorAttributes,
                               ErrorProperties errorProperties, List<ErrorViewResolver> errorViewResolvers) {
         super(errorAttributes, errorViewResolvers);
@@ -39,15 +39,19 @@ public class PmyErrorController extends AbstractErrorController {
 
     //响应浏览器客户端请求
     @RequestMapping(produces = "text/html")
-    public ModelAndView errorHtml(HttpServletRequest request,
-                                  HttpServletResponse response) {
+    public void errorHtml(HttpServletRequest request,
+                          HttpServletResponse response) throws IOException {
         HttpStatus status = getStatus(request);
         Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(
                 request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
         response.setStatus(status.value());
-        ModelAndView modelAndView = resolveErrorView(request, response, status, model);
-        modelAndView.addObject("error", model.get("error"));
-        return (modelAndView != null) ? modelAndView : new ModelAndView("error", model);
+        //不同状态码进行不同响应
+        if ("413、415、417、417".contains(String.valueOf(status.value()))) {
+            response.getWriter().print((ResultBean)model.get("error"));
+        } else {
+            ModelAndView modelAndView = resolveErrorView(request, response, status, model);
+            response.sendRedirect(modelAndView.getViewName());
+        }
     }
 
     //响应手机客户端请求
