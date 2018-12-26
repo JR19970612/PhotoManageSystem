@@ -41,7 +41,7 @@ public class PhotoUtil implements ServletContextListener {
     //判断文件格式
     public boolean judgeFormat(MultipartFile multipartFile) {
         String fileName= multipartFile.getOriginalFilename();
-        if (fileName == null && !Pattern.matches("(.JPEG|.jpeg|.JPG|.jpg|.png|.PNG|.bmp|.BMP)$",fileName)) {
+        if (fileName != null && !Pattern.matches(".+(.JPEG|.jpeg|.JPG|.jpg|.png|.PNG|.bmp|.BMP)$",fileName)) {
             return false;
         }
         return true;

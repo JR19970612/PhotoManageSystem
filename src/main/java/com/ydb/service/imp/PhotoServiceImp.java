@@ -45,7 +45,7 @@ public class PhotoServiceImp implements IPhotoService {
         MultipartFile multipartFile = request.getFile("photo");
         //判断文件格式
         if (!photoUtil.judgeFormat(multipartFile)) {
-            throw new FomatTypeException("上传的文件格式有误");
+            throw new FomatTypeException("请重新确认上传的图片");
         }
         //保存图片到本地
         photoUtil.saveImage(multipartFile, photo);

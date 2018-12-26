@@ -66,4 +66,14 @@ public class ResultBean<E> {
     public void setException(ExceptionBean exception) {
         this.exception = exception;
     }
+
+    @Override
+    public String toString() {
+        return "ResultBean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", exception=" + exception +
+                '}';
+    }
 }
