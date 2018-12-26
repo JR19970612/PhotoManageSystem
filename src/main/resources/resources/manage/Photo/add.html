@@ -51,8 +51,8 @@
 					<td class="tableleft">所属相册id</td>
 					<td>
 						<!--<input type="text" name="albumId" />-->
-						<select  name="albumId" v-for="item in albums" >
-							<option :value="item.albumId">A</option>
+						<select  name="albumId"  >
+							<option v-for="item in albums" :value="item.albumId">A</option>
 						</select>
 					</td>
 				</tr>
