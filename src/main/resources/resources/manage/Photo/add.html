@@ -49,7 +49,12 @@
 				</tr>
 				<tr>
 					<td class="tableleft">所属相册id</td>
-					<td><input type="text" name="albumId" /></td>
+					<td>
+						<!--<input type="text" name="albumId" />-->
+						<select  name="albumId" v-for="item in albums" >
+							<option :value="item.albumId">A</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>
@@ -72,6 +77,32 @@
 	</body>
 </html>
 <script>
+
+//    http://127.0.0.1:8080/gdpi/albums
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        type: "photoName",
+        searchKey: "",
+        albums: [],
+        page: 1,
+        pageConut: 5
+    },
+    mounted: function() {
+        this.getAllAlbumInfo();
+    },
+    methods: {
+        getAllAlbumInfo: function() { //查找单张照片
+            var url = URL+"albums";
+            var _self = this;
+            $.get(url, function(data) {
+                _self.albums = data.data;
+            })
+        },
+    }
+
+});
 
 	$(function() { //返回列表
 		$('#backid').click(function() {
