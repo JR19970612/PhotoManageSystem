@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * @author: create by JR
  * @version: v1.0
- * @description: 环境下认证失败的处理器
+ * @description: 认证失败的处理器
  * @date:2018/12/22
  */
 @Component("formAuthenctiationFailureHandler")
@@ -38,6 +38,6 @@ public class FormAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
         //返回Json错误信息
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(exception.getMessage());
+        response.getWriter().write("登陆失败");
     }
 }

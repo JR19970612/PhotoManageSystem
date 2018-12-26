@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //对静态资源进行放行
         web.
                 ignoring()
-                .mvcMatchers("/manage/assets/**", "/manage/Js/**", "/manage/Images/**", "/manage/front/**", "/manage/allvariable.js")
+                .mvcMatchers("/favicon/**")
                 .and();
     }
 
