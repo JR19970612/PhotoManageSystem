@@ -10,11 +10,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+
 @CrossOrigin(
         origins = "*",
         allowCredentials = "true",
         allowedHeaders = "*",
-        methods = RequestMethod.GET,
+        methods = {RequestMethod.POST, RequestMethod.GET},
         maxAge = 3600
 )
 @RestController
@@ -29,9 +32,9 @@ public class CommentController {
             @ApiImplicitParam(name = "person.personId", value = "评论用户ID", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @PostMapping(value = "/comment",params = {"photoId","commentContent","person.personId"})
+    @PostMapping(value = "/comment", params = {"photoId", "commentContent", "person.personId"})
     @JsonView(SuccessView.class)
-    public ResultBean addComment(Comment comment) {
+    public ResultBean addComment(Comment comment, HttpServletResponse response) {
         return commentService.addComment(comment);
     }
 
@@ -42,7 +45,7 @@ public class CommentController {
             @ApiImplicitParam(name = "commentId", value = "评论ID", required = true, paramType = "query", dataType = "int"),
     }
     )
-    @DeleteMapping(value = "/comment",params = {"photoId","commentId"})
+    @DeleteMapping(value = "/comment", params = {"photoId", "commentId"})
     @JsonView(SuccessView.class)
     public ResultBean dropComment(Comment comment) {
         return commentService.dropComment(comment);

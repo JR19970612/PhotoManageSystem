@@ -73,8 +73,21 @@
                     url: URL + "album?albumName=" + this.albumName + "&albumDesc=" + this.albumDesc,
                     type: 'post',
                     success: function (result) {
-                        alert(result.msg);
+                        alert("success"+result.msg);
                         console.log("success=================="+result);
+                        location.reload();//刷新当前页面
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息
+                        console.log(textStatus);
+                    },
+                    complete: function (result) {
+                        alert("complete"+result.msg);
+                        console.log("complete==================",result);
                         location.reload();//刷新当前页面
                     },
                 });
