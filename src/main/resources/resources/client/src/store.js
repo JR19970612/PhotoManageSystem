@@ -49,15 +49,15 @@ var
             }]
         }], URL: {
             setCommentsUrl: head + "/photo/photoId?params=",
-            setPopPhotoAlbumInfoUrl: head + "/album/AlbumId?params=",
+            setPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
             getCommentsUrl: head + "/photo/photoId?params=",
-            getPopPhotoAlbumInfoUrl: head + "/album/AlbumId?params=",
+            getPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
             getPagePhotosUrl: head + "/photo/",
             addPagePhotosUrl: head + "/photo/",
-            addPageAlbumsUrl: head + "/Album/",
+            addPageAlbumsUrl: head + "/album/",
             getSearchPhotosByPhotoNameUrl: head + "/photo/photoName?params=",
-            getSearchPhotosByAlbumNameUrl: head + "/album/AlbumName?params=",
-            getPageAlbumsUrl: head + "/Album/",
+            getSearchPhotosByAlbumNameUrl: head + "/album/albumName?params=",
+            getPageAlbumsUrl: head + "/album/",
             sendCommentUrl: head + "/comment?person.personId=",
             loginUrl: head + "/login",
         }
