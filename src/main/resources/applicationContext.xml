@@ -8,62 +8,62 @@
         <property name="basePackage" value="com.ydb.dao"></property>
     </bean>
     <!--注册缓存处理切面-->
-    <!--<bean id="photoCacheAspect" class="com.ydb.aspect.PhotoCacheAspect"></bean>-->
-    <!--<bean id="commentCacheAspect" class="com.ydb.aspect.CommentCacheAspect"></bean>-->
-    <!--<bean id="personCacheAspect" class="com.ydb.aspect.PersonCacheAspect"></bean>-->
-    <!--&lt;!&ndash;aspectj织入切面&ndash;&gt;-->
-    <!--<aop:config>-->
-        <!--&lt;!&ndash;定义IPhotoDao切入点&ndash;&gt;-->
-        <!--<aop:pointcut id="photoDaoPoincut_insertPhoto"-->
-                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.insertPhoto(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="photoDaoPoincut_deletePhoto"-->
-                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.deletePhoto(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="photoDaoPoincut_updatePhoto"-->
-                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.updatePhoto(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="photoDaoPoincut_selectPhoto"-->
-                      <!--expression="execution(* com.ydb.dao.IPhotoDao+.selectPhoto*(..))"></aop:pointcut>-->
-        <!--&lt;!&ndash;织入IPhotoDao切面&ndash;&gt;-->
-        <!--<aop:aspect ref="photoCacheAspect">-->
-            <!--<aop:around method="updateCache" pointcut-ref="photoDaoPoincut_insertPhoto"></aop:around>-->
-            <!--<aop:around method="deleteCache" pointcut-ref="photoDaoPoincut_deletePhoto"></aop:around>-->
-            <!--<aop:around method="updateCache" pointcut-ref="photoDaoPoincut_updatePhoto"></aop:around>-->
-            <!--<aop:around method="queryCacheBeforeSelectDao" pointcut-ref="photoDaoPoincut_selectPhoto"></aop:around>-->
-        <!--</aop:aspect>-->
-    <!--</aop:config>-->
-    <!--<aop:config>-->
-        <!--&lt;!&ndash;定义ICommentDao切入点&ndash;&gt;-->
-        <!--<aop:pointcut id="commentDaoPoincut_updateComment"-->
-                      <!--expression="execution(* com.ydb.dao.ICommentDao+.addComment(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="commentDaoPoincut_deleteComment"-->
-                      <!--expression="execution(* com.ydb.dao.ICommentDao+.deleteComment(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="commentDaoPoincut_selectComment"-->
-                      <!--expression="execution(* com.ydb.dao.ICommentDao+.selectCommentByPhotoId*(..))"></aop:pointcut>-->
-        <!--&lt;!&ndash;织入ICommentDao切面&ndash;&gt;-->
-        <!--<aop:aspect ref="commentCacheAspect">-->
-            <!--<aop:around method="updateCache" pointcut-ref="commentDaoPoincut_updateComment"></aop:around>-->
-            <!--<aop:around method="deleteCache" pointcut-ref="commentDaoPoincut_deleteComment"></aop:around>-->
-            <!--<aop:around method="queryCacheBeforeSelectDao" pointcut-ref="commentDaoPoincut_selectComment"></aop:around>-->
-        <!--</aop:aspect>-->
-    <!--</aop:config>-->
-    <!--<aop:config>-->
-        <!--&lt;!&ndash;定义IPersonDao切入点&ndash;&gt;-->
-        <!--<aop:pointcut id="personDaoPoincut_updatePerson"-->
-                      <!--expression="execution(* com.ydb.dao.IPersonDao+.updatePerson(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="personDaoPoincut_insertPerson"-->
-                      <!--expression="execution(* com.ydb.dao.IPersonDao+.insertPerson(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="personDaoPoincut_deletePerson"-->
-                      <!--expression="execution(* com.ydb.dao.IPersonDao+.deletePerson(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="personDaoPoincut_selectPersonById"-->
-                      <!--expression="execution(* com.ydb.dao.IPersonDao+.queryPersonBy*(..))"></aop:pointcut>-->
-        <!--<aop:pointcut id="personDaoPoincut_selectAllPerson"-->
-                      <!--expression="execution(* com.ydb.dao.IPersonDao+.queryPersons())"></aop:pointcut>-->
-        <!--&lt;!&ndash;织入IPersonDao切面&ndash;&gt;-->
-        <!--<aop:aspect ref="personCacheAspect">-->
-            <!--<aop:around method="updateCache" pointcut-ref="personDaoPoincut_updatePerson"></aop:around>-->
-            <!--<aop:around method="updateCache" pointcut-ref="personDaoPoincut_insertPerson"></aop:around>-->
-            <!--<aop:around method="deleteCache" pointcut-ref="personDaoPoincut_deletePerson"></aop:around>-->
-            <!--<aop:around method="queryCacheByArgsBeforeSelectDao" pointcut-ref="personDaoPoincut_selectPersonById"></aop:around>-->
-            <!--<aop:around method="queryAllCacheBeforeSelectDao" pointcut-ref="personDaoPoincut_selectAllPerson"></aop:around>-->
-        <!--</aop:aspect>-->
-    <!--</aop:config>-->
+    <bean id="photoCacheAspect" class="com.ydb.aspect.PhotoCacheAspect"></bean>
+    <bean id="commentCacheAspect" class="com.ydb.aspect.CommentCacheAspect"></bean>
+    <bean id="personCacheAspect" class="com.ydb.aspect.PersonCacheAspect"></bean>
+    <!--aspectj织入切面-->
+    <aop:config>
+        <!--定义IPhotoDao切入点-->
+        <aop:pointcut id="photoDaoPoincut_insertPhoto"
+                      expression="execution(* com.ydb.dao.IPhotoDao+.insertPhoto(..))"></aop:pointcut>
+        <aop:pointcut id="photoDaoPoincut_deletePhoto"
+                      expression="execution(* com.ydb.dao.IPhotoDao+.deletePhoto(..))"></aop:pointcut>
+        <aop:pointcut id="photoDaoPoincut_updatePhoto"
+                      expression="execution(* com.ydb.dao.IPhotoDao+.updatePhoto(..))"></aop:pointcut>
+        <aop:pointcut id="photoDaoPoincut_selectPhoto"
+                      expression="execution(* com.ydb.dao.IPhotoDao+.selectPhoto*(..))"></aop:pointcut>
+        <!--织入IPhotoDao切面-->
+        <aop:aspect ref="photoCacheAspect">
+            <aop:around method="updateCache" pointcut-ref="photoDaoPoincut_insertPhoto"></aop:around>
+            <aop:around method="deleteCache" pointcut-ref="photoDaoPoincut_deletePhoto"></aop:around>
+            <aop:around method="updateCache" pointcut-ref="photoDaoPoincut_updatePhoto"></aop:around>
+            <aop:around method="queryCacheBeforeSelectDao" pointcut-ref="photoDaoPoincut_selectPhoto"></aop:around>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <!--定义ICommentDao切入点-->
+        <aop:pointcut id="commentDaoPoincut_updateComment"
+                      expression="execution(* com.ydb.dao.ICommentDao+.addComment(..))"></aop:pointcut>
+        <aop:pointcut id="commentDaoPoincut_deleteComment"
+                      expression="execution(* com.ydb.dao.ICommentDao+.deleteComment(..))"></aop:pointcut>
+        <aop:pointcut id="commentDaoPoincut_selectComment"
+                      expression="execution(* com.ydb.dao.ICommentDao+.selectCommentByPhotoId*(..))"></aop:pointcut>
+        <!--织入ICommentDao切面-->
+        <aop:aspect ref="commentCacheAspect">
+            <aop:around method="updateCache" pointcut-ref="commentDaoPoincut_updateComment"></aop:around>
+            <aop:around method="deleteCache" pointcut-ref="commentDaoPoincut_deleteComment"></aop:around>
+            <aop:around method="queryCacheBeforeSelectDao" pointcut-ref="commentDaoPoincut_selectComment"></aop:around>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <!--定义IPersonDao切入点-->
+        <aop:pointcut id="personDaoPoincut_updatePerson"
+                      expression="execution(* com.ydb.dao.IPersonDao+.updatePerson(..))"></aop:pointcut>
+        <aop:pointcut id="personDaoPoincut_insertPerson"
+                      expression="execution(* com.ydb.dao.IPersonDao+.insertPerson(..))"></aop:pointcut>
+        <aop:pointcut id="personDaoPoincut_deletePerson"
+                      expression="execution(* com.ydb.dao.IPersonDao+.deletePerson(..))"></aop:pointcut>
+        <aop:pointcut id="personDaoPoincut_selectPersonById"
+                      expression="execution(* com.ydb.dao.IPersonDao+.queryPersonBy*(..))"></aop:pointcut>
+        <aop:pointcut id="personDaoPoincut_selectAllPerson"
+                      expression="execution(* com.ydb.dao.IPersonDao+.queryPersons())"></aop:pointcut>
+        <!--织入IPersonDao切面-->
+        <aop:aspect ref="personCacheAspect">
+            <aop:around method="updateCache" pointcut-ref="personDaoPoincut_updatePerson"></aop:around>
+            <aop:around method="updateCache" pointcut-ref="personDaoPoincut_insertPerson"></aop:around>
+            <aop:around method="deleteCache" pointcut-ref="personDaoPoincut_deletePerson"></aop:around>
+            <aop:around method="queryCacheByArgsBeforeSelectDao" pointcut-ref="personDaoPoincut_selectPersonById"></aop:around>
+            <aop:around method="queryAllCacheBeforeSelectDao" pointcut-ref="personDaoPoincut_selectAllPerson"></aop:around>
+        </aop:aspect>
+    </aop:config>
 </beans>

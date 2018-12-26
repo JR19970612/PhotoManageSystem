@@ -29,12 +29,13 @@ public class PersonCacheAspect extends AbstractCacheApsect<Person> {
 
     @Override
     public void update(Person person) {
-        //先删除缓存，之后拿数据库中的数据更新缓存
+        //先删除缓存
         person = personDao.queryPersonById(person.getPersonId());
         if (person != null) {
             redisTemplate.delete(String.format(namespace, person.getPersonId(), person.getPersonName()));
+            //之后拿数据库中的数据更新缓存
+            person = personDao.queryPersonById(person.getPersonId());
         }
-        person = personDao.queryPersonById(person.getPersonId());
         if (person != null && person.getPersonId() != null) {
             hashOperations.put(String.format(namespace, person.getPersonId(), person.getPersonName()), "PersonId", String.valueOf(person.getPersonId()));
         }

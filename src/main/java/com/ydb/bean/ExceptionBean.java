@@ -50,4 +50,12 @@ public class ExceptionBean {
         this.excetionMessage = excetionMessage;
     }
 
+    @Override
+    public String toString() {
+        return "ExceptionBean{" +
+                "exceptionName='" + exceptionName + '\'' +
+                ", time='" + time + '\'' +
+                ", excetionMessage='" + excetionMessage + '\'' +
+                '}';
+    }
 }

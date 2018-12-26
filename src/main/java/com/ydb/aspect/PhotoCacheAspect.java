@@ -34,12 +34,13 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     @Override
     public void update(Photo photo) {
-        //先删除缓存，之后拿数据库中的数据更新缓存
+        //先删除缓存
         photo = photoDao.selectPhotoById(photo.getPhotoId()).get(0);
         if (photo != null) {
-            redisTemplate.delete(String.format(namespace, photo.getPhotoName(), photo.getPhotoName()));
+            redisTemplate.delete(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()));
+            //之后拿数据库中的数据更新缓存
+            photo = photoDao.selectPhotoById(photo.getPhotoId()).get(0);
         }
-        photo = photoDao.selectPhotoById(photo.getPhotoId()).get(0);
         if (photo != null && photo.getPhotoId() != null) {
             hashOperations.put(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()), "PhotoId", String.valueOf(photo.getPhotoId()));
         }
