@@ -2,6 +2,7 @@ package com.ydb.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -30,6 +31,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
         super.addViewControllers(registry);
     }
 
+    //配置跨域权限
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/loginPerson")//允许跨域的接口
+                .allowedOrigins("*")//允许访问的站点
+                .allowCredentials(true)
+                .allowedMethods("POST", "PATCH")//支持跨域的请求方法
+                .maxAge(3600);
+        super.addCorsMappings(registry);
+    }
 
     @Bean
     public RedirectView redirectPhotoView() {

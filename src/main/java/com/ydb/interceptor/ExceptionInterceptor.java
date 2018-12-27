@@ -47,6 +47,11 @@ public class ExceptionInterceptor {
                 msg = "请重新确认上传文件";
                 break;
             }
+            case "DataIntegrityViolationException": {
+                status = 417;
+                msg = "请求确认上传参数";
+                break;
+            }
             case "DuplicateKeyException": {
                 status = 417;
                 msg = "请求确认上传参数";

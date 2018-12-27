@@ -32,10 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //配置表单登陆
-        formAuthenticationConfig.configure(http);
-        //权限配置
-        authorizeConfig.configure(http);
+
         http//csrf跨域访问配置
                 .csrf()
                 .disable()//关闭csrf
@@ -47,6 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/signOut")//退出拦截器处理的退出url
                 .logoutSuccessUrl("/client/index.html")//退出后重定向的页面
                 .and();
+        //配置表单登陆
+        formAuthenticationConfig.configure(http);
+        //权限配置
+        authorizeConfig.configure(http);
     }
 
     @Override
