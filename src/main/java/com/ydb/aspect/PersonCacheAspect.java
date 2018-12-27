@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ import java.util.*;
  * @description: person缓存切面
  * @date:2018/12/17
  */
-//@Component
+@Component
 public class PersonCacheAspect extends AbstractCacheApsect<Person> {
     private String namespace = "person:personId:%s:personName:%s";//缓存命名空间
 

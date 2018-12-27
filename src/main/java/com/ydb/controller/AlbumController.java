@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-//@CrossOrigin(
-//        origins = "*",
-//        allowCredentials = "true",
-//        allowedHeaders = "*",
-//        methods = RequestMethod.GET,
-//        maxAge = 3600
-//)
-@CrossOrigin
+@CrossOrigin(
+        origins = "*",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = RequestMethod.GET,
+        maxAge = 3600
+)
 @RestController
 public class AlbumController {
 
