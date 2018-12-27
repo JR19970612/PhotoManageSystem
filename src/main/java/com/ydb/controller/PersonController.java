@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -78,10 +77,8 @@ public class PersonController {
     )
     @PutMapping(value = "/person", params = {"personId"})
     @JsonView(SuccessView.class)
-    public ModelAndView updatePerson(Person person) throws IOException {
-        ResultBean<Person> resultBean = PersonService.updatePerson(person);
-        ModelAndView modelAndView = new ModelAndView("redirectUserView", "status", resultBean.getStatus());
-        return modelAndView;
+    public ResultBean<Person> updatePerson(Person person) throws IOException {
+        return PersonService.updatePerson(person);
     }
 
     @ApiOperation(value = "查询所有用户信息")

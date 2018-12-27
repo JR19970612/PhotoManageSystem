@@ -5,7 +5,7 @@
                     class="upload-demo"
                     drag
                     :before-upload="beforeUpload"
-                    :action="URL.getPagePhotosUrl"
+                    :action="URL.upPhoto"
                     :data="uploadData"
                     multiple
                     name="photo"

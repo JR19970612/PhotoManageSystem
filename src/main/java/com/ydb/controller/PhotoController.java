@@ -12,17 +12,17 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
-@CrossOrigin(
-        origins = "*",
-        allowCredentials = "true",
-        allowedHeaders = "*",
-        methods = RequestMethod.GET,
-        maxAge = 3600
-)
+//@CrossOrigin(
+//        origins = "*",
+//        allowCredentials = "true",
+//        allowedHeaders = "*",
+//        methods = RequestMethod.GET,
+//        maxAge = 3600
+//)
+@CrossOrigin
 @RestController
 public class PhotoController {
     @Autowired
@@ -39,10 +39,8 @@ public class PhotoController {
     )
     @PostMapping(value = "/photo", params = {"photoName", "photoDesc", "albumId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public ModelAndView uploadPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
-        ResultBean resultBean = photoService.addPhoto(request, photo);
-        ModelAndView modelAndView = new ModelAndView("redirectPhotoView", "status", resultBean.getStatus());
-        return modelAndView;
+    public ResultBean uploadPhoto(MultipartHttpServletRequest request, Photo photo) throws IOException {
+        return  photoService.addPhoto(request, photo);
     }
 
 
@@ -68,10 +66,8 @@ public class PhotoController {
     )
     @PutMapping(value = "/photo", params = {"photoId"})
     @JsonView(PhotoView.QueryRoughly.class)
-    public ModelAndView updatePhoto(Photo photo) throws IOException {
-        ResultBean<Photo> resultBean = photoService.updatePhoto(photo);
-        ModelAndView modelAndView = new ModelAndView("redirectPhotoView", "status", resultBean.getStatus());
-        return modelAndView;
+    public ResultBean<Photo> updatePhoto(Photo photo) throws IOException {
+        return photoService.updatePhoto(photo);
     }
 
     @ApiOperation(value = "获取单张图片信息", notes = "通过photoId(编号)或名称获取用户")

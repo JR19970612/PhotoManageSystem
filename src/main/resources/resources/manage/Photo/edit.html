@@ -1,123 +1,192 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
-		<link rel="stylesheet" type="text/css" href="../Css/style.css" />
-		<script type="text/javascript" src="../Js/jquery.js"></script>
-		<script type="text/javascript" src="../Js/bootstrap.js"></script>
-		<script type="text/javascript" src="../Js/ckform.js"></script>
-		<script type="text/javascript" src="../Js/common.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script  type="text/javascript" src="../allvariable.js"></script>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="../allvariable.js"></script>
+    <script src="../Js/ax.js"></script>
 
 
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
 
-		<style type="text/css">
-			body {
-				padding-bottom: 40px;
-			}
+        .sidebar-nav {
+            padding: 9px 0;
+        }
 
-			.sidebar-nav {
-				padding: 9px 0;
-			}
+        @media (max-width: 980px) {
 
-			@media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <form class="definewidth m20">
+        <input type="hidden" name="_method" value="PUT">
+        <table class="table table-bordered table-hover definewidth m10">
+            <div>
+                <tr>
+                    <td width="10%" class="tableleft">图片的id</td>
+                    <td><input v-model="listphoto.photoId" readonly="readonly" type="text" name="photoId"/></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tableleft">图片名称</td>
+                    <td><input v-model="listphoto.photoName" type="text" name="photoName"/></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tableleft">图片描述</td>
+                    <td><input v-model="listphoto.photoDesc" type="text" name="photoDesc"/></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tableleft">所属相册id</td>
+                    <td><input v-model="listphoto.albumId" type="text" name="albumId"/></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tableleft">图片原图url</td>
+                    <td><input v-model="listphoto.photoOriginalUrl" type="text" name="photoOriginalUrl"/></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tableleft">图片缩略图url</td>
+                    <td><input v-model="listphoto.photoThumUrl" type="text" name="photoThumUrl"/></td>
+                </tr>
 
-				/* Enable use of floated navbar text */
-				.navbar-text.pull-right {
-					float: none;
-					padding-left: 5px;
-					padding-right: 5px;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<div id="app">
-			<form action="http://localhost:8080/gdpi/photo" method="post" class="definewidth m20" >
-				 <input type="hidden" name="_method" value="PUT">
-				<table class="table table-bordered table-hover definewidth m10">
-					<div>
-						<tr>
-							<td width="10%" class="tableleft">图片id</td>
-							<td><input v-model="listphoto.photoId" readonly="readonly" type="text" name="photoId" /></td>
-						</tr>
-						<tr>
-							<td width="10%" class="tableleft">图片名称</td>
-							<td><input v-model="listphoto.photoName" type="text" name="photoName" /></td>
-						</tr>
-						<tr>
-							<td width="10%" class="tableleft">图片描述</td>
-							<td><input v-model="listphoto.photoDesc" type="text" name="photoDesc" /></td>
-						</tr>
-						<tr>
-							<td width="10%" class="tableleft">所属相册id</td>
-							<td><input v-model="listphoto.albumId" type="text" name="albumId" /></td>
-						</tr>
-						<tr>
-							<td width="10%" class="tableleft">图片原图url</td>
-							<td><input v-model="listphoto.photoOriginalUrl" type="text" name="photoOriginalUrl" /></td>
-						</tr>
-						<tr>
-							<td width="10%" class="tableleft">图片缩略图url</td>
-							<td><input v-model="listphoto.photoThumUrl" type="text" name="photoThumUrl" /></td>
-						</tr>
+            </div>
 
-					</div>
-
-					<tr>
-						<td class="tableleft"></td>
-						<td>
-							<button type="submit" class="btn btn-primary">保存</button> &nbsp;&nbsp;
-							<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</body>
+            <tr>
+                <td class="tableleft"></td>
+                <td>
+                    <button @click="submitForm" class="btn btn-primary">保存</button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
 </html>
 <script>
-	var app = new Vue({
-		el: '#app',
-		data: {
-			listphoto: [],
-		},
-		mounted: function() {
-			var photoId=this.GetRequest().photoId;		//拿到对应id
-			this.getPhotoSearchResult(photoId);			
-			//console.log(photoId)
-		},
-		methods: {
-			
-			getPhotoSearchResult: function(photoId) { //查找单张照片
-				var url = URL+"photo/photoId?params=" + photoId;
-				var _self = this;
-				$.get(url, function(data) {
-					_self.listphoto = data.data[0];
-				})
-			},
-			GetRequest: function() {
-				var url = location.search; //获取url中"?"符后的字串
-				var theRequest = new Object();
-				if (url.indexOf("?") != -1) {
-					var str = url.substr(1);
-					strs = str.split("&");
-					for (var i = 0; i < strs.length; i++) {
-						theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-					}
-				}
-				return theRequest;
-			},
-		}
-	});
+    var app = new Vue({
+        el: '#app',
+        data: {
+            listphoto: [],
+        },
+        mounted: function () {
+            var photoId = this.GetRequest().photoId;		//拿到对应id
+            this.getPhotoSearchResult(photoId);
+            //console.log(photoId)
+        },
+        methods: {
 
-	$(function() { //返回列表
-		$('#backid').click(function() {
-			window.location.href = "index.html";
-		});
-	});
+            getPhotoSearchResult: function (photoId) { //查找单张照片
+                var url = URL + "photo/photoId?params=" + photoId;
+                var _self = this;
+                $.get(url, function (data) {
+                    _self.listphoto = data.data[0];
+                })
+            },
+            GetRequest: function () {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            },
+            submitForm: function () {
+                $.post("/gdpi/photo?_method=put&photoId=" + this.listphoto.photoId + "&photoName=" + this.listphoto.photoName + "&photoDesc=" + this.listphoto.photoDesc + "&albumId=" + this.listphoto.albumId).success(
+                    function (result) {
+                        console.log("success", result);
+                        alert("操作成功")
+                    }).error(
+                    function (result) {
+                        console.log("result", result);
+                    })
+
+//                var readyData = Qs.stringify({
+//                    photoId: this.listphoto.photoId,
+//                    photoName: this.listphoto.photoName,
+//                    photoDesc: this.listphoto.photoDesc,
+//                    albumId: this.listphoto.albumId,
+//                    photoOriginalUrl: this.listphoto.photoOriginalUrl,
+//                    photoThumUrl: this.listphoto.photoThumUrl
+//                });
+//                let data = new FormData();
+//                data.append('photoId', this.listphoto.photoId);
+//                data.append('_method', 'put');
+//                data.append('photoName', this.listphoto.photoName);
+//                data.append('photoDesc', this.listphoto.photoDesc);
+//                data.append('albumId', this.listphoto.albumId);
+//                data.append('photoOriginalUrl', this.listphoto.photoOriginalUrl);
+                //data.append('photoThumUrl', this.listphoto.photoThumUrl);
+//                axios({
+//                    method: 'post',
+//                    url: '/gdpi/photo',
+//                    data: {
+//                        _method:"put",
+//                        photoId: this.listphoto.photoId,
+//                        photoName: this.listphoto.photoName,
+//                        photoDesc: this.listphoto.photoDesc,
+//                        albumId: this.listphoto.albumId,
+//                        photoOriginalUrl: this.listphoto.photoOriginalUrl,
+//                        photoThumUrl: this.listphoto.photoThumUrl
+//                    }
+//                }).then(function (response) {
+//                    console.log(response);
+//                });
+//
+//                axios.post('/gdpi/photo', {
+//                    _method:"put",
+//                    photoId: this.listphoto.photoId,
+//                    photoName: this.listphoto.photoName,
+//                    photoDesc: this.listphoto.photoDesc,
+//                    albumId: this.listphoto.albumId,
+//                    photoOriginalUrl: this.listphoto.photoOriginalUrl,
+//                    photoThumUrl: this.listphoto.photoThumUrl
+//                })
+//                    .then(function (response) {
+//                        console.log(response);
+//                    })
+//                    .catch(function (error) {
+//                        console.log(error);
+//                    });
+
+//                axios.post("/gdpi/photo", data)
+//                    .then(function (response) {
+//                        console.log("res: ", response);
+//                        if (response.data.status == 0) {
+//                            window.location.href = "/gdpi/manage/Photo/index.html";
+//                        }
+//                    }).catch((error) => {
+//                    console.log("error", error.response);
+//                    alert(error.response.data.msg + " 请确定填写的是正确的！")
+//                });
+            }
+        }
+    });
+
+    $(function () { //返回列表
+        $('#backid').click(function () {
+            window.location.href = "index.html";
+        });
+    });
 </script>

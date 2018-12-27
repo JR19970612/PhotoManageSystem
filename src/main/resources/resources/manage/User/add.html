@@ -83,7 +83,9 @@
 						success: function(result) {
 							alert(result.msg);
 							location.reload();//刷新当前页面
-						}
+						}, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("添加失败！！");
+                        }
 					});
 						
 				}}

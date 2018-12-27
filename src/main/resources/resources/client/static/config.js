@@ -8,6 +8,7 @@ window.URLS = {
     getCommentsUrl: head + "/photo/photoId?params=",
     getPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
     getPagePhotosUrl: head + "/photo/",
+    upPhoto: head + "/photo",
     addPagePhotosUrl: head + "/photo/",
     addPageAlbumsUrl: head + "/album/",
     getSearchPhotosByPhotoNameUrl: head + "/photo/photoName?params=",

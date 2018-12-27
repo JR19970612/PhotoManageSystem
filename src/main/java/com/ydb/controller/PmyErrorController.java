@@ -62,7 +62,9 @@ public class PmyErrorController extends AbstractErrorController {
         Map<String, Object> body = getErrorAttributes(request,
                 isIncludeStackTrace(request, MediaType.ALL));
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<ResultBean>((ResultBean) body.get("error"), status);
+//        response.setStatus(status.value());
+        return new ResponseEntity<ResultBean>(
+                (ResultBean) body.get("error"), status);
     }
 
     @Override
