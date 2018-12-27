@@ -22,14 +22,9 @@
                 </div>
                 <div class="el-upload__tip" slot="tip">请注意您只能上传 png  jpg 格式的视频文件</div>
             </el-upload>
-            <el-select v-model="value" placeholder="请选择">
-                <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                ></el-option>
-            </el-select>
+            <div>
+                <input type="text" v-model="uploadData.albumId" placeholder="填写相册ID">
+            </div>
             <div>
                 <el-button type="primary" @click="newSubmitForm()" class="yes-btn">确 定</el-button>
                 <el-button @click="resetForm('newform')">重 置</el-button>
@@ -86,7 +81,7 @@
 //                    console.log("res:" + res);
 //                });
                 console.log("this.$refs.newUpload1", this.$refs.newUpload);
-                this.$refs.newUpload.data.photoName=file.name;
+                this.$refs.newUpload.data.photoName = file.name;
                 console.log("this.$refs.newUpload2", this.$refs.newUpload);
                 return true;
             },
