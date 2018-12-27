@@ -5,7 +5,6 @@
         <el-select v-model="select" slot="prepend" placeholder="请选择" style="z-index:0">
           <el-option label="图片名" value="photoName"></el-option>
           <el-option label="相册名" value="AlbumName"></el-option>
-          <el-option label="相片编号" value="3"></el-option>
         </el-select>
         <el-button
           slot="append"

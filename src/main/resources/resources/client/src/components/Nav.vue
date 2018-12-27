@@ -14,10 +14,7 @@
         <el-menu-item index="2">
             <router-link to="/albums">相册</router-link>
         </el-menu-item>
-        <el-menu-item index="3">
-            <router-link to="/upPhoto">临时上传到相册</router-link>
-        </el-menu-item>
-        <el-menu-item index="4" style="float:right">
+        <el-menu-item index="3" style="float:right">
             <el-button type="text" @click="dialogFormVisible = true">管理员登陆</el-button>
             <el-dialog title="管理员登陆" :visible.sync="dialogFormVisible">
                 <el-form :model="form" method="post" action="/gdpi/login">
