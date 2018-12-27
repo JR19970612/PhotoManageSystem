@@ -10,6 +10,7 @@ export default {
         {path: '/upPhoto', component: UpPhoto},
         {path: '/searchPhotos', component: PhotosLayout},
         {path: '/searchAlbums', component: AlbumsLayout},
-
+        //拦截其他非法页面到首页
+        {path:'/*',component: PhotosLayout}
     ]
 }

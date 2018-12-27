@@ -4,13 +4,7 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import vars from '../static/config.js'
 Vue.use(Vuex);
-let port = 8080;
-let projectName = "/gdpi";
-let head =
-    "http://127.0.0.1:" + port + projectName;
-
 
 //定义属性（数据）
 var
@@ -189,10 +183,7 @@ const actions = {
         var errorCallback = response => {
             console.log("服务器请求出错了");
         };
-        // var tUrl = "/gdpi/photo/";
-        // Vue.http
-        //     .get(tUrl + pageCount + "/" + 1)
-        //     .then(successCallback, errorCallback);
+        console.log("mie??",state.URL.getPagePhotosUrl + pageCount + "/" + 1);
         Vue.http
             .get(state.URL.getPagePhotosUrl + pageCount + "/" + 1)
             .then(successCallback, errorCallback);

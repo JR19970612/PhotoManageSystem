@@ -64,16 +64,30 @@
                 let successCallback = response => {
                     console.log("服务器请求登陆接口");
                     let result = response.data;
-                    console.log("result:", result);
+                    console.log("进入页面：result:", result.redirect);
                     // todo 成功就進入管理員的頁面
-                    window.location.href = "/gdpi/admin";
+                    window.location.href = result.redirect;
                 };
                 let errorCallback = response => {
                     // todo 失敗就提示錯誤信息，不關閉頁面
-                    console.log("服务器请求出错了");
+                    if (response.status == 401) {
+                        console.log("服务器请求出错了a", response);
+                        // alert("登陆失败，请重试！")
+                        this.$notify({
+                            title: '警告',
+                            message: '对不起，认证失败！',
+                            type: 'warning'
+                        });
+                    }
                 };
+                console.log("loginUrl", this.URL.loginUrl);
                 this.$http
-                    .post(this.URL.loginUrl + "&personName=" + this.form.name + "&personPassword=" + this.form.password)
+                    .post(this.URL.loginUrl,
+                        {
+                            personName: this.form.name,
+                            personPassword: this.form.password
+                        },
+                        {emulateJSON: true})
                     .then(successCallback, errorCallback);
 // document.getElementsByClassName('el-form')[0].submit();
 // 再次修改input内容

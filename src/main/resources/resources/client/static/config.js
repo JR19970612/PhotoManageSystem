@@ -1,5 +1,7 @@
+var domain = '';
+// domain = 'http://127.0.0.1:8080';
 let head =
-    "http://127.0.0.1:8080/gdpi";
+    domain + "/gdpi";
 window.URLS = {
     setCommentsUrl: head + "/photo/photoId?params=",
     setPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
