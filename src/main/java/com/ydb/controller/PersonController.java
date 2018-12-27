@@ -14,11 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @CrossOrigin(
         origins = "*",
         allowCredentials = "true",
         allowedHeaders = "*",
-        methods = RequestMethod.GET,
+        methods = RequestMethod.POST,
         maxAge = 3600
 )
 @RestController
