@@ -90,6 +90,7 @@
     import PopPhotoLayout from "./PopPhotoLayout.vue";
     import Classify from "../Classify.vue";
     import NullLayout from "./NullLayout.vue";
+    import config from "../../../static/config";
 
     export default {
         data() {
@@ -105,6 +106,7 @@
             NullLayout
         },
         mounted() {
+//           console.log("config.custonData",window.URLS);
             this.getPagePhotos();
 //            const loading = this.$loading({
 //                lock: true,

@@ -86,7 +86,7 @@ export default {
     newVideo(data) {
       return axios({
         method: "post",
-        url: "http://127.0.0.1:8080/photo",
+        url: "http://127.0.0.1:8080/gdpi/photo",
         timeout: 20000,
         data: data
       });

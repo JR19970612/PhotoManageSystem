@@ -4,6 +4,7 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import vars from '../static/config.js'
 Vue.use(Vuex);
 let port = 8080;
 let projectName = "/gdpi";
@@ -47,22 +48,9 @@ var
                 "photoOriginalUrl": "",
                 "photoThumUrl": ""
             }]
-        }], URL: {
-            setCommentsUrl: head + "/photo/photoId?params=",
-            setPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
-            getCommentsUrl: head + "/photo/photoId?params=",
-            getPopPhotoAlbumInfoUrl: head + "/album/albumId?params=",
-            getPagePhotosUrl: head + "/photo/",
-            addPagePhotosUrl: head + "/photo/",
-            addPageAlbumsUrl: head + "/album/",
-            getSearchPhotosByPhotoNameUrl: head + "/photo/photoName?params=",
-            getSearchPhotosByAlbumNameUrl: head + "/album/albumName?params=",
-            getPageAlbumsUrl: head + "/album/",
-            sendCommentUrl: head + "/comment?person.personId=",
-            loginUrl: head + "/login",
-        }
+        }],
+        URL: window.URLS
     };
-
 //定义getters
 var getters = {
     allPhotos(state) {
@@ -188,6 +176,7 @@ const actions = {
             .then(successCallback, errorCallback);
     },
     getPagePhotos({commit}, {pageCount}) {
+        console.log("config的内容", window.URLS.setCommentsUrl);
         var successCallback = response => {
             console.log("???123服务器请求成功了 getPagePhotos");
             console.log("设置分页为1");
@@ -200,10 +189,13 @@ const actions = {
         var errorCallback = response => {
             console.log("服务器请求出错了");
         };
+        // var tUrl = "/gdpi/photo/";
+        // Vue.http
+        //     .get(tUrl + pageCount + "/" + 1)
+        //     .then(successCallback, errorCallback);
         Vue.http
             .get(state.URL.getPagePhotosUrl + pageCount + "/" + 1)
             .then(successCallback, errorCallback);
-
     },
     addPagePhotos({commit}, {pageCount, page}) {
         var successCallback = response => {
@@ -227,7 +219,7 @@ const actions = {
             console.log("服务器请求出错了");
         };
         Vue.http
-            .get(state.URL.addPagePhotosUrl+ pageCount + "/" + (++this.state.photosPage))
+            .get(state.URL.addPagePhotosUrl + pageCount + "/" + (++this.state.photosPage))
             .then(successCallback, errorCallback);
 
     },
@@ -315,7 +307,7 @@ const actions = {
             console.log("服务器请求出错了");
         };
         Vue.http
-            .get(state.URL.getPageAlbumsUrl+ pageCount + "/" + 1)
+            .get(state.URL.getPageAlbumsUrl + pageCount + "/" + 1)
             .then(successCallback, errorCallback);
 
     },
@@ -336,7 +328,7 @@ const actions = {
             .then(successCallback, errorCallback);
 
     }
-}
+};
 
 //定义mutations，处理状态（数据）的改变
 const mutations = {

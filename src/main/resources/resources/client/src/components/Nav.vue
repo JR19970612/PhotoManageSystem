@@ -21,13 +21,14 @@
             <el-button type="text" @click="dialogFormVisible = true">管理员登陆</el-button>
             <el-dialog title="管理员登陆" :visible.sync="dialogFormVisible">
                 <el-form :model="form" method="post" action="/gdpi/login">
-                    <el-form-item >
+                    <el-form-item>
                         <el-input id="name" name="personName" v-model="form.name" placeholder="请输入帐号">
                             <template slot="prepend">帐号</template>
                         </el-input>
                     </el-form-item>
-                    <el-form-item >
-                        <el-input id="password" name="personPassword" v-model="form.password" type="password" placeholder="请输入密码">
+                    <el-form-item>
+                        <el-input id="password" name="personPassword" v-model="form.password" type="password"
+                                  placeholder="请输入密码">
                             <template slot="prepend">密码</template>
                         </el-input>
                     </el-form-item>
@@ -52,12 +53,6 @@
                 form: {
                     name: '',
                     password: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
                 },
             };
         }, computed: mapGetters(["URL"]),
@@ -66,22 +61,22 @@
                 console.log(key, keyPath);
             },
             login: function () {
-//                let successCallback = response => {
-//                    console.log("服务器请求登陆接口");
-//                    let result = response.data;
-//                    console.log("result:", result);
-//                    // todo 成功就進入管理員的頁面
-//
-//                };
-//                let errorCallback = response => {
-//                    // 失敗就提示錯誤信息，不關閉頁面
-//                    console.log("服务器请求出错了");
-//                };
-//                this.$http
-//                    .post(this.URL.loginUrl+"&personName="+this.form.name+"&personPassword="+this.form.password)
-//                    .then(successCallback, errorCallback);
-                document.getElementsByClassName('el-form')[0].submit();
-//再次修改input内容
+                let successCallback = response => {
+                    console.log("服务器请求登陆接口");
+                    let result = response.data;
+                    console.log("result:", result);
+                    // todo 成功就進入管理員的頁面
+                    window.location.href = "/gdpi/admin";
+                };
+                let errorCallback = response => {
+                    // todo 失敗就提示錯誤信息，不關閉頁面
+                    console.log("服务器请求出错了");
+                };
+                this.$http
+                    .post(this.URL.loginUrl + "&personName=" + this.form.name + "&personPassword=" + this.form.password)
+                    .then(successCallback, errorCallback);
+// document.getElementsByClassName('el-form')[0].submit();
+// 再次修改input内容
             }
         },
         watch: {
@@ -102,6 +97,7 @@
     .el-menu-item {
         font-size: 18px;
     }
+
     a {
         text-decoration: none;
     }
