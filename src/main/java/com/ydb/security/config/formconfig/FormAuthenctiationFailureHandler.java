@@ -3,6 +3,7 @@
  */
 package com.ydb.security.config.formconfig;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -36,8 +39,11 @@ public class FormAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
                                         AuthenticationException exception) throws IOException, ServletException {
         logger.info("登录失败");
         //返回Json错误信息
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write("登陆失败");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        Map<String,Object> result=new HashMap<>();
+        result.put("status",HttpStatus.UNAUTHORIZED.value());
+        JSONObject jsonObject = new JSONObject(result);
+        response.getWriter().write(jsonObject.toString());
     }
 }
