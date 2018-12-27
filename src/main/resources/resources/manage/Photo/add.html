@@ -1,113 +1,178 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
-		<link rel="stylesheet" type="text/css" href="../Css/style.css" />
-		<script type="text/javascript" src="../Js/jquery.js"></script>
-		<script type="text/javascript" src="../Js/bootstrap.js"></script>
-		<script type="text/javascript" src="../Js/ckform.js"></script>
-		<script type="text/javascript" src="../Js/common.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script  type="text/javascript" src="../allvariable.js"></script>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="../allvariable.js"></script>
+    <script src="../Js/ax.js"></script>
 
 
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
 
-		<style type="text/css">
-			body {
-				padding-bottom: 40px;
-			}
+        .sidebar-nav {
+            padding: 9px 0;
+        }
 
-			.sidebar-nav {
-				padding: 9px 0;
-			}
+        @media (max-width: 980px) {
 
-			@media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <form class="definewidth m20">
+        <table class="table table-bordered table-hover definewidth m10">
+            <tr>
+                <td width="10%" class="tableleft">图片名称</td>
+                <td><input v-model="photoName" type="text" name="photoName"/></td>
+            </tr>
+            <tr>
+                <td width="10%" class="tableleft">图片描述</td>
+                <td><input v-model="photoDesc" type="text" name="photoDesc"/></td>
+            </tr>
+            <tr>
+                <td class="tableleft">所属相册id</td>
+                <td>
+                    <!--<input type="text" name="albumId" />-->
+                    <select v-model="albumId" name="albumId">
+                        <option v-for="item in albums" :value="item.albumId">{{item.albumName}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="exampleInputFile">选择图片</label>
+                    <input id="upfile" @change="getFile($event)" type="file" name="photo" id="exampleInputFile">
 
-				/* Enable use of floated navbar text */
-				.navbar-text.pull-right {
-					float: none;
-					padding-left: 5px;
-					padding-right: 5px;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<div id="app">
-			<form action="http://localhost:8080/gdpi/photo" method="post" class="definewidth m20" enctype="multipart/form-data" >
-			<table class="table table-bordered table-hover definewidth m10">
-				<tr>
-					<td width="10%" class="tableleft">图片名称</td>
-					<td><input type="text" name="photoName" /></td>
-				</tr>
-				<tr>
-					<td width="10%" class="tableleft">图片描述</td>
-					<td><input type="text" name="photoDesc" /></td>
-				</tr>
-				<tr>
-					<td class="tableleft">所属相册id</td>
-					<td>
-						<!--<input type="text" name="albumId" />-->
-						<select  name="albumId"  >
-							<option v-for="item in albums" :value="item.albumId">{{item.albumName}}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="exampleInputFile">选择图片</label>
-						<input type="file" name="photo" id="exampleInputFile">
-					</td>
-				</tr>
+                </td>
+            </tr>
 
-				<tr>
-					<td class="tableleft"></td>
-					<td>
-						<button class="btn btn-primary" type="submit">提交</button>
-						<button class="btn btn-primary" type="reset">重置</button>
-						<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
-					</td>
-				</tr>
-			</table>
-			</form>
-		</div>
-	</body>
+            <tr>
+                <td class="tableleft"></td>
+                <td>
+                    <button class="btn btn-primary" @click="submitForm()">提交</button>
+                    <button class="btn btn-primary" type="reset">重置</button>
+                    <button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
 </html>
 <script>
 
-//    http://127.0.0.1:8080/gdpi/albums
+    //    http://127.0.0.1:8080/gdpi/albums
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        type: "photoName",
-        searchKey: "",
-        albums: [],
-        page: 1,
-        pageConut: 5
-    },
-    mounted: function() {
-        this.getAllAlbumInfo();
-    },
-    methods: {
-        getAllAlbumInfo: function() { //查找单张照片
-            var url = URL+"albums";
-            var _self = this;
-            $.get(url, function(data) {
-                _self.albums = data.data;
-            })
+    var app = new Vue({
+        el: '#app',
+        data: {
+            type: "photoName",
+            searchKey: "",
+            albums: [],
+            page: 1,
+            pageConut: 5,
+            photoName: "",
+            photoDesc: "",
+            albumId: "",
+            file: '',
         },
-    }
+        mounted: function () {
+            this.getAllAlbumInfo();
+        },
+        methods: {
+            getFile(event) {
+                this.file = event.target.files[0];
+                console.log(this.file);
+            },
+            getAllAlbumInfo: function () { //查找单张照片
+                var url = URL + "albums";
+                var _self = this;
+                $.get(url, function (data) {
+                    _self.albums = data.data;
+                })
+            },
+            submitForm: function () {
+                event.preventDefault();
+                let formData = new FormData();
+                // 向 formData 对象中添加文件
+                formData.append('photo', this.file);
+                formData.append('photoName', this.photoName);
+                formData.append('photoDesc', this.photoDesc);
+                formData.append('albumId', this.albumId);
+                axios.post("/gdpi/photo", formData).then(function (response) {
+                    console.log("res: ", response);
+                    if (response.data.status == 0) {
+                        window.location.href = "/gdpi/manage/Photo/index.html";
+                    }
+                }).catch((error) => {
+                    console.log("error", error.response);
+                    alert(error.response.data.msg + " 请确定填写的是正确的！")
+                });
 
-});
+//                $('#upJQuery').on('click', function() {
+//                    var fd = new FormData();
+//                    fd.append('photoName', this.photoName);
+//                    fd.append('photoDesc', this.photoDesc);
+//                    fd.append('albumId', this.albumId);
+//                    fd.append("photo", $("#upfile").get(0).files[0]);
+//                    $.ajax({
+//                        url: "/gdpi/photo",
+//                        type: "POST",
+//                        processData: false,
+//                        contentType: false,
+//                        data: fd,
+//                        success: function(d) {
+//                            console.log(d);
+//                        }
+//                    });
+//                });
+//                alert("submitForm");
+////            axios.post('/gdpi/photo', {
+//                event.preventDefault();//取消默认行为
+//                let formdata = new FormData();
+//                formdata.append('photo', this.file);
+//                formdata.append('photoName', this.photoName);
+//                formdata.append('photoDesc', this.photoDesc);
+//                formdata.append('albumId', this.albumId);
+////此处必须设置为  multipart/form-data
+//                let config = {
+//                    headers: {
+//                        'Content-Type': 'multipart/form-data'  //之前说的以表单传数据的格式来传递fromdata
+//                    }
+//                };
+//                this.$http.post('/gdpi/photo', formData, config).
+//                then((res) => {
+//                    console.log("s", res);
+//                }).catch((error) => {
+//                    console.log("f", error);
+//                });
+            }
+        }
 
-	$(function() { //返回列表
-		$('#backid').click(function() {
-			window.location.href = "index.html";
-		});
+    });
 
-	});
+    $(function () { //返回列表
+        $('#backid').click(function () {
+            window.location.href = "index.html";
+        });
+
+    });
 </script>

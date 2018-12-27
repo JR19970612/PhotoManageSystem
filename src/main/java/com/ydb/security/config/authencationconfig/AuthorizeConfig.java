@@ -15,12 +15,11 @@ import org.springframework.web.cors.CorsUtils;
 @Component
 public class AuthorizeConfig {
     public void configure(HttpSecurity builder) throws Exception {
-
         builder.authorizeRequests()
                 .antMatchers("/", "/login.html", "/client/**", "/originalphoto/**", "/thumphoto/**").permitAll()//首页和登陆页、图片浏览页面不进行认证拦截，任何用户都可进行访问
                 //开放接口
                 .antMatchers(HttpMethod.GET, "/album/**", "/albums", "/photo/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/loginPerson", "/login","/comment").permitAll()
+                .antMatchers(HttpMethod.POST, "/loginPerson","/login", "/person","/comment").permitAll()
 //                .antMatchers(HttpMethod.OPTIONS, "/loginPerson", "/comment").permitAll()//授权上面跨域请求的OPTIONS预请求
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//该设置表示授权所有POST请求通发送OPTIONS预请求进行授权
                 .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagge‌​r-ui.html").hasAuthority("SuperAdmin")//Swagger接口测试只对超级管理员开通

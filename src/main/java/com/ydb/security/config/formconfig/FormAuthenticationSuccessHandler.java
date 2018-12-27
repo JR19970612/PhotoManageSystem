@@ -35,7 +35,7 @@ public class FormAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        logger.info("认证成功");
+//        logger.info("认证成功");
 //        String accept = request.getHeader("Accept");
 //        //根据appcet响应头判断客户端是浏览器还是移动端，在进行指定响应动作
 //        if (accept != null & accept.contains("text/html")) {//若是浏览器端则重定向到指定页面
@@ -53,20 +53,20 @@ public class FormAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 //            String type = authentication.getClass().getSimpleName();
 //            response.getWriter().write(type);
 //        }
-            List<? extends GrantedAuthority> authorities = (List<? extends GrantedAuthority>) authentication.getAuthorities();
-            GrantedAuthority grantedAuthority = authorities.get(0);
-            String url;
-            if (grantedAuthority.getAuthority().equals("SuperAdmin")) {
-                url= "/gdpi/manage/user.html";//登陆成功后重定向的目标路径
-            } else {
-                url="/gdpi/manage/photo.html";//登陆成功后重定向的目标路径
-            }
-            response.setContentType("application/json;charset=UTF-8");
-            Map<String,Object> result=new HashMap<>();
+        logger.info("认证成功");
+        List<? extends GrantedAuthority> authorities = (List<? extends GrantedAuthority>) authentication.getAuthorities();
+        GrantedAuthority grantedAuthority = authorities.get(0);
+        String url;
+        if (grantedAuthority.getAuthority().equals("SuperAdmin")) {
+            url= "/gdpi/manage/user.html";//登陆成功后重定向的目标路径
+        } else {
+            url="/gdpi/manage/photo.html";//登陆成功后重定向的目标路径
+        }
+        response.setContentType("application/json;charset=UTF-8");
+        Map<String,Object> result=new HashMap<>();
         result.put("status","0");
         result.put("redirect",url);
         JSONObject jsonObject = new JSONObject(result);
         response.getWriter().write(jsonObject.toString());
-
     }
 }

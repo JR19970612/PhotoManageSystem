@@ -49,6 +49,7 @@ public class PmyErrorController extends AbstractErrorController {
         if ("413、415、417、417".contains(String.valueOf(status.value()))) {
             response.getWriter().print((ResultBean)model.get("error"));
         } else {
+            //根据状态码选择合适的异常页面
             ModelAndView modelAndView = resolveErrorView(request, response, status, model);
             response.sendRedirect(modelAndView.getViewName());
         }
@@ -61,7 +62,9 @@ public class PmyErrorController extends AbstractErrorController {
         Map<String, Object> body = getErrorAttributes(request,
                 isIncludeStackTrace(request, MediaType.ALL));
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<ResultBean>((ResultBean) body.get("error"), status);
+//        response.setStatus(status.value());
+        return new ResponseEntity<ResultBean>(
+                (ResultBean) body.get("error"), status);
     }
 
     @Override

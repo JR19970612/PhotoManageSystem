@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Class-Path: spring-data-redis-1.8.18.BUILD-20181127.140119-3.jar fastj
+ son-1.2.47.jar guava-18.0.jar spring-boot-starter-thymeleaf-1.5.19.BU
+ ILD-20181220.104456-6.jar swagger-annotations-1.5.13.jar spring-boot-
+ starter-security-1.5.19.BUILD-20181220.104456-6.jar javassist-3.21.0-
+ GA.jar springfox-spi-2.7.0.jar springfox-spring-web-2.7.0.jar jcl-ove
+ r-slf4j-1.7.25.jar pagehelper-5.1.4.jar mybatis-spring-boot-autoconfi
+ gure-1.3.2.jar aspectjweaver-1.8.13.jar commons-pool2-2.4.3.jar sprin
+ g-webmvc-4.3.22.BUILD-20181212.120909-5.jar spring-boot-starter-data-
+ redis-1.5.19.BUILD-20181220.104456-6.jar thymeleaf-layout-dialect-1.4
+ .0.jar logback-classic-1.1.11.jar thymeleaf-2.1.6.RELEASE.jar spring-
+ aop-4.3.22.BUILD-20181212.120909-5.jar springfox-schema-2.7.0.jar tom
+ cat-annotations-api-8.5.37.jar tomcat-jdbc-8.5.37.jar slf4j-api-1.7.2
+ 5.jar classmate-1.3.4.jar spring-boot-starter-logging-1.5.19.BUILD-20
+ 181220.104456-6.jar spring-boot-starter-1.5.19.BUILD-20181220.104456-
+ 6.jar spring-oxm-4.3.22.BUILD-20181212.120909-5.jar jackson-core-2.8.
+ 11.jar jul-to-slf4j-1.7.25.jar spring-beans-4.3.22.BUILD-20181212.120
+ 909-5.jar spring-core-4.3.22.BUILD-20181212.120909-5.jar mybatis-3.4.
+ 6.jar swagger-models-1.5.13.jar spring-boot-1.5.19.BUILD-20181220.104
+ 456-6.jar jboss-logging-3.3.2.Final.jar spring-boot-starter-jdbc-1.5.
+ 19.BUILD-20181220.104456-6.jar spring-plugin-metadata-1.2.0.RELEASE.j
+ ar jedis-2.9.0.jar spring-context-support-4.3.22.BUILD-20181212.12090
+ 9-5.jar tomcat-embed-el-8.5.37.jar reflections-0.9.11.jar spring-expr
+ ession-4.3.22.BUILD-20181212.120909-5.jar mybatis-spring-boot-starter
+ -1.3.2.jar byte-buddy-1.6.14.jar jsqlparser-1.0.jar mapstruct-1.1.0.F
+ inal.jar spring-data-keyvalue-1.2.18.BUILD-20181211.104544-4.jar jack
+ son-databind-2.8.11.3.jar spring-web-4.3.22.BUILD-20181212.120909-5.j
+ ar tomcat-juli-8.5.37.jar springfox-core-2.7.0.jar mysql-connector-ja
+ va-5.1.47.jar ognl-3.0.8.jar log4j-over-slf4j-1.7.25.jar pagehelper-s
+ pring-boot-autoconfigure-1.2.5.jar thumbnailator-0.4.8.jar spring-jdb
+ c-4.3.22.BUILD-20181212.120909-5.jar hibernate-validator-5.3.6.Final.
+ jar springfox-swagger-ui-2.7.0.jar spring-security-config-4.2.10.RELE
+ ASE.jar spring-security-core-4.2.10.RELEASE.jar mybatis-spring-1.3.2.
+ jar snakeyaml-1.17.jar spring-boot-starter-aop-1.5.19.BUILD-20181220.
+ 104456-6.jar thymeleaf-spring4-2.1.6.RELEASE.jar jackson-annotations-
+ 2.8.0.jar spring-boot-starter-web-1.5.19.BUILD-20181220.104456-6.jar 
+ spring-context-4.3.22.BUILD-20181212.120909-5.jar springfox-swagger2-
+ 2.7.0.jar aopalliance-1.0.jar spring-security-web-4.2.10.RELEASE.jar 
+ spring-plugin-core-1.2.0.RELEASE.jar logback-core-1.1.11.jar pagehelp
+ er-spring-boot-starter-1.2.5.jar spring-tx-4.3.22.BUILD-20181212.1209
+ 09-5.jar tomcat-embed-core-8.5.37.jar springfox-swagger-common-2.7.0.
+ jar spring-data-commons-1.13.18.BUILD-20181225.032421-35.jar spring-b
+ oot-autoconfigure-1.5.19.BUILD-20181220.104456-6.jar validation-api-1
+ .1.0.Final.jar spring-boot-starter-tomcat-1.5.19.BUILD-20181220.10445
+ 6-6.jar groovy-2.4.16.jar tomcat-embed-websocket-8.5.37.jar unbescape
+ -1.1.0.RELEASE.jar
+Main-Class: com.ydb.WorkApplication
+

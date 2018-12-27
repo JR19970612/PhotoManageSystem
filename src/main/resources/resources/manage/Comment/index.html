@@ -67,7 +67,7 @@
                 <span>{{item.person.personName}} </span>
             </td>
             <td>
-                <a @click="show_confirm(comments.commentId)" style="cursor: pointer">删除</a>
+                <a @click="show_confirm(item.commentId)" style="cursor: pointer">删除</a>
             </td>
         </tr>
     </table>
@@ -93,7 +93,7 @@
                 })
             },
             show_confirm: function (commentId) { //删除单个评论确认框
-                var r = confirm("确定要删除该评论？");
+                var r = confirm("确定要删除commentId为"+commentId+"的评论？");
                 if (r == true) {
                     this.delectCommentId(commentId);
                     location.reload();//刷新当前页面
