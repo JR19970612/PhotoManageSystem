@@ -19,7 +19,7 @@
                         <img
                                 alt
                                 width="50"
-                                :src="'http://127.0.0.1:8080/gdpi/favicon/'+index%16+'.bmp'"
+                                :src="'/gdpi/favicon/'+index%16+'.bmp'"
                         >
                     </div>
                     <div class="comment_content">
