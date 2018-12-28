@@ -15,14 +15,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 
-//@CrossOrigin(
-//        origins = "*",
-//        allowCredentials = "true",
-//        allowedHeaders = "*",
-//        methods = RequestMethod.GET,
-//        maxAge = 3600
-//)
-@CrossOrigin
+@CrossOrigin(
+        origins = "*",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        methods = RequestMethod.GET,
+        maxAge = 3600
+)
 @RestController
 public class PhotoController {
     @Autowired

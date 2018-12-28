@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ydb.listener.LoadingDataToRedis;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
@@ -20,8 +22,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @description: reids 相关bean的配置
  * @date:2018/12/16
  */
-//@EnableCaching //注解来开启我们的项目支持缓存
-//@Configuration
+@EnableCaching //注解来开启我们的项目支持缓存
+@Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**

@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ import java.util.*;
  * @description: Photo图片信息缓存
  * @date:2018/12/16
  */
-//@Component
+@Component
 public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
 
     private String namespace = "photo:photoId:%s:photoName:%s";//缓存命名空间
@@ -68,7 +69,6 @@ public class PhotoCacheAspect extends AbstractCacheApsect<Photo> {
     public void delete(Photo photo) {
         Set keys = redisTemplate.keys(String.format(namespace, photo.getPhotoId(), "*"));
         redisTemplate.delete(keys.iterator().next());
-//        redisTemplate.delete(String.format(namespace, photo.getPhotoId(), photo.getPhotoName()));
     }
 
     //在查询数据库之前先会查询缓存是否存在该数据

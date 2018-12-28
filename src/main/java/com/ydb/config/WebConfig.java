@@ -20,8 +20,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果�
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:D://originalphoto/");
-        registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:D://thumphoto/");
+//        registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:D://originalphoto/");
+//        registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:D://thumphoto/");
         super.addResourceHandlers(registry);
     }
 
