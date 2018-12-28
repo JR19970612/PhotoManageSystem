@@ -19,7 +19,7 @@
 
     <insert id="insertPhoto" parameterType="Photo">
         INSERT INTO
-        Photo(photo_name,photo_desc,photo_createtime,album_id,photo_original_url,photo_thum_url)
+        photo(photo_name,photo_desc,photo_createtime,album_id,photo_original_url,photo_thum_url)
         VALUES (#{photoName},#{photoDesc},#{photoCreateTime},#{albumId},#{photoOriginalUrl},#{photoThumUrl})
         <selectKey resultType="int" keyProperty="photoId" order="AFTER">
             select @@identity

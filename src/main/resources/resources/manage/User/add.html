@@ -70,8 +70,9 @@
 				methods: {
 					submit: function() { //添加用户
 					$.ajax({
-						url: URL+"person",
-						type: 'post',
+						// url: URL+"person",
+                        url: "/gdpi/person",
+                        type: 'post',
 						headers:{
 							"Content-type":"application/x-www-form-urlencoded",
 							"platform":"browser",

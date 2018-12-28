@@ -85,15 +85,19 @@
 		},
 		methods: {
 			getAlbumSearchResult: function() { //查找单个相册
-				var url = URL+"album/" + this.type + "?params=" + this.searchKey;
-				var _self = this;
+				// var url = URL+"album/" + this.type + "?params=" + this.searchKey;
+                var url = "/gdpi/album/" + this.type + "?params=" + this.searchKey;
+
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listAlbums = data.data;
 				})
 			},
 			getAlbum: function() { //查找所有相册
-				var url = URL+"albums";
-				var _self = this;
+				// var url = URL+"albums";
+                var url = "/gdpi/albums";
+
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listAlbums = data.data;
 				})
@@ -109,8 +113,10 @@
 			},
 			delectAlbum: function(albumId) { //删除单个相册
 				$.ajax({
-					url: URL+"album/"+albumId,
-					type: 'DELETE',
+					// url: URL+"album/"+albumId,
+                    url: "/gdpi/album/"+albumId,
+
+                    type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);
 					}

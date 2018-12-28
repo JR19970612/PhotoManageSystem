@@ -75,15 +75,18 @@
 		},
 		methods: {
 			getPersonSearchResult: function() { //查找单个用户
-				var url = URL+"person?personName=" + this.searchKey;
-				var _self = this;
+				// var url = URL+"person?personName=" + this.searchKey;
+                var url = "/gdpi/person?personName=" + this.searchKey;
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listpersons = data.data;
 				})
 			},
 			getPerson: function() { //查找所有用户
-				var url = URL+"persons";
-				var _self = this;
+				// var url = URL+"persons";
+                var url = "/gdpi/persons";
+
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listpersons = data.data;
 				})
@@ -99,8 +102,10 @@
 			},
 			delectPerson: function(personId) { //删除单个用户
 				$.ajax({
-					url: URL+"person/"+personId,
-					type: 'DELETE',
+					// url: URL+"person/"+personId,
+                    url: "/gdpi/person/"+personId,
+
+                    type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);
 					}

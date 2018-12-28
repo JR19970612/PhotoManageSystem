@@ -70,7 +70,9 @@
         methods: {
             submit: function () { //添加相册
                 $.ajax({
-                    url: URL + "album?albumName=" + this.albumName + "&albumDesc=" + this.albumDesc,
+                    // url: URL + "album?albumName=" + this.albumName + "&albumDesc=" + this.albumDesc,
+                    url: "/gdpi/album?albumName=" + this.albumName + "&albumDesc=" + this.albumDesc,
+
                     type: 'post',
                     success: function (result) {
                         alert("成功添加");

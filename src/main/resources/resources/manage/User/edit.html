@@ -37,7 +37,7 @@
 	</head>
 	<body>
 		<div id="app">
-		<form action="http://localhost:8080/gdpi/person" method="post" class="definewidth m20">
+		<form action="/gdpi/person" method="post" class="definewidth m20">
 			<input type="hidden" name="_method" value="PUT">
 			<table class="table table-bordered table-hover definewidth m10">
 				<tr>
@@ -77,8 +77,9 @@
 		},
 		methods: {
 			getPersonSearchResult: function(personName) { //查找单个用户
-				var url = URL+"person?personName=" + personName;
-				var _self = this;
+				// var url = URL+"person?personName=" + personName;
+                var url = "/gdpi/person?personName=" + personName;
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listPerson = data.data[0];
 				})

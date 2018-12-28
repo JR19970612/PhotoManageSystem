@@ -85,7 +85,9 @@
         },
         methods: {
             getPhotoComment: function () { //查找单张照片
-                var url = URL + "photo/photoId?params=" + this.byIdSearch;
+                // var url = URL + "photo/photoId?params=" + this.byIdSearch;
+                var url =  "/gdpi/photo/photoId?params=" + this.byIdSearch;
+
                 var _self = this;
                 $.get(url, function (data) {
                     _self.comments = data.data[0].comments;
@@ -104,7 +106,9 @@
             delectCommentId: function (commentId) { //删除单个评论
                 $.ajax({
                     //http://localhost:8080/gdpi/comment?photoId=158&commentId=1
-                    url: URL + "comment?photoId=" + this.byIdSearch + "&commentId=" + commentId,
+                    // url: URL + "comment?photoId=" + this.byIdSearch + "&commentId=" + commentId,
+                    url: "/gdpi/comment?photoId=" + this.byIdSearch + "&commentId=" + commentId,
+
                     type: 'DELETE',
                     success: function (result) {
                         alert(result.msg);

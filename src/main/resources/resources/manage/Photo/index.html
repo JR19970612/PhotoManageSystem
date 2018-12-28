@@ -93,23 +93,29 @@
 		},
 		methods: {
 			getPhotoSearchResult: function() { //查找单张照片
-				var url = URL+"photo/" + this.type + "?params=" + this.searchKey;
-				var _self = this;
+				// var url = URL+"photo/" + this.type + "?params=" + this.searchKey;
+                var url = "/gdpi/photo/" + this.type + "?params=" + this.searchKey;
+
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
 				})
 			},
 			getPhoto: function() { //查找所有照片
-				var url = URL+"photo/" + this.pageConut + "/" + this.page;
-				var _self = this;
+				// var url = URL+"photo/" + this.pageConut + "/" + this.page;
+                var url = "/gdpi/photo/" + this.pageConut + "/" + this.page;
+
+                var _self = this;
 				$.get(url, function(data) {
 					_self.listphotos = data.data;
 				})
 			},
 			addpage: function() { //查看更多
 				this.page = this.page + 1;
-				var url = URL+"photo/" + this.pageConut + "/" +this.page;
-				var _self = this;
+				// var url = URL+"photo/" + this.pageConut + "/" +this.page;
+                var url ="/gdpi/photo/" + this.pageConut + "/" +this.page;
+
+                var _self = this;
 				$.get(url, function(data) {
 					// this.arr.concat(anotherArr);
 					_self.listphotos = _self.listphotos.concat(data.data);
@@ -128,8 +134,10 @@
 			},
 			delectPhoto: function(photoId,photoName, photoOriginalUrl, photoThumUrl) { //删除单张照片
 				$.ajax({				
-					url: URL+"photo?photoId=" + photoId +"&photoName="+photoName+"&photoOriginalUrl=" + photoOriginalUrl +
-						"&photoThumUrl=" + photoThumUrl,
+					// url: URL+"photo?photoId=" + photoId +"&photoName="+photoName+"&photoOriginalUrl=" + photoOriginalUrl +
+                    url: "/gdpi/photo?photoId=" + photoId +"&photoName="+photoName+"&photoOriginalUrl=" + photoOriginalUrl +
+
+                "&photoThumUrl=" + photoThumUrl,
 					type: 'DELETE',
 					success: function(result) {
 						alert(result.msg);

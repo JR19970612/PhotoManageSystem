@@ -34,7 +34,7 @@ public class PersonServiceimp implements IPersonService {
         if (person.getPersonAvatarUrl() == null) {
             // 设置用户默认头像
             Random random = new Random();
-            person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
+            person.setPersonAvatarUrl("http://47.106.147.248/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         }
         int code = personDao.insertPerson(person);
         //设置用户匿名角色
@@ -52,7 +52,7 @@ public class PersonServiceimp implements IPersonService {
         if (person.getPersonAvatarUrl() == null) {
             // 设置用户默认头像
             Random random = new Random();
-            person.setPersonAvatarUrl("http://localhost:8080/gdpi/favicon/" + random.nextInt(16) + ".bmp");
+            person.setPersonAvatarUrl("http://47.106.147.248/gdpi/favicon/" + random.nextInt(16) + ".bmp");
         }
         int code = personDao.insertPerson(person);
         //设置用户管理员角色

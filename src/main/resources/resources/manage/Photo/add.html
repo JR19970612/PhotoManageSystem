@@ -103,7 +103,9 @@
                 console.log(this.file);
             },
             getAllAlbumInfo: function () { //查找单张照片
-                var url = URL + "albums";
+                // var url = URL + "albums";
+                var url = "/gdpi/albums";
+
                 var _self = this;
                 $.get(url, function (data) {
                     _self.albums = data.data;

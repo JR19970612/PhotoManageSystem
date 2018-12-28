@@ -28,9 +28,8 @@ public class PhotoUtil implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
-//        realPath = servletContext.getRealPath("/");
-        realPath = "D:\\";
-        contextPath = "http://localhost:8080" + servletContext.getContextPath();
+        realPath = servletContext.getRealPath("/");
+        contextPath = "http://47.106.147.248:80" + servletContext.getContextPath();
     }
 
     @Override
