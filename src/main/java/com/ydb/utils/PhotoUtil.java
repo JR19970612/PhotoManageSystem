@@ -22,14 +22,14 @@ import java.util.regex.Pattern;
 @Component
 public class PhotoUtil implements ServletContextListener {
 
-    private String realPath;
-    private String contextPath;
+    private String realPath;//用于保存图片磁盘路径
+    private String contextPath;//用于保存图片网络URL路径
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
-        realPath = servletContext.getRealPath("/");
-        contextPath = "http://47.106.147.248:80" + servletContext.getContextPath();
+        realPath ="E:/Java/WorkPlace/PhotoManageSystem/image";
+        contextPath = servletContext.getContextPath();
     }
 
     @Override
@@ -39,8 +39,8 @@ public class PhotoUtil implements ServletContextListener {
 
     //判断文件格式
     public boolean judgeFormat(MultipartFile multipartFile) {
-        String fileName= multipartFile.getOriginalFilename();
-        if (fileName != null && !Pattern.matches(".+(.JPEG|.jpeg|.JPG|.jpg|.png|.PNG|.bmp|.BMP)$",fileName)) {
+        String fileName = multipartFile.getOriginalFilename();
+        if (fileName != null && !Pattern.matches(".+(.JPEG|.jpeg|.JPG|.jpg|.png|.PNG|.bmp|.BMP)$", fileName)) {
             return false;
         }
         return true;

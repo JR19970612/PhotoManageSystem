@@ -79,8 +79,6 @@
 </html>
 <script>
 
-    //    http://127.0.0.1:8080/gdpi/albums
-
     var app = new Vue({
         el: '#app',
         data: {
@@ -103,7 +101,6 @@
                 console.log(this.file);
             },
             getAllAlbumInfo: function () { //查找单张照片
-                // var url = URL + "albums";
                 var url = "/gdpi/albums";
 
                 var _self = this;

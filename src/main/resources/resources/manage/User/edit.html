@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td width="10%" class="tableleft">用户密码</td>
-                <td><input type="text" v-model="listPerson.personName"  name="personPassword"/></td>
+                <td><input type="text" v-model="listPerson.personPassword"  name="personPassword"/></td>
             </tr>
             <tr>
                 <td class="tableleft"></td>
@@ -76,7 +76,8 @@
         },
         methods: {
             getPersonSearchResult: function (personName) { //查找单个用户
-                var url = URL + "person?personName=" + personName;
+                var url = "/gdpi/person?personName=" + personName;
+
                 var _self = this;
                 $.get(url, function (data) {
                     _self.listPerson = data.data[0];
@@ -104,10 +105,10 @@
                         "personPassword": this.listPerson.personPassword
                     },
                     success: function (result) {
-                        alert(result.msg);
+                        // alert(result.msg);
                         location.reload();//刷新当前页面
                     }, error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("修改失败！！");
+                        // alert("修改失败！！");
                     }
                 });
             }

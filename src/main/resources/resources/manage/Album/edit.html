@@ -73,11 +73,9 @@
 		mounted: function() {
 			var albumId = this.GetRequest().albumId; //拿到对应id
 			this.getPhotoSearchResult(albumId);
-			//console.log(albumId)
 		},
 		methods: {
 			getPhotoSearchResult: function(albumId) { //查找单个相册
-				// var url = URL+"album/albumId?params=" + albumId;
                 var url = "/gdpi/album/albumId?params=" + albumId;
 
 				var _self = this;

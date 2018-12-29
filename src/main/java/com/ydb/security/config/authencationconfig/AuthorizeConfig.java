@@ -16,7 +16,7 @@ import org.springframework.web.cors.CorsUtils;
 public class AuthorizeConfig {
     public void configure(HttpSecurity builder) throws Exception {
         builder.authorizeRequests()
-                .antMatchers("/", "/login.html", "/client/**","/error", "/originalphoto/**", "/thumphoto/**").permitAll()//首页和登陆页、图片浏览页面不进行认证拦截，任何用户都可进行访问
+                .antMatchers("/", "/login.html", "/client/**","/error/**", "/originalphoto/**", "/thumphoto/**").permitAll()//首页和登陆页、图片浏览页面不进行认证拦截，任何用户都可进行访问
                 //开放接口
                 .antMatchers(HttpMethod.GET, "/album/**", "/albums", "/photo/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/loginPerson","/login", "/person","/comment").permitAll()

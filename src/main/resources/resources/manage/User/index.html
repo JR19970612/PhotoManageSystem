@@ -75,7 +75,6 @@
 		},
 		methods: {
 			getPersonSearchResult: function() { //查找单个用户
-				// var url = URL+"person?personName=" + this.searchKey;
                 var url = "/gdpi/person?personName=" + this.searchKey;
                 var _self = this;
 				$.get(url, function(data) {
@@ -102,7 +101,6 @@
 			},
 			delectPerson: function(personId) { //删除单个用户
 				$.ajax({
-					// url: URL+"person/"+personId,
                     url: "/gdpi/person/"+personId,
 
                     type: 'DELETE',

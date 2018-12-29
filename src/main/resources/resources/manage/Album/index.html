@@ -85,7 +85,6 @@
 		},
 		methods: {
 			getAlbumSearchResult: function() { //查找单个相册
-				// var url = URL+"album/" + this.type + "?params=" + this.searchKey;
                 var url = "/gdpi/album/" + this.type + "?params=" + this.searchKey;
 
                 var _self = this;
@@ -113,7 +112,6 @@
 			},
 			delectAlbum: function(albumId) { //删除单个相册
 				$.ajax({
-					// url: URL+"album/"+albumId,
                     url: "/gdpi/album/"+albumId,
 
                     type: 'DELETE',

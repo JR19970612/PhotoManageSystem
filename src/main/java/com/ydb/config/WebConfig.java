@@ -18,10 +18,11 @@ import org.springframework.web.servlet.view.RedirectView;
 public class WebConfig extends WebMvcConfigurerAdapter {//注意！！！如果这里集成WebMvcConfigurerSupport的话，接下来的配置将会覆盖父类的方法配置，比如这里配置资源索引话，Springboot默认的资源索引路径（/static、/resource...）将不起作用，
 
 
+    //映射静态资源本地寻找路径
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:/usr/java/source/originalphoto/");
-        registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:/usr/java/source/thumphoto/");
+        registry.addResourceHandler("/originalphoto/**").addResourceLocations("file:E:/Java/WorkPlace/PhotoManageSystem/image/originalphoto/");
+        registry.addResourceHandler("/thumphoto/**").addResourceLocations("file:E:/Java/WorkPlace/PhotoManageSystem/image/thumphoto/");
         super.addResourceHandlers(registry);
     }
 
