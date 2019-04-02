@@ -28,3 +28,19 @@ public class CommentController{}
 .antMatchers(HttpMethod.OPTIONS,"/comment").permitAll() 
 注意！！！因为POST请求进行跨域时，浏览器会预先发送options请求进行认证，
 确认当前的站点域名是服务器授权的。所以为了防止被Cors拦截，故还需配置全局的授权
+
+### Security权限注解
+
+https://blog.csdn.net/w605283073/article/details/51327182
+
+> @Security()
+
+    需要注意的是，value值也就是role角色名需要添加"ROLE_"前缀，
+    否则在最终在FilterSecurityInterceptor校验权限时无法匹配到可用的投票者，
+    这里可以分析其中的一个投票者源码，可以知道，它在support()进行判断，仅支持前缀为"ROLE_"的角色名进行权限的校验。
+ 
+        public boolean supports(ConfigAttribute attribute) {
+            return attribute.getAttribute() != null && attribute.getAttribute().startsWith(this.getRolePrefix());
+        }
+   
+    所以为了能够使其中的一个投票者生效，需要添加该前缀。@Security(value="ROLE_xxx");
